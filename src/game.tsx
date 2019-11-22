@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { updateScore } from "./redux/actions"
 import { RootState } from "./redux/reducers"
 import {
-  GlobalStyle,
   MainContainer,
   GameWrapper,
   Header,
@@ -17,7 +16,7 @@ import {
   Paragraph,
   Grid
 } from "./styled"
-import { CELLS_NUMBER, createGrid } from "./utils"
+import { CELLS_NUMBER, createGrid, getRandomCellId } from "./utils"
 
 interface GameStateProps {
   currentScore: number
@@ -26,9 +25,17 @@ interface GameStateProps {
 interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
+  const currentGrid: ReactElement[] = createGrid(CELLS_NUMBER)
+  const firstRandomId = getRandomCellId()
+  let secondRandomId = getRandomCellId()
+  if (secondRandomId === firstRandomId) {
+    secondRandomId = getRandomCellId()
+  }
+  console.log(firstRandomId)
+  console.log(secondRandomId)
+
   return (
     <MainContainer>
-      <GlobalStyle />
       <GameWrapper>
         <Header>
           <GameName>2048</GameName>
@@ -63,7 +70,7 @@ const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
 }
 
 const mapStateToProps = (state: RootState): GameStateProps => ({
-  currentScore: state.score
+  currentScore: 2
 })
 
 export default connect<any, any, any, any>(mapStateToProps, null)(Game)
