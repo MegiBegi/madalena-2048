@@ -1,20 +1,20 @@
 export const UPDATE_SCORE = "UPDATE SCORE"
-export const RESET_GAME = "RESET GAME"
+export const NEW_GAME = "RESET GAME"
 
 interface UpdateScore {
   type: "UPDATE SCORE"
 }
 
-interface ResetGame {
+interface NewGame {
   type: "RESET GAME"
 }
 
-export type Actions = UpdateScore | ResetGame
+export type Actions = UpdateScore | NewGame
 
 export const updateScore = (): UpdateScore => ({
   type: UPDATE_SCORE
 })
 
-export const resetGame = (): ResetGame => ({
-  type: RESET_GAME
+export const newGame = (): NewGame => ({
+  type: NEW_GAME
 })

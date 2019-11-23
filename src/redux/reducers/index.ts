@@ -1,4 +1,4 @@
-import { Actions, UPDATE_SCORE, RESET_GAME } from "../actions"
+import { Actions, UPDATE_SCORE, NEW_GAME } from "../actions"
 
 export interface RootState {
   test: string
@@ -10,10 +10,8 @@ const initialState: RootState = {
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
-    case UPDATE_SCORE:
-      return {
-        ...state
-      }
+    case NEW_GAME:
+      return state
     default:
       return state
   }

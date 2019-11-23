@@ -46,7 +46,10 @@ export const GameName = styled.h1`
   font-size: 5rem;
 `
 export const Score = styled.button`
-  font-size: 2rem;
+  background-color: #fff;
+  color: #8b9ab3;
+  font-size: 2.1rem;
+  border-radius: 5%;
 `
 export const Main = styled.main`
   font-size: 1rem;
