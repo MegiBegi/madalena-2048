@@ -7,10 +7,9 @@ export const getRandomCellId = (): number => {
   return Math.floor(Math.random() * (CELLS_NUMBER - 1))
 }
 
-const firstRandomId = getRandomCellId()
-let secondRandomId = getRandomCellId()
-if (secondRandomId === firstRandomId) {
-  secondRandomId = getRandomCellId()
+const allTilesIds = []
+for (let i = 0; i < CELLS_NUMBER; i++) {
+  allTilesIds.push(i)
 }
 
 export const createGrid = (number: number) => {
@@ -19,4 +18,18 @@ export const createGrid = (number: number) => {
     cells.push(<Cell key={i} />)
   }
   return cells
+}
+
+export const getTwoRandomTileIds = () => {
+  const allTilesIds: number[] = []
+  for (let i = 0; i < CELLS_NUMBER; i++) {
+    allTilesIds.push(i)
+  }
+  const firstId = Math.floor(Math.random() * (CELLS_NUMBER - 1))
+  let secondId = Math.floor(Math.random() * (CELLS_NUMBER - 1))
+  if (secondId === firstId) {
+    secondId = Math.floor(Math.random() * (CELLS_NUMBER - 1))
+  }
+  console.log(firstId)
+  console.log(secondId)
 }

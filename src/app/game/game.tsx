@@ -26,13 +26,6 @@ interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
   const currentGrid: ReactElement[] = createGrid(CELLS_NUMBER)
-  const firstRandomId = getRandomCellId()
-  let secondRandomId = getRandomCellId()
-  if (secondRandomId === firstRandomId) {
-    secondRandomId = getRandomCellId()
-  }
-  console.log(firstRandomId)
-  console.log(secondRandomId)
 
   return (
     <MainContainer>
