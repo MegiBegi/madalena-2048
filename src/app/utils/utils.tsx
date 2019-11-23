@@ -41,18 +41,18 @@ export const createGrid = (number: number) => {
   for (let i = 0; i <= number - 1; i++) {
     if (i === randomIds[0]) {
       cells.push(
-        <Cell key={i} color="white">
+        <Cell key={i} color={poppingTiles[0] === 2 ? "#c3d9c5" : "#cdc3d9"}>
           {poppingTiles[0]}
         </Cell>
       )
     } else if (i === randomIds[1]) {
       cells.push(
-        <Cell key={i} color="white">
+        <Cell key={i} color={poppingTiles[1] === 2 ? "#c3d9c5" : "#cdc3d9"}>
           {poppingTiles[1]}
         </Cell>
       )
     } else {
-      cells.push(<Cell key={i} />)
+      cells.push(<Cell key={i} color="#8b9ab3" />)
     }
   }
   return cells

@@ -1,5 +1,9 @@
 import styled, { keyframes, createGlobalStyle } from "styled-components"
 
+interface CellProps {
+  color: string
+}
+
 export const GlobalStyle = createGlobalStyle`
 html {
   padding: 0;
@@ -44,6 +48,22 @@ export const Header = styled.header`
 export const GameName = styled.h1`
   font-weight: bold;
   font-size: 5rem;
+  background: linear-gradient(
+    124deg,
+    #ff2400,
+    #e81d1d,
+    #e8b71d,
+    #e3e81d,
+    #1de840,
+    #1ddde8,
+    #2b1de8,
+    #dd00f3,
+    #dd00f3
+  );
+  background-size: 1600% 1600%;
+  animation: ${rainbow} 18s ease infinite;
+  border-radius: 5%;
+  padding: 7px;
 `
 export const Score = styled.button`
   background-color: #fff;
@@ -99,24 +119,12 @@ export const Footer = styled.footer`
   width: 100%;
   padding-bottom: 30px;
 `
-export const Cell = styled.div`
+export const Cell = styled.div<CellProps>`
   width: 110px;
   height: 110px;
   border-radius: 5%;
-  color: ${({ color }) => color};
-  background: linear-gradient(
-    124deg,
-    #ff2400,
-    #e81d1d,
-    #e8b71d,
-    #e3e81d,
-    #1de840,
-    #1ddde8,
-    #2b1de8,
-    #dd00f3,
-    #dd00f3
-  );
-  background-size: 1800% 1800%;
-  animation: ${rainbow} 18s ease infinite;
-  font-size: 3rem;
+  background-color: ${({ color }) => color};
+  font-size: 5rem;
+  text-align: center;
+  line-height: 110px;
 `
