@@ -35,7 +35,7 @@ export const GameWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
 `
-export const Header = styled.div`
+export const Header = styled.header`
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -45,10 +45,10 @@ export const GameName = styled.h1`
   font-weight: bold;
   font-size: 5rem;
 `
-export const Score = styled.div`
+export const Score = styled.button`
   font-size: 2rem;
 `
-export const Main = styled.div`
+export const Main = styled.main`
   font-size: 1rem;
   width: 100%;
 `
@@ -91,7 +91,7 @@ export const Paragraph = styled.p`
   padding-bottom: 20px;
   border-bottom: 2px solid #fff;
 `
-export const Footer = styled.div`
+export const Footer = styled.footer`
   font-size: 1rem;
   width: 100%;
   padding-bottom: 30px;
