@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react"
-import { Cell } from "./styled"
+import { Cell } from "../styles/styled"
 
 export const CELLS_NUMBER = 16
 

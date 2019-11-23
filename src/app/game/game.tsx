@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react"
 import { connect } from "react-redux"
-import { updateScore } from "./redux/actions"
-import { RootState } from "./redux/reducers"
+import { updateScore } from "../../redux/actions"
+import { RootState } from "../../redux/reducers"
 import {
   MainContainer,
   GameWrapper,
@@ -15,8 +15,8 @@ import {
   Button,
   Paragraph,
   Grid
-} from "./styled"
-import { CELLS_NUMBER, createGrid, getRandomCellId } from "./utils"
+} from "../styles/styled"
+import { CELLS_NUMBER, createGrid, getRandomCellId } from "../utils/utils"
 
 interface GameStateProps {
   currentScore: number
