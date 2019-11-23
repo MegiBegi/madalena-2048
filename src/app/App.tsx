@@ -4,10 +4,10 @@ import { GlobalStyle } from "./styles/styled"
 
 const App: FC = (): ReactElement => {
   return (
-    <div>
+    <>
       <GlobalStyle />
       <Game />
-    </div>
+    </>
   )
 }
 

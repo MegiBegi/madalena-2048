@@ -10,13 +10,13 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, mainReducer)
 
-declare global {
-  interface Window {
-    _REDUX_DEVTOOLS_EXTENSION_COMPOSE_?: typeof compose
-  }
-}
+const composeEnhancers =
+  process.env.DEBUG_ENV !== "production" &&
+  typeof window === "object" &&
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose
 
-const composeEnhancers = window._REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose
 export const store = createStore(persistedReducer, composeEnhancers())
 export let persistor = persistStore(store)
 export const dispatch = store.dispatch
