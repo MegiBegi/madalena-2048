@@ -16,7 +16,7 @@ import {
   Paragraph,
   Grid
 } from "../styles/styled"
-import { CELLS_NUMBER, createGrid, getTwoRandomTileIds } from "../utils/utils"
+import { CELLS_NUMBER, createGrid } from "../utils/utils"
 
 interface GameStateProps {
   currentScore: number
