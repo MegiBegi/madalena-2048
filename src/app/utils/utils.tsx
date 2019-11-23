@@ -2,6 +2,13 @@ import React, { ReactElement } from "react"
 import { Cell } from "../styles/styled"
 
 export const CELLS_NUMBER = 16
+export const ROWS_NUM = 4
+
+interface Grid {
+  row: number
+  col: number
+  isTwo?: boolean
+}
 
 const allTilesIds = []
 for (let i = 0; i < CELLS_NUMBER; i++) {
@@ -11,6 +18,15 @@ for (let i = 0; i < CELLS_NUMBER; i++) {
 const getRandomNumber = (numberOfCells: number): number => {
   return Math.floor(Math.random() * (numberOfCells - 1))
 }
+
+export const getRandomGridPosition = (numberOfCells: number): Grid => {
+  return {
+    row: Math.floor(Math.random() * (numberOfCells - 1)),
+    col: Math.floor(Math.random() * (numberOfCells - 1))
+  }
+}
+
+const randomNumber: Grid = getRandomGridPosition(16)
 
 const getTwoRandomTileIds = (): number[] => {
   const allTilesIds: number[] = []

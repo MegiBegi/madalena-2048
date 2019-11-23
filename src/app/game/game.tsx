@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react"
+import React, { FC, ReactElement, useEffect } from "react"
 import { connect } from "react-redux"
 import { updateScore } from "../../redux/actions"
 import { RootState } from "../../redux/reducers"
@@ -14,9 +14,10 @@ import {
   Buttons,
   Button,
   Paragraph,
-  Grid
+  Grid,
+  Cell
 } from "../styles/styled"
-import { CELLS_NUMBER, createGrid } from "../utils/utils"
+import { getRandomGridPosition } from "../utils/utils"
 
 interface GameStateProps {
   currentScore: number
@@ -25,7 +26,45 @@ interface GameStateProps {
 interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
-  const currentGrid: ReactElement[] = createGrid(CELLS_NUMBER)
+  const CELLS_NUMBER = 16
+  const ROWS_NUM = 4
+
+  interface Grid {
+    row: number
+    col: number
+    isTwo?: boolean
+  }
+  const randomNumber: Grid = getRandomGridPosition(16)
+  const grid = []
+  for (let row = 0; row < ROWS_NUM; row++) {
+    for (let col = 0; col < CELLS_NUMBER / ROWS_NUM; col++) {
+      const isTwo = randomNumber.row === row && randomNumber.col === col
+      grid.push({
+        row,
+        col
+      })
+    }
+  }
+
+  const gridItems = grid.map(grid => {
+    return <Cell key={`${grid.row} + ${grid.col}`} color="#8b9ab3" />
+  })
+
+  const handleKeyPress = (): void => {}
+  const componentDidMount = (): void => {
+    document.addEventListener("keydown", handleKeyPress)
+  }
+
+  const componentWillUnmount = (): void => {
+    document.removeEventListener("keydown", handleKeyPress)
+  }
+
+  useEffect(() => {
+    componentDidMount()
+    return () => {
+      componentWillUnmount()
+    }
+  }, [])
   return (
     <MainContainer>
       <GameWrapper>
@@ -34,7 +73,7 @@ const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
           <Score>Best merge:</Score>
         </Header>
         <Main>
-          <Grid>{createGrid(CELLS_NUMBER)}</Grid>
+          <Grid>{gridItems}</Grid>
           <Buttons>
             <Button>UNDO </Button>
             <Button>NEW GAME</Button>

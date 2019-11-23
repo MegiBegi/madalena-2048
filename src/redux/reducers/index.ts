@@ -1,11 +1,11 @@
 import { Actions, UPDATE_SCORE, NEW_GAME } from "../actions"
 
 export interface RootState {
-  test: string
+  isTwo: boolean
 }
 
 const initialState: RootState = {
-  test: "magdusia"
+  isTwo: false
 }
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
