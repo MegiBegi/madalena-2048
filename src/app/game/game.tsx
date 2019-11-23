@@ -16,7 +16,7 @@ import {
   Paragraph,
   Grid
 } from "../styles/styled"
-import { CELLS_NUMBER, createGrid, getRandomCellId } from "../utils/utils"
+import { CELLS_NUMBER, createGrid, getTwoRandomTileIds } from "../utils/utils"
 
 interface GameStateProps {
   currentScore: number
@@ -26,7 +26,6 @@ interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ currentScore }): ReactElement => {
   const currentGrid: ReactElement[] = createGrid(CELLS_NUMBER)
-
   return (
     <MainContainer>
       <GameWrapper>

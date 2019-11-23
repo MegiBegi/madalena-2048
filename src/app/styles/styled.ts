@@ -118,4 +118,5 @@ export const Cell = styled.div`
   );
   background-size: 1800% 1800%;
   animation: ${rainbow} 18s ease infinite;
+  font-size: 3rem;
 `
