@@ -3,21 +3,9 @@ import { Cell } from "../styles/styled"
 
 export const CELLS_NUMBER = 16
 
-export const getRandomCellId = (): number => {
-  return Math.floor(Math.random() * (CELLS_NUMBER - 1))
-}
-
 const allTilesIds = []
 for (let i = 0; i < CELLS_NUMBER; i++) {
   allTilesIds.push(i)
-}
-
-export const createGrid = (number: number) => {
-  const cells: ReactElement[] = []
-  for (let i = 1; i <= number; i++) {
-    cells.push(<Cell key={i} />)
-  }
-  return cells
 }
 
 export const getTwoRandomTileIds = () => {
@@ -32,4 +20,16 @@ export const getTwoRandomTileIds = () => {
   }
   console.log(firstId)
   console.log(secondId)
+}
+
+export const createGrid = (number: number) => {
+  const cells: ReactElement[] = []
+  for (let i = 1; i <= number; i++) {
+    cells.push(
+      <Cell key={i} color="red">
+        {i}
+      </Cell>
+    )
+  }
+  return cells
 }

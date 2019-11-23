@@ -103,6 +103,7 @@ export const Cell = styled.div`
   width: 110px;
   height: 110px;
   border-radius: 5%;
+  color: ${({ color }) => color};
   background: linear-gradient(
     124deg,
     #ff2400,
