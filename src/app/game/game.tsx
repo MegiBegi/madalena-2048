@@ -16,8 +16,7 @@ import {
   Paragraph,
   Grid,
   Cell
-} from "../styles/styled"
-import { getRandomGridPosition, firstInitial } from "../utils/utils"
+} from "../styles"
 import { dispatch } from "../../redux/store"
 
 interface Grid {
@@ -27,61 +26,20 @@ interface Grid {
   isFour?: boolean
 }
 interface GameStateProps {
-  firstInitial: Grid
-  secondInitial: Grid
+  numbers: TileInfo[]
 }
 
 interface GameProps extends GameStateProps {}
 
-const Game: FC<GameProps> = ({ firstInitial, secondInitial }): ReactElement => {
-  const CELLS_NUMBER = 16
-  const ROWS_NUM = 4
-
-  const grid = []
-  for (let row = 0; row < ROWS_NUM; row++) {
-    for (let col = 0; col < CELLS_NUMBER / ROWS_NUM; col++) {
-      const isTwo =
-        (firstInitial.row === row &&
-          firstInitial.col === col &&
-          firstInitial.isTwo) ||
-        (secondInitial.row === row &&
-          secondInitial.col === col &&
-          secondInitial.isTwo)
-      const isFour =
-        (firstInitial.row === row &&
-          firstInitial.col === col &&
-          firstInitial.isFour) ||
-        (secondInitial.row === row &&
-          secondInitial.col === col &&
-          secondInitial.isFour)
-      grid.push({
-        row,
-        col,
-        isTwo,
-        isFour
-      })
-    }
-  }
-
-  console.log(grid)
-  const gridItems = grid.map(grid => {
-    if (grid.isTwo) {
-      return (
-        <Cell key={`${grid.row} + ${grid.col}`} color="#8b9ab3">
-          2
-        </Cell>
-      )
-    } else if (grid.isFour) {
-      return (
-        <Cell key={`${grid.row} + ${grid.col}`} color="#8b9ab3">
-          4
-        </Cell>
-      )
-    } else {
-      return <Cell key={`${grid.row} + ${grid.col}`} color="#8b9ab3" />
-    }
+const Game: FC<GameProps> = ({ numbers }): ReactElement => {
+  const gridItems = numbers.map(number => {
+    return (
+      <Cell key={`${number.row} + ${number.col}`} tileColor={number.value}>
+        {number.value}
+      </Cell>
+    )
   })
-
+  console.log(numbers)
   const handleKeyPress = (): void => {}
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
@@ -97,9 +55,7 @@ const Game: FC<GameProps> = ({ firstInitial, secondInitial }): ReactElement => {
 
   useEffect(() => {
     componentDidMount()
-    return () => {
-      componentWillUnmount()
-    }
+    return componentWillUnmount
   }, [])
   return (
     <MainContainer>
@@ -137,8 +93,7 @@ const Game: FC<GameProps> = ({ firstInitial, secondInitial }): ReactElement => {
 }
 
 const mapStateToProps = (state: RootState): GameStateProps => ({
-  firstInitial: state.firstInitialTile,
-  secondInitial: state.secondInitialTile
+  numbers: state.numbers
 })
 
 export default connect<any, any, any, any>(mapStateToProps, null)(Game)

@@ -1,7 +1,7 @@
 import styled, { keyframes, createGlobalStyle } from "styled-components"
 
 interface CellProps {
-  color: string
+  tileColor: number
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -123,7 +123,7 @@ export const Cell = styled.div<CellProps>`
   width: 110px;
   height: 110px;
   border-radius: 5%;
-  background-color: ${({ color }) => color};
+  background-color: ${({ tileColor }) => tileColor};
   font-size: 5rem;
   text-align: center;
   line-height: 110px;
