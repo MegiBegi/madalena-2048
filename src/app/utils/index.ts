@@ -13,13 +13,43 @@ const getAllPositions = () => {
 }
 
 const getRowFromPosition = (newPosition: number): number => {
-  if (newPosition <= ROWS_NUM) return 1
-  return Math.ceil(newPosition / ROWS_NUM)
+  if (newPosition <= 4) return 1
+  if (newPosition > 4 && newPosition <= 8) return 2
+  if (newPosition > 8 && newPosition <= 12) return 3
+  if (newPosition > 12 && newPosition <= 16) return 4
+  return 5
 }
 
 const getColFromPosition = (newPosition: number): number => {
-  if ((newPosition - 1) % COLS_NUM === 0) return 1
-  return newPosition % ROWS_NUM
+  if (
+    newPosition === 1 ||
+    newPosition === 5 ||
+    newPosition === 9 ||
+    newPosition === 13
+  )
+    return 1
+  if (
+    newPosition === 2 ||
+    newPosition === 6 ||
+    newPosition === 10 ||
+    newPosition === 14
+  )
+    return 2
+  if (
+    newPosition === 3 ||
+    newPosition === 7 ||
+    newPosition === 11 ||
+    newPosition === 15
+  )
+    return 3
+  if (
+    newPosition === 4 ||
+    newPosition === 8 ||
+    newPosition === 12 ||
+    newPosition === 16
+  )
+    return 4
+  return 5
 }
 
 const getRandomValue = (): number => {
@@ -41,22 +71,16 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
   }
 
   const newPosition =
-    emptyPlaces[Math.floor(Math.random() * emptyPlaces.length - 1)]
-  console.log("new position w get random num", newPosition)
+    emptyPlaces[Math.floor(Math.random() * emptyPlaces.length)]
 
   const row = getRowFromPosition(newPosition)
-  console.log(row)
   const col = getColFromPosition(newPosition)
-  console.log(col)
-
   const value = getRandomValue()
-
   const newRandomNumber: TileInfo = {
     row: row,
     col: col,
     value: value
   }
-
   return [...takenTiles, newRandomNumber]
 }
 export const createEmptyTilesGrid = (

@@ -1,8 +1,7 @@
 import styled, { keyframes, createGlobalStyle } from "styled-components"
-import { equals } from "ramda"
 
 interface CellProps {
-  tileColor?: string
+  tileColor: string
 }
 
 export const GlobalStyle = createGlobalStyle`

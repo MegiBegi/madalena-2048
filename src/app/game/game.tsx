@@ -27,17 +27,13 @@ interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ numbers }): ReactElement => {
   const updatedGrid = updateGrid(numbers)
-  const gridItems = updatedGrid.map(tile => {
-    return (
+  const gridItems: ReactElement[] = updatedGrid.map(
+    (tile: TileInfo): ReactElement => (
       <Cell key={`${tile.row} + ${tile.col}`} tileColor={getTileColor(tile)}>
         {tile.value !== 0 && tile.value}
       </Cell>
     )
-  })
-
-  console.log("numbers", numbers)
-  console.log("updatedGrid", updatedGrid)
-  console.log("griditesm", gridItems)
+  )
 
   const handleKeyPress = (): void => {}
   const componentDidMount = (): void => {
