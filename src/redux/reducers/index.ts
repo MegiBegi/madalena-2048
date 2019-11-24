@@ -20,8 +20,10 @@ const initialState: RootState = {
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
-    case NEW_GAME:
-      return { ...state, numbers: getRandomNumber([]) }
+    case NEW_GAME: {
+      const tilesWithFirstNumber = getRandomNumber([])
+      return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) }
+    }
     default:
       return state
   }

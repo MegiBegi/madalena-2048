@@ -38,6 +38,7 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
   const handleKeyPress = (): void => {}
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
+    dispatch(newGame())
   }
 
   const componentWillUnmount = (): void => {
