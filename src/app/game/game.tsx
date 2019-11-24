@@ -18,13 +18,7 @@ import {
   Cell
 } from "../styles"
 import { dispatch } from "../../redux/store"
-
-interface Grid {
-  row: number
-  col: number
-  isTwo?: boolean
-  isFour?: boolean
-}
+import { updateGrid, getTileColor } from "../utils"
 interface GameStateProps {
   numbers: TileInfo[]
 }
@@ -32,14 +26,15 @@ interface GameStateProps {
 interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ numbers }): ReactElement => {
-  const gridItems = numbers.map(number => {
+  const updatedGrid = updateGrid()
+  const gridItems = updatedGrid.map(tile => {
     return (
-      <Cell key={`${number.row} + ${number.col}`} tileColor={number.value}>
-        {number.value}
+      <Cell key={`${tile.row} + ${tile.col}`} tileColor={getTileColor(tile)}>
+        {tile.value != 0 && tile.value}
       </Cell>
     )
   })
-  console.log(numbers)
+
   const handleKeyPress = (): void => {}
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
