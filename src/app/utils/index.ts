@@ -1,6 +1,6 @@
 export const CELLS_NUMBER = 16
 export const ROWS_NUM = 4
-const COLS_NUM = CELLS_NUMBER / ROWS_NUM
+export const COLS_NUM = CELLS_NUMBER / ROWS_NUM
 
 const getAllPositions = () => {
   let positions: number[] = []
@@ -14,13 +14,11 @@ const getAllPositions = () => {
 
 const getRowFromPosition = (newPosition: number): number => {
   if (newPosition <= ROWS_NUM) return 1
-
   return Math.ceil(newPosition / ROWS_NUM)
 }
 
 const getColFromPosition = (newPosition: number): number => {
   if ((newPosition - 1) % COLS_NUM === 0) return 1
-
   return newPosition % ROWS_NUM
 }
 
@@ -44,9 +42,13 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
 
   const newPosition =
     emptyPlaces[Math.floor(Math.random() * emptyPlaces.length - 1)]
+  console.log("new position w get random num", newPosition)
 
   const row = getRowFromPosition(newPosition)
+  console.log(row)
   const col = getColFromPosition(newPosition)
+  console.log(col)
+
   const value = getRandomValue()
 
   const newRandomNumber: TileInfo = {
@@ -56,4 +58,52 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
   }
 
   return [...takenTiles, newRandomNumber]
+}
+export const createEmptyTilesGrid = (
+  rows: number,
+  cols: number
+): TileInfo[] => {
+  const emptyTilesGrid: TileInfo[] = []
+  let row: number = 1
+  for (row; row <= rows; row++) {
+    for (let col = 1; col <= cols; col++) {
+      emptyTilesGrid.push({
+        row: row,
+        col,
+        value: 0
+      })
+    }
+  }
+  return emptyTilesGrid
+}
+
+export const getTileColor = (tile: TileInfo): string => {
+  switch (tile.value) {
+    case 0:
+      return "#8b9ab3"
+    case 2:
+      return "#6b7585"
+    case 4:
+      return "#d5e317"
+    case 8:
+      return "#17e3c8"
+    case 16:
+      return "#70537a"
+    default:
+      return "#8b9ab3"
+  }
+}
+
+export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
+  const emptyGrid = createEmptyTilesGrid(4, 4)
+  const takenTiles = updates
+  const updatedGrid = emptyGrid.map(
+    (tile: TileInfo): TileInfo =>
+      takenTiles.find(
+        (takenTile: TileInfo): boolean =>
+          takenTile.row === tile.row && takenTile.col === tile.col
+      ) || tile
+  )
+
+  return updatedGrid
 }

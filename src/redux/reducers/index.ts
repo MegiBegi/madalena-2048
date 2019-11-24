@@ -1,5 +1,5 @@
 import { Actions, UPDATE_SCORE, NEW_GAME } from "../actions"
-import { getRandomNumber } from "../../app/utils/utils"
+import { getRandomNumber } from "../../app/utils"
 
 declare global {
   interface TileInfo {
@@ -14,14 +14,14 @@ export interface RootState {
 }
 
 const initialState: RootState = {
-  numbers: getRandomNumber([]),
+  numbers: [],
   isPlaying: true
 }
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
     case NEW_GAME:
-      return initialState
+      return { ...state, numbers: getRandomNumber([]) }
     default:
       return state
   }
