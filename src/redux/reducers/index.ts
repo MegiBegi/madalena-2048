@@ -24,9 +24,8 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       const tilesWithFirstNumber = getRandomNumber([])
       return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) }
     }
-    case MOVE_UP: {
+    case MOVE_UP:
       return { ...state, numbers: handleMoveUp(state.numbers) }
-    }
 
     default:
       return state

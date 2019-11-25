@@ -27,6 +27,7 @@ interface GameProps extends GameStateProps {}
 
 const Game: FC<GameProps> = ({ numbers }): ReactElement => {
   const updatedGrid = updateGrid(numbers)
+  console.log(numbers, "numbers")
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
       <Cell key={`${tile.row} + ${tile.col}`} tileColor={getTileColor(tile)}>
@@ -42,6 +43,7 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
         break
     }
   }
+
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
     dispatch(newGame())

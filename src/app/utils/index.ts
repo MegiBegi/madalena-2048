@@ -132,13 +132,30 @@ export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
   return updatedGrid
 }
 
-export const handleMoveUp = (currentGrid: TileInfo[]) => {
+export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
   const updatedGrid = updateGrid(currentGrid)
   console.log("currentGrid", currentGrid)
   console.log("updatedGrid", updatedGrid)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
-    return (tile = { row: tile.row - 1, col: tile.col, value: tile.value })
+    let oldRow = tile.row
+    let newRow
+    if (oldRow >= 2) {
+      newRow = oldRow - 1
+    } else {
+      newRow = oldRow
+    }
+
+    return (tile = { row: newRow, col: tile.col, value: tile.value })
   })
   console.log("reupdateGrid", reUpdatedGrid)
-  return reUpdatedGrid
+
+  const updatedNumbers: TileInfo[] = []
+  for (let tile = 0; tile < reUpdatedGrid.length; tile++) {
+    if (reUpdatedGrid[tile].value != 0) {
+      updatedNumbers.push(reUpdatedGrid[tile])
+    }
+  }
+  console.log("reupdateGrid", reUpdatedGrid)
+  console.log("updatedNumbers", updatedNumbers)
+  return updatedNumbers
 }
