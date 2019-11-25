@@ -131,3 +131,14 @@ export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
 
   return updatedGrid
 }
+
+export const handleMoveUp = (currentGrid: TileInfo[]) => {
+  const updatedGrid = updateGrid(currentGrid)
+  console.log("currentGrid", currentGrid)
+  console.log("updatedGrid", updatedGrid)
+  const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
+    return (tile = { row: tile.row - 1, col: tile.col, value: tile.value })
+  })
+  console.log("reupdateGrid", reUpdatedGrid)
+  return reUpdatedGrid
+}

@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react"
 import { connect } from "react-redux"
-import { newGame } from "../../redux/actions"
+import { newGame, moveUp } from "../../redux/actions"
 import { RootState } from "../../redux/reducers"
 import {
   MainContainer,
@@ -35,7 +35,13 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
     )
   )
 
-  const handleKeyPress = (): void => {}
+  const handleKeyPress = (e: any): void => {
+    switch (e.keyCode) {
+      case 38:
+        dispatch(moveUp())
+        break
+    }
+  }
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
     dispatch(newGame())
