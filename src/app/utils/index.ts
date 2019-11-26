@@ -1,3 +1,4 @@
+import { includes, sortBy } from "ramda"
 export const CELLS_NUMBER = 16
 export const ROWS_NUM = 4
 export const COLS_NUM = CELLS_NUMBER / ROWS_NUM
@@ -140,14 +141,20 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
     let oldRow = tile.row
     let newRow
     if (oldRow >= 2) {
-      newRow = oldRow - 1
+      if (oldRow === 2) {
+        newRow = oldRow - 1
+      } else if (oldRow === 3) {
+        newRow = oldRow - 2
+      } else {
+        newRow = oldRow - 3
+      }
     } else {
       newRow = oldRow
     }
 
     return (tile = { row: newRow, col: tile.col, value: tile.value })
   })
-  console.log("reupdateGrid", reUpdatedGrid)
+  console.log("reUpdatedGrid", reUpdatedGrid)
 
   const updatedNumbers: TileInfo[] = []
   for (let tile = 0; tile < reUpdatedGrid.length; tile++) {
@@ -155,7 +162,7 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
       updatedNumbers.push(reUpdatedGrid[tile])
     }
   }
-  console.log("reupdateGrid", reUpdatedGrid)
+
   console.log("updatedNumbers", updatedNumbers)
   return updatedNumbers
 }
