@@ -60,9 +60,37 @@ const getRandomValue = (): number => {
 }
 
 export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
-  let places = getAllPositions()
-  const takenPlaces =
-    takenTiles.length === 0 ? [] : takenTiles.map(tile => tile.row * tile.col)
+  let places: number[] = getAllPositions()
+  const debug = takenTiles.map((tile: TileInfo): number => {
+    if (tile.row === 1) {
+      if (tile.col === 1) return 1
+      if (tile.col === 2) return 2
+      if (tile.col === 3) return 3
+      if (tile.col === 4) return 4
+    }
+    if (tile.row === 2) {
+      if (tile.col === 1) return 5
+      if (tile.col === 2) return 6
+      if (tile.col === 3) return 7
+      if (tile.col === 4) return 8
+    }
+    if (tile.row === 3) {
+      if (tile.col === 1) return 9
+      if (tile.col === 2) return 10
+      if (tile.col === 3) return 11
+      if (tile.col === 4) return 12
+    } else if (tile.row === 4) {
+      if (tile.col === 1) return 13
+      if (tile.col === 2) return 14
+      if (tile.col === 3) return 15
+      if (tile.col === 4) return 16
+    }
+    return 90
+  })
+  let takenPlaces: number[]
+  takenPlaces = takenTiles.length === 0 ? [] : debug
+  console.log("takenTiles", takenTiles)
+  console.log("takenPlaces", takenPlaces)
   let emptyPlaces = []
 
   for (let place of places) {
@@ -70,6 +98,7 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
       emptyPlaces.push(place)
     }
   }
+  console.log("emptyPlaces", emptyPlaces)
 
   const newPosition =
     emptyPlaces[Math.floor(Math.random() * emptyPlaces.length)]
