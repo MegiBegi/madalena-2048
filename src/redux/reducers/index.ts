@@ -1,9 +1,17 @@
-import { Actions, MOVE_UP, NEW_GAME, MOVE_DOWN, MOVE_LEFT } from "../actions"
+import {
+  Actions,
+  MOVE_UP,
+  NEW_GAME,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT
+} from "../actions"
 import {
   getRandomNumber,
   handleMoveUp,
   handleMoveDown,
-  handleMoveLeft
+  handleMoveLeft,
+  handleMoveRight
 } from "../../app/utils"
 
 declare global {
@@ -38,6 +46,9 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
 
     case MOVE_LEFT:
       return { ...state, numbers: handleMoveLeft(state.numbers) }
+
+    case MOVE_RIGHT:
+      return { ...state, numbers: handleMoveRight(state.numbers) }
 
     default:
       return state

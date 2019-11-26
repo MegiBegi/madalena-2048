@@ -1,6 +1,12 @@
 import React, { FC, ReactElement, useEffect } from "react"
 import { connect } from "react-redux"
-import { newGame, moveUp, moveDown, moveLeft } from "../../redux/actions"
+import {
+  newGame,
+  moveUp,
+  moveDown,
+  moveLeft,
+  moveRight
+} from "../../redux/actions"
 import { RootState } from "../../redux/reducers"
 import {
   MainContainer,
@@ -17,6 +23,14 @@ import {
   Grid,
   Cell
 } from "../styles"
+import {
+  Actions,
+  MOVE_UP,
+  NEW_GAME,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT
+} from "../../redux/actions"
 import { dispatch } from "../../redux/store"
 import { updateGrid, getTileColor } from "../utils"
 interface GameStateProps {
@@ -44,6 +58,10 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
 
       case 38:
         dispatch(moveUp())
+        break
+
+      case 39:
+        dispatch(moveRight())
         break
 
       case 40:
@@ -108,4 +126,23 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers
 })
 
-export default connect<any, any, any, any>(mapStateToProps, null)(Game)
+interface AllActions {
+  MOVE_UP: Actions
+  NEW_GAME: Actions
+  MOVE_DOWN: Actions
+  MOVE_LEFT: Actions
+  MOVE_RIGHT: Actions
+}
+
+const mapDispatchToProps = {
+  MOVE_UP,
+  NEW_GAME,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT
+}
+
+export default connect<GameStateProps, any, any, any>(
+  mapStateToProps,
+  mapDispatchToProps
+)(Game)
