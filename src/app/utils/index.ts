@@ -1,4 +1,4 @@
-import { includes, sortBy } from "ramda"
+import { includes, sortBy, drop } from "ramda"
 export const CELLS_NUMBER = 16
 export const ROWS_NUM = 4
 export const COLS_NUM = CELLS_NUMBER / ROWS_NUM
@@ -156,12 +156,33 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
   })
   console.log("reUpdatedGrid", reUpdatedGrid)
 
-  const updatedNumbers: TileInfo[] = []
-  for (let tile = 0; tile < reUpdatedGrid.length; tile++) {
-    if (reUpdatedGrid[tile].value != 0) {
-      updatedNumbers.push(reUpdatedGrid[tile])
+  const tilesWithPosVal: TileInfo[] = []
+  for (let i = 0; i < reUpdatedGrid.length; i++) {
+    if (reUpdatedGrid[i].value !== 0) {
+      tilesWithPosVal.push(reUpdatedGrid[i])
     }
   }
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  let newArray: TileInfo[] = []
+  const tileOne = tilesWithPosVal[1]
 
-  return updatedNumbers
+  if (
+    tilesWithPosVal[0].row === tilesWithPosVal[1].row &&
+    tilesWithPosVal[0].col === tilesWithPosVal[1].col &&
+    tilesWithPosVal[0].value === tilesWithPosVal[1].value
+  ) {
+    newArray.push({ ...tileOne, value: tileOne.value * 2 })
+  } else if (
+    tilesWithPosVal[0].row === tilesWithPosVal[1].row &&
+    tilesWithPosVal[0].col === tilesWithPosVal[1].col &&
+    tilesWithPosVal[0].value !== tilesWithPosVal[1].value
+  ) {
+    newArray.push(tilesWithPosVal[0], { ...tileOne, row: tileOne.row + 1 })
+  } else {
+    newArray = tilesWithPosVal
+  }
+
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("newArray", newArray)
+  return newArray
 }
