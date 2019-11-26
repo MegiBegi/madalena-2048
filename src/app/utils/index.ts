@@ -191,3 +191,121 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
   console.log("newArray", newArray)
   return newArray
 }
+
+export const handleMoveDown = (currentGrid: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(currentGrid)
+  const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
+    if (tile.value !== 0) {
+      let oldRow = tile.row
+      let newRow
+      if (oldRow <= 3) {
+        if (oldRow === 3) {
+          newRow = oldRow + 1
+        } else if (oldRow === 2) {
+          newRow = oldRow + 2
+        } else {
+          newRow = oldRow + 3
+        }
+      } else {
+        newRow = oldRow
+      }
+
+      return (tile = { row: newRow, col: tile.col, value: tile.value })
+    } else return tile
+  })
+  console.log("reUpdatedGrid", reUpdatedGrid)
+
+  const tilesWithPosVal: TileInfo[] = []
+  for (let i = 0; i < reUpdatedGrid.length; i++) {
+    if (reUpdatedGrid[i].value !== 0) {
+      tilesWithPosVal.push(reUpdatedGrid[i])
+    }
+  }
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  let newArray: TileInfo[] = []
+  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    if (
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+    ) {
+      newArray.push({
+        ...tilesWithPosVal[1],
+        value: tilesWithPosVal[1].value * 2
+      })
+    } else if (
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+    ) {
+      newArray.push(tilesWithPosVal[i + 1], {
+        ...tilesWithPosVal[i],
+        row: tilesWithPosVal[i].row - 1
+      })
+    } else {
+      newArray = tilesWithPosVal
+    }
+  }
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("newArray", newArray)
+  return newArray
+}
+
+export const handleMoveLeft = (currentGrid: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(currentGrid)
+  const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
+    if (tile.value !== 0) {
+      let oldCol = tile.col
+      let newCol
+      if (oldCol >= 2) {
+        if (oldCol === 2) {
+          newCol = oldCol - 1
+        } else if (oldCol === 3) {
+          newCol = oldCol - 2
+        } else {
+          newCol = oldCol - 3
+        }
+      } else {
+        newCol = oldCol
+      }
+
+      return (tile = { row: tile.row, col: newCol, value: tile.value })
+    } else return tile
+  })
+  console.log("reUpdatedGrid", reUpdatedGrid)
+
+  const tilesWithPosVal: TileInfo[] = []
+  for (let i = 0; i < reUpdatedGrid.length; i++) {
+    if (reUpdatedGrid[i].value !== 0) {
+      tilesWithPosVal.push(reUpdatedGrid[i])
+    }
+  }
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  let newArray: TileInfo[] = []
+  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    if (
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+    ) {
+      newArray.push({
+        ...tilesWithPosVal[1],
+        value: tilesWithPosVal[1].value * 2
+      })
+    } else if (
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+    ) {
+      newArray.push(tilesWithPosVal[i], {
+        ...tilesWithPosVal[i + 1],
+        col: tilesWithPosVal[i + 1].col + 1
+      })
+    } else {
+      newArray = tilesWithPosVal
+    }
+  }
+  console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("newArray", newArray)
+  return newArray
+}

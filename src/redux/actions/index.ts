@@ -1,6 +1,8 @@
 export const UPDATE_SCORE = "UPDATE SCORE"
 export const NEW_GAME = "RESET GAME"
 export const MOVE_UP = "MOVE UP"
+export const MOVE_DOWN = "MOVE DOWN"
+export const MOVE_LEFT = "MOVE LEFT"
 
 interface UpdateScore {
   type: "UPDATE SCORE"
@@ -9,12 +11,19 @@ interface UpdateScore {
 interface NewGame {
   type: "RESET GAME"
 }
-
 interface MoveUp {
   type: "MOVE UP"
 }
 
-export type Actions = UpdateScore | NewGame | MoveUp
+interface MoveDown {
+  type: "MOVE DOWN"
+}
+
+interface MoveLeft {
+  type: "MOVE LEFT"
+}
+
+export type Actions = UpdateScore | NewGame | MoveUp | MoveDown | MoveLeft
 
 export const updateScore = (): UpdateScore => ({
   type: UPDATE_SCORE
@@ -26,4 +35,12 @@ export const newGame = (): NewGame => ({
 
 export const moveUp = (): MoveUp => ({
   type: MOVE_UP
+})
+
+export const moveDown = (): MoveDown => ({
+  type: MOVE_DOWN
+})
+
+export const moveLeft = (): MoveLeft => ({
+  type: MOVE_LEFT
 })

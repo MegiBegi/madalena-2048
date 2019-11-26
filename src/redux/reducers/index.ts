@@ -1,5 +1,10 @@
-import { Actions, MOVE_UP, NEW_GAME } from "../actions"
-import { getRandomNumber, handleMoveUp } from "../../app/utils"
+import { Actions, MOVE_UP, NEW_GAME, MOVE_DOWN, MOVE_LEFT } from "../actions"
+import {
+  getRandomNumber,
+  handleMoveUp,
+  handleMoveDown,
+  handleMoveLeft
+} from "../../app/utils"
 
 declare global {
   interface TileInfo {
@@ -22,10 +27,17 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
     case NEW_GAME: {
       const tilesWithFirstNumber = getRandomNumber([])
+      //here is a bag as sometimes only one number is picked
       return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) }
     }
     case MOVE_UP:
       return { ...state, numbers: handleMoveUp(state.numbers) }
+
+    case MOVE_DOWN:
+      return { ...state, numbers: handleMoveDown(state.numbers) }
+
+    case MOVE_LEFT:
+      return { ...state, numbers: handleMoveLeft(state.numbers) }
 
     default:
       return state
