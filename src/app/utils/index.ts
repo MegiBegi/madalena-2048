@@ -193,27 +193,31 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
   let newArray: TileInfo[] = []
-  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
-    if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push({
-        ...tilesWithPosVal[1],
-        value: tilesWithPosVal[1].value * 2
-      })
-    } else if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push(tilesWithPosVal[i], {
-        ...tilesWithPosVal[i + 1],
-        row: tilesWithPosVal[i + 1].row + 1
-      })
-    } else {
-      newArray = tilesWithPosVal
+  if (tilesWithPosVal.length === 1) {
+    newArray.push(tilesWithPosVal[0])
+  } else {
+    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+      if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push({
+          ...tilesWithPosVal[1],
+          value: tilesWithPosVal[1].value * 2
+        })
+      } else if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push(tilesWithPosVal[i], {
+          ...tilesWithPosVal[i + 1],
+          row: tilesWithPosVal[i + 1].row + 1
+        })
+      } else {
+        newArray = tilesWithPosVal
+      }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
@@ -252,27 +256,31 @@ export const handleMoveDown = (currentGrid: TileInfo[]): TileInfo[] => {
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
   let newArray: TileInfo[] = []
-  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
-    if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push({
-        ...tilesWithPosVal[1],
-        value: tilesWithPosVal[1].value * 2
-      })
-    } else if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push(tilesWithPosVal[i + 1], {
-        ...tilesWithPosVal[i],
-        row: tilesWithPosVal[i].row - 1
-      })
-    } else {
-      newArray = tilesWithPosVal
+  if (tilesWithPosVal.length === 1) {
+    newArray.push(tilesWithPosVal[0])
+  } else {
+    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+      if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push({
+          ...tilesWithPosVal[1],
+          value: tilesWithPosVal[1].value * 2
+        })
+      } else if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
+        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push(tilesWithPosVal[i + 1], {
+          ...tilesWithPosVal[i],
+          row: tilesWithPosVal[i].row - 1
+        })
+      } else {
+        newArray = tilesWithPosVal
+      }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
@@ -311,27 +319,31 @@ export const handleMoveLeft = (currentGrid: TileInfo[]): TileInfo[] => {
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
   let newArray: TileInfo[] = []
-  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
-    if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push({
-        ...tilesWithPosVal[1],
-        value: tilesWithPosVal[1].value * 2
-      })
-    } else if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push(tilesWithPosVal[i], {
-        ...tilesWithPosVal[i + 1],
-        col: tilesWithPosVal[i + 1].col + 1
-      })
-    } else {
-      newArray = tilesWithPosVal
+  if (tilesWithPosVal.length === 1) {
+    newArray.push(tilesWithPosVal[0])
+  } else {
+    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+      if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push({
+          ...tilesWithPosVal[1],
+          value: tilesWithPosVal[1].value * 2
+        })
+      } else if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push(tilesWithPosVal[i], {
+          ...tilesWithPosVal[i + 1],
+          col: tilesWithPosVal[i + 1].col + 1
+        })
+      } else {
+        newArray = tilesWithPosVal
+      }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
@@ -370,27 +382,31 @@ export const handleMoveRight = (currentGrid: TileInfo[]): TileInfo[] => {
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
   let newArray: TileInfo[] = []
-  for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
-    if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push({
-        ...tilesWithPosVal[1],
-        value: tilesWithPosVal[1].value * 2
-      })
-    } else if (
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-      tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
-    ) {
-      newArray.push(tilesWithPosVal[i + 1], {
-        ...tilesWithPosVal[i],
-        col: tilesWithPosVal[i].col - 1
-      })
-    } else {
-      newArray = tilesWithPosVal
+  if (tilesWithPosVal.length === 1) {
+    newArray.push(tilesWithPosVal[0])
+  } else {
+    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+      if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push({
+          ...tilesWithPosVal[1],
+          value: tilesWithPosVal[1].value * 2
+        })
+      } else if (
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
+        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+      ) {
+        newArray.push(tilesWithPosVal[i + 1], {
+          ...tilesWithPosVal[i],
+          col: tilesWithPosVal[i].col - 1
+        })
+      } else {
+        newArray = tilesWithPosVal
+      }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)

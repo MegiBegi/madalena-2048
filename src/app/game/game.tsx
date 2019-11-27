@@ -23,7 +23,6 @@ import {
   Grid,
   Cell
 } from "../styles"
-import { dispatch } from "../../redux/store"
 import { updateGrid, getTileColor } from "../utils"
 interface GameStateProps {
   numbers: TileInfo[]
