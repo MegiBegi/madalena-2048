@@ -1,4 +1,3 @@
-import { includes, sortBy, drop } from "ramda"
 export const CELLS_NUMBER = 16
 export const ROWS_NUM = 4
 export const COLS_NUM = CELLS_NUMBER / ROWS_NUM
@@ -61,7 +60,7 @@ const getRandomValue = (): number => {
 
 export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
   let places: number[] = getAllPositions()
-  const debug = takenTiles.map((tile: TileInfo): number => {
+  const mapTakenPlaces = takenTiles.map((tile: TileInfo): number => {
     if (tile.row === 1) {
       if (tile.col === 1) return 1
       if (tile.col === 2) return 2
@@ -88,7 +87,7 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
     return 90
   })
   let takenPlaces: number[]
-  takenPlaces = takenTiles.length === 0 ? [] : debug
+  takenPlaces = takenTiles.length === 0 ? [] : mapTakenPlaces
   console.log("takenTiles", takenTiles)
   console.log("takenPlaces", takenPlaces)
   let emptyPlaces = []
@@ -162,8 +161,8 @@ export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
   return updatedGrid
 }
 
-export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(currentGrid)
+export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(takenTiles)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
     if (tile.value !== 0) {
       let oldRow = tile.row
@@ -225,8 +224,8 @@ export const handleMoveUp = (currentGrid: TileInfo[]): TileInfo[] => {
   return newArray
 }
 
-export const handleMoveDown = (currentGrid: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(currentGrid)
+export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(takenTiles)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
     if (tile.value !== 0) {
       let oldRow = tile.row
@@ -288,8 +287,8 @@ export const handleMoveDown = (currentGrid: TileInfo[]): TileInfo[] => {
   return newArray
 }
 
-export const handleMoveLeft = (currentGrid: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(currentGrid)
+export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(takenTiles)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
     if (tile.value !== 0) {
       let oldCol = tile.col
@@ -351,8 +350,8 @@ export const handleMoveLeft = (currentGrid: TileInfo[]): TileInfo[] => {
   return newArray
 }
 
-export const handleMoveRight = (currentGrid: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(currentGrid)
+export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
+  const updatedGrid = updateGrid(takenTiles)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
     if (tile.value !== 0) {
       let oldCol = tile.col

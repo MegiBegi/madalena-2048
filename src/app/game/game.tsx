@@ -5,7 +5,8 @@ import {
   moveUp,
   moveDown,
   moveLeft,
-  moveRight
+  moveRight,
+  newRound
 } from "../../redux/actions"
 import { RootState } from "../../redux/reducers"
 import {
@@ -37,7 +38,8 @@ const Game: FC<GameProps> = ({
   moveUp,
   moveDown,
   moveLeft,
-  moveRight
+  moveRight,
+  newRound
 }): ReactElement => {
   const updatedGrid: TileInfo[] = updateGrid(numbers)
   console.log(numbers, "numbers")
@@ -132,6 +134,7 @@ interface DispatchProps {
   moveDown: () => void
   moveLeft: () => void
   moveRight: () => void
+  newRound: () => void
 }
 
 const mapDispatchToProps: DispatchProps = {
@@ -139,7 +142,8 @@ const mapDispatchToProps: DispatchProps = {
   newGame: newGame,
   moveDown: moveDown,
   moveLeft: moveLeft,
-  moveRight: moveRight
+  moveRight: moveRight,
+  newRound: newRound
 }
 
 export default connect<GameStateProps, any, any, any>(
