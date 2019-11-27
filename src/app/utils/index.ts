@@ -161,6 +161,23 @@ export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
   return updatedGrid
 }
 
+export const sortList = (list: TileInfo[]): TileInfo[] => {
+  const sortedList: TileInfo[] = list.sort((a, b) =>
+    a.value > b.value
+      ? 1
+      : a.value === b.value
+      ? a.row > b.row
+        ? 1
+        : a.row === b.row
+        ? a.col > b.col
+          ? 1
+          : -1
+        : -1
+      : -1
+  )
+  return sortedList
+}
+
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
   const updatedGrid = updateGrid(takenTiles)
   const reUpdatedGrid = updatedGrid.map((tile: TileInfo) => {
@@ -195,31 +212,33 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
   if (tilesWithPosVal.length === 1) {
     newArray.push(tilesWithPosVal[0])
   } else {
-    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    const sortedList = sortList(tilesWithPosVal)
+    for (let i = 0; i < sortedList.length - 1; i++) {
       if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].col === sortedList[i + 1].col &&
+        sortedList[i].value === sortedList[i + 1].value
       ) {
         newArray.push({
-          ...tilesWithPosVal[1],
-          value: tilesWithPosVal[1].value * 2
+          ...sortedList[1],
+          value: sortedList[1].value * 2
         })
       } else if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].col === sortedList[i + 1].col &&
+        sortedList[i].value !== sortedList[i + 1].value
       ) {
-        newArray.push(tilesWithPosVal[i], {
-          ...tilesWithPosVal[i + 1],
-          row: tilesWithPosVal[i + 1].row + 1
+        newArray.push(sortedList[i], {
+          ...sortedList[i + 1],
+          row: sortedList[i + 1].row + 1
         })
       } else {
-        newArray = tilesWithPosVal
+        newArray = sortedList
       }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("sortedList", sortList(tilesWithPosVal))
   console.log("newArray", newArray)
   return newArray
 }
@@ -258,31 +277,35 @@ export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
   if (tilesWithPosVal.length === 1) {
     newArray.push(tilesWithPosVal[0])
   } else {
-    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    const sortedList = sortList(tilesWithPosVal)
+
+    for (let i = 0; i < sortedList.length - 1; i++) {
       if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].col === sortedList[i + 1].col &&
+        sortedList[i].value === sortedList[i + 1].value
       ) {
         newArray.push({
-          ...tilesWithPosVal[1],
-          value: tilesWithPosVal[1].value * 2
+          ...sortedList[1],
+          value: sortedList[1].value * 2
         })
       } else if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].col === tilesWithPosVal[i + 1].col &&
-        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].col === sortedList[i + 1].col &&
+        sortedList[i].value !== sortedList[i + 1].value
       ) {
-        newArray.push(tilesWithPosVal[i + 1], {
-          ...tilesWithPosVal[i],
-          row: tilesWithPosVal[i].row - 1
+        newArray.push(sortedList[i + 1], {
+          ...sortedList[i],
+          row: sortedList[i].row - 1
         })
       } else {
-        newArray = tilesWithPosVal
+        newArray = sortedList
       }
     }
   }
-  console.log("tilesWithPosVal", tilesWithPosVal)
+
+  console.log("tileswithposval", tilesWithPosVal)
+  console.log("sortedList", sortList(tilesWithPosVal))
   console.log("newArray", newArray)
   return newArray
 }
@@ -321,31 +344,34 @@ export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
   if (tilesWithPosVal.length === 1) {
     newArray.push(tilesWithPosVal[0])
   } else {
-    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    const sortedList = sortList(tilesWithPosVal)
+
+    for (let i = 0; i < sortedList.length - 1; i++) {
       if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].value === sortedList[i + 1].value
       ) {
         newArray.push({
-          ...tilesWithPosVal[1],
-          value: tilesWithPosVal[1].value * 2
+          ...sortedList[1],
+          value: sortedList[1].value * 2
         })
       } else if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].value !== sortedList[i + 1].value
       ) {
-        newArray.push(tilesWithPosVal[i], {
-          ...tilesWithPosVal[i + 1],
-          col: tilesWithPosVal[i + 1].col + 1
+        newArray.push(sortedList[i], {
+          ...sortedList[i + 1],
+          col: sortedList[i + 1].col + 1
         })
       } else {
-        newArray = tilesWithPosVal
+        newArray = sortedList
       }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("sortedList", sortList(tilesWithPosVal))
   console.log("newArray", newArray)
   return newArray
 }
@@ -384,38 +410,34 @@ export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
   if (tilesWithPosVal.length === 1) {
     newArray.push(tilesWithPosVal[0])
   } else {
-    for (let i = 0; i < tilesWithPosVal.length - 1; i++) {
+    const sortedList = sortList(tilesWithPosVal)
+
+    for (let i = 0; i < sortedList.length - 1; i++) {
       if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].value === tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].value === sortedList[i + 1].value
       ) {
         newArray.push({
-          ...tilesWithPosVal[1],
-          value: tilesWithPosVal[1].value * 2
+          ...sortedList[1],
+          value: sortedList[1].value * 2
         })
       } else if (
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].row === tilesWithPosVal[i + 1].row &&
-        tilesWithPosVal[i].value !== tilesWithPosVal[i + 1].value
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].row === sortedList[i + 1].row &&
+        sortedList[i].value !== sortedList[i + 1].value
       ) {
-        newArray.push(tilesWithPosVal[i + 1], {
-          ...tilesWithPosVal[i],
-          col: tilesWithPosVal[i].col - 1
+        newArray.push(sortedList[i + 1], {
+          ...sortedList[i],
+          col: sortedList[i].col - 1
         })
       } else {
-        newArray = tilesWithPosVal
+        newArray = sortedList
       }
     }
   }
   console.log("tilesWithPosVal", tilesWithPosVal)
+  console.log("sortedList", sortList(tilesWithPosVal))
   console.log("newArray", newArray)
   return newArray
-}
-
-export const toObject = (list: TileInfo[]) => {
-  list.sort((a, b) =>
-    a.row > b.row ? 1 : a.row === b.row ? (a.col > b.col ? 1 : -1) : -1
-  )
-  console.log(list)
 }

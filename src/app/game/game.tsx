@@ -24,7 +24,7 @@ import {
   Grid,
   Cell
 } from "../styles"
-import { updateGrid, getTileColor, toObject } from "../utils"
+import { updateGrid, getTileColor } from "../utils"
 interface GameStateProps {
   numbers: TileInfo[]
 }
