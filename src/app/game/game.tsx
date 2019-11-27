@@ -48,6 +48,8 @@ const Game: FC<GameProps> = ({
       </Cell>
     )
   )
+
+  // just to check the new branch
   const handleKeyPress = (e: any): void => {
     switch (e.keyCode) {
       case 37:
