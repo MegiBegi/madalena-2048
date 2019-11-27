@@ -33,11 +33,10 @@ const initialState: RootState = {
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
-    case NEW_GAME: {
+    case NEW_GAME:
       const tilesWithFirstNumber = getRandomNumber([])
-      //here is a bag as sometimes only one number is picked
       return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) }
-    }
+
     case MOVE_UP:
       return { ...state, numbers: handleMoveUp(state.numbers) }
 

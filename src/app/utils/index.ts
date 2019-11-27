@@ -59,7 +59,7 @@ const getRandomValue = (): number => {
   return possibleRandomValues[randomIndex]
 }
 
-export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
+export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] => {
   let places: number[] = getAllPositions()
   const debug = takenTiles.map((tile: TileInfo): number => {
     if (tile.row === 1) {
@@ -100,7 +100,7 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] | [] => {
   }
   console.log("emptyPlaces", emptyPlaces)
 
-  const newPosition =
+  const newPosition: number =
     emptyPlaces[Math.floor(Math.random() * emptyPlaces.length)]
 
   const row = getRowFromPosition(newPosition)
@@ -149,9 +149,10 @@ export const getTileColor = (tile: TileInfo): string => {
 }
 
 export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
-  const emptyGrid = createEmptyTilesGrid(4, 4)
-  const takenTiles = updates
-  const updatedGrid = emptyGrid.map(
+  const emptyGrid: TileInfo[] = createEmptyTilesGrid(4, 4)
+  const takenTiles: TileInfo[] = updates
+  console.log("takentiles", takenTiles)
+  const updatedGrid: TileInfo[] = emptyGrid.map(
     (tile: TileInfo): TileInfo =>
       takenTiles.find(
         (takenTile: TileInfo): boolean =>
