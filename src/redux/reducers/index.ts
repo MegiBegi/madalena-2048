@@ -4,7 +4,8 @@ import {
   NEW_GAME,
   MOVE_DOWN,
   MOVE_LEFT,
-  MOVE_RIGHT
+  MOVE_RIGHT,
+  NEW_ROUND
 } from "../actions"
 import {
   getRandomNumber,
@@ -33,11 +34,10 @@ const initialState: RootState = {
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
-    case NEW_GAME: {
+    case NEW_GAME:
       const tilesWithFirstNumber = getRandomNumber([])
-      //here is a bag as sometimes only one number is picked
       return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) }
-    }
+
     case MOVE_UP:
       return { ...state, numbers: handleMoveUp(state.numbers) }
 
@@ -50,6 +50,9 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
     case MOVE_RIGHT:
       return { ...state, numbers: handleMoveRight(state.numbers) }
 
+    case NEW_ROUND:
+      console.log("this is new round")
+      return { ...state, numbers: getRandomNumber(state.numbers) }
     default:
       return state
   }

@@ -24,7 +24,7 @@ import {
   Grid,
   Cell
 } from "../styles"
-import { updateGrid, getTileColor } from "../utils"
+import { updateGrid, getTileColor, toObject } from "../utils"
 interface GameStateProps {
   numbers: TileInfo[]
 }
@@ -51,11 +51,11 @@ const Game: FC<GameProps> = ({
     )
   )
 
-  // just to check the new branch
   const handleKeyPress = (e: any): void => {
     switch (e.keyCode) {
       case 37:
         moveLeft()
+        newRound()
         break
 
       case 38:

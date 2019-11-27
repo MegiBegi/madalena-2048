@@ -412,3 +412,10 @@ export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
   console.log("newArray", newArray)
   return newArray
 }
+
+export const toObject = (list: TileInfo[]) => {
+  list.sort((a, b) =>
+    a.row > b.row ? 1 : a.row === b.row ? (a.col > b.col ? 1 : -1) : -1
+  )
+  console.log(list)
+}
