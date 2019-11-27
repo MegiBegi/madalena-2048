@@ -23,14 +23,6 @@ import {
   Grid,
   Cell
 } from "../styles"
-import {
-  Actions,
-  MOVE_UP,
-  NEW_GAME,
-  MOVE_DOWN,
-  MOVE_LEFT,
-  MOVE_RIGHT
-} from "../../redux/actions"
 import { dispatch } from "../../redux/store"
 import { updateGrid, getTileColor } from "../utils"
 interface GameStateProps {
@@ -38,9 +30,17 @@ interface GameStateProps {
 }
 
 interface GameProps extends GameStateProps {}
+interface GameProps extends DispatchProps {}
 
-const Game: FC<GameProps> = ({ numbers }): ReactElement => {
-  const updatedGrid = updateGrid(numbers)
+const Game: FC<GameProps> = ({
+  numbers,
+  newGame,
+  moveUp,
+  moveDown,
+  moveLeft,
+  moveRight
+}): ReactElement => {
+  const updatedGrid: TileInfo[] = updateGrid(numbers)
   console.log(numbers, "numbers")
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
@@ -49,30 +49,29 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
       </Cell>
     )
   )
-
   const handleKeyPress = (e: any): void => {
     switch (e.keyCode) {
       case 37:
-        dispatch(moveLeft())
+        moveLeft()
         break
 
       case 38:
-        dispatch(moveUp())
+        moveUp()
         break
 
       case 39:
-        dispatch(moveRight())
+        moveRight()
         break
 
       case 40:
-        dispatch(moveDown())
+        moveDown()
         break
     }
   }
 
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress)
-    dispatch(newGame())
+    newGame()
   }
 
   const componentWillUnmount = (): void => {
@@ -80,7 +79,7 @@ const Game: FC<GameProps> = ({ numbers }): ReactElement => {
   }
 
   const handleOnClick = (): void => {
-    dispatch(newGame())
+    newGame()
   }
 
   useEffect(() => {
@@ -126,20 +125,20 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers
 })
 
-interface AllActions {
-  MOVE_UP: Actions
-  NEW_GAME: Actions
-  MOVE_DOWN: Actions
-  MOVE_LEFT: Actions
-  MOVE_RIGHT: Actions
+interface DispatchProps {
+  newGame: () => void
+  moveUp: () => void
+  moveDown: () => void
+  moveLeft: () => void
+  moveRight: () => void
 }
 
-const mapDispatchToProps = {
-  MOVE_UP,
-  NEW_GAME,
-  MOVE_DOWN,
-  MOVE_LEFT,
-  MOVE_RIGHT
+const mapDispatchToProps: DispatchProps = {
+  moveUp: moveUp,
+  newGame: newGame,
+  moveDown: moveDown,
+  moveLeft: moveLeft,
+  moveRight: moveRight
 }
 
 export default connect<GameStateProps, any, any, any>(
