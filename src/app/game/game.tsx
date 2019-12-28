@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useEffect } from "react"
-import { connect } from "react-redux"
+import React, { FC, ReactElement, useEffect } from "react";
+import { connect } from "react-redux";
 import {
   newGame,
   moveUp,
@@ -7,8 +7,8 @@ import {
   moveLeft,
   moveRight,
   newRound
-} from "../../redux/actions"
-import { RootState } from "../../redux/reducers"
+} from "../../redux/actions";
+import { RootState } from "../../redux/reducers";
 import {
   MainContainer,
   GameWrapper,
@@ -23,10 +23,10 @@ import {
   Paragraph,
   Grid,
   Cell
-} from "../styles"
-import { updateGrid, getTileColor } from "../utils"
+} from "../styles";
+import { updateGrid, getTileColor } from "../utils";
 interface GameStateProps {
-  numbers: TileInfo[]
+  numbers: TileInfo[];
 }
 
 interface GameProps extends GameStateProps {}
@@ -41,54 +41,54 @@ const Game: FC<GameProps> = ({
   moveRight,
   newRound
 }): ReactElement => {
-  const updatedGrid: TileInfo[] = updateGrid(numbers)
-  console.log(numbers, "numbers")
+  const updatedGrid: TileInfo[] = updateGrid(numbers);
+  console.log(numbers, "numbers");
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
-      <Cell key={`${tile.row} + ${tile.col}`} tileColor={getTileColor(tile)}>
+      <Cell key={tile.position} tileColor={getTileColor(tile)}>
         {tile.value !== 0 && tile.value}
       </Cell>
     )
-  )
+  );
 
   const handleKeyPress = (e: any): void => {
     switch (e.keyCode) {
       case 37:
-        moveLeft()
-        newRound()
-        break
+        moveLeft();
+        newRound();
+        break;
 
       case 38:
-        moveUp()
-        break
+        moveUp();
+        break;
 
       case 39:
-        moveRight()
-        break
+        moveRight();
+        break;
 
       case 40:
-        moveDown()
-        break
+        moveDown();
+        break;
     }
-  }
+  };
 
   const componentDidMount = (): void => {
-    document.addEventListener("keydown", handleKeyPress)
-    newGame()
-  }
+    document.addEventListener("keydown", handleKeyPress);
+    newGame();
+  };
 
   const componentWillUnmount = (): void => {
-    document.removeEventListener("keydown", handleKeyPress)
-  }
+    document.removeEventListener("keydown", handleKeyPress);
+  };
 
   const handleOnClick = (): void => {
-    newGame()
-  }
+    newGame();
+  };
 
   useEffect(() => {
-    componentDidMount()
-    return componentWillUnmount
-  }, [])
+    componentDidMount();
+    return componentWillUnmount;
+  }, []);
   return (
     <MainContainer>
       <GameWrapper>
@@ -121,20 +121,20 @@ const Game: FC<GameProps> = ({
         <Footer>Visit my website</Footer>
       </GameWrapper>
     </MainContainer>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers
-})
+});
 
 interface DispatchProps {
-  newGame: () => void
-  moveUp: () => void
-  moveDown: () => void
-  moveLeft: () => void
-  moveRight: () => void
-  newRound: () => void
+  newGame: () => void;
+  moveUp: () => void;
+  moveDown: () => void;
+  moveLeft: () => void;
+  moveRight: () => void;
+  newRound: () => void;
 }
 
 const mapDispatchToProps: DispatchProps = {
@@ -144,9 +144,9 @@ const mapDispatchToProps: DispatchProps = {
   moveLeft: moveLeft,
   moveRight: moveRight,
   newRound: newRound
-}
+};
 
 export default connect<GameStateProps, any, any, any>(
   mapStateToProps,
   mapDispatchToProps
-)(Game)
+)(Game);
