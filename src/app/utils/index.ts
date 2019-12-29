@@ -100,38 +100,6 @@ const getColFromPosition = (newPosition: number): number => {
   return newPosition % COLS_NUMBER;
 };
 
-// find most optimal position
-const findBestPosition = (tab: TileInfo[], tile: TileInfo) => {
-  tab.find(
-    (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER
-  ) ||
-    //check value
-
-    //merge? albo
-    /* updatedTab.push({
-      position: tile.position ROWS_NUMBER,
-      value: tile.value
-    })*/
-    tab.find(
-      (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER * 2
-    );
-  //check value
-  //merge? albo
-  /* updatedTab.push({
-      position: tile.position -ROWS_NUMBER * 2,
-      value: tile.value
-    })*/
-  tab.find(
-    (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER * 3
-  );
-  //check value
-  //merge? albo
-  /* updatedTab.push({
-      position: tile.position + 90,
-      value: tile.value
-    })*/
-};
-
 const moveOrMerge = ({
   updatedTiles,
   tile,
@@ -145,13 +113,13 @@ const moveOrMerge = ({
   let tilePosition = tile.position;
   const tileValue = tile.value;
 
-  if (takenPositions.includes(tilePosition - 4)) {
+  if (takenPositions.includes(tilePosition - ROWS_NUMBER)) {
     if (
-      updatedTiles.find(tile => tile.position === tilePosition - 4)?.value ===
-      tileValue
+      updatedTiles.find(tile => tile.position === tilePosition - ROWS_NUMBER)
+        ?.value === tileValue
     ) {
       return updatedTiles.map(tile =>
-        tile.position === tilePosition - 4
+        tile.position === tilePosition - ROWS_NUMBER
           ? { ...tile, value: tile.value * 2 }
           : tile
       );
