@@ -1,4 +1,8 @@
+import includes from "ramda/es/includes";
+
 export const CELLS_NUMBER = 16;
+export const ROWS_NUMBER = 4;
+export const COLS_NUMBER = 4;
 
 const getAllPositions = () => {
   let positions: number[] = [];
@@ -77,26 +81,54 @@ export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
   return updatedGrid;
 };
 
-export const sortList = (list: TileInfo[]): TileInfo[] => {
-  const sortedList: TileInfo[] = list.sort((a, b) =>
-    a.position > b.position ? 1 : -1
-  );
-  return sortedList;
+export const exemplaryGrid: TileInfo[] = [
+  { position: 5, value: 2 },
+  { position: 9, value: 4 }
+];
+
+const localExample: TileInfo[] = [
+  { position: 5, value: 2 },
+  { position: 9, value: 4 }
+];
+
+const getRowFromPosition = (newPosition: number): number =>
+  newPosition <= 4 ? 1 : Math.ceil(newPosition / ROWS_NUMBER);
+
+const getColFromPosition = (newPosition: number): number => {
+  if (newPosition < COLS_NUMBER || newPosition % newPosition === 0)
+    return newPosition;
+  return newPosition % COLS_NUMBER;
+};
+
+const moveOrMerge = (newTab: TileInfo[]): TileInfo[] => {
+  return [];
 };
 
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(takenTiles);
-  return updatedGrid;
+  let updatedTiles: TileInfo[] = [];
+  const sortedTiles: TileInfo[] = localExample.sort();
+  const takenPositions: number[] = sortedTiles.map(
+    (tile: TileInfo): number => tile.position
+  );
+  sortedTiles.forEach((tile: TileInfo): void => {
+    if (getRowFromPosition(tile.position) === 1) updatedTiles.push(tile);
+    updatedTiles = moveOrMerge(updatedTiles);
+  });
+  return sortedTiles;
 };
+
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(takenTiles);
-  return updatedGrid;
+  const sortedTiles: TileInfo[] = localExample.sort();
+
+  return sortedTiles;
 };
 export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(takenTiles);
-  return updatedGrid;
+  const sortedTiles: TileInfo[] = localExample.sort();
+
+  return sortedTiles;
 };
 export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
-  const updatedGrid = updateGrid(takenTiles);
-  return updatedGrid;
+  const sortedTiles: TileInfo[] = localExample.sort();
+
+  return sortedTiles;
 };

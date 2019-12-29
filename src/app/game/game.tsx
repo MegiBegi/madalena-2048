@@ -24,7 +24,7 @@ import {
   Grid,
   Cell
 } from "../styles";
-import { updateGrid, getTileColor } from "../utils";
+import { updateGrid, getTileColor, exemplaryGrid } from "../utils";
 interface GameStateProps {
   numbers: TileInfo[];
 }
@@ -41,8 +41,7 @@ const Game: FC<GameProps> = ({
   moveRight,
   newRound
 }): ReactElement => {
-  const updatedGrid: TileInfo[] = updateGrid(numbers);
-  console.log(numbers, "numbers");
+  const updatedGrid: TileInfo[] = updateGrid(exemplaryGrid);
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
       <Cell key={tile.position} tileColor={getTileColor(tile)}>
