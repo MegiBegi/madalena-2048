@@ -1,8 +1,8 @@
-import includes from "ramda/es/includes";
-
 export const CELLS_NUMBER = 16;
 export const ROWS_NUMBER = 4;
 export const COLS_NUMBER = 4;
+
+type Direction = "up" | "down" | "right" | "left";
 
 const getAllPositions = () => {
   let positions: number[] = [];
@@ -100,21 +100,88 @@ const getColFromPosition = (newPosition: number): number => {
   return newPosition % COLS_NUMBER;
 };
 
-const moveOrMerge = (newTab: TileInfo[]): TileInfo[] => {
-  return [];
+// find most optimal position
+const findBestPosition = (tab: TileInfo[], tile: TileInfo) => {
+  tab.find(
+    (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER
+  ) ||
+    //check value
+
+    //merge? albo
+    /* updatedTab.push({
+      position: tile.position ROWS_NUMBER,
+      value: tile.value
+    })*/
+    tab.find(
+      (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER * 2
+    );
+  //check value
+  //merge? albo
+  /* updatedTab.push({
+      position: tile.position -ROWS_NUMBER * 2,
+      value: tile.value
+    })*/
+  tab.find(
+    (el: TileInfo): boolean => el.position === tile.position - ROWS_NUMBER * 3
+  );
+  //check value
+  //merge? albo
+  /* updatedTab.push({
+      position: tile.position + 90,
+      value: tile.value
+    })*/
+};
+
+const moveOrMerge = ({
+  updatedTiles,
+  tile,
+  direction
+}: {
+  updatedTiles: TileInfo[];
+  direction: Direction;
+  tile: TileInfo;
+}): TileInfo[] => {
+  const takenPositions = updatedTiles.map(tile => tile.position);
+  let tilePosition = tile.position;
+  const tileValue = tile.value;
+
+  if (takenPositions.includes(tilePosition - 4)) {
+    if (
+      updatedTiles.find(tile => tile.position === tilePosition - 4)?.value ===
+      tileValue
+    ) {
+      return updatedTiles.map(tile =>
+        tile.position === tilePosition - 4
+          ? { ...tile, value: tile.value * 2 }
+          : tile
+      );
+    }
+    return updatedTiles;
+  }
+
+  while (
+    getRowFromPosition(tilePosition) > 1 &&
+    !takenPositions.includes(tilePosition)
+  ) {
+    tilePosition -= ROWS_NUMBER;
+  }
+
+  return updatedTiles;
 };
 
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
   let updatedTiles: TileInfo[] = [];
   const sortedTiles: TileInfo[] = localExample.sort();
-  const takenPositions: number[] = sortedTiles.map(
-    (tile: TileInfo): number => tile.position
-  );
+
   sortedTiles.forEach((tile: TileInfo): void => {
-    if (getRowFromPosition(tile.position) === 1) updatedTiles.push(tile);
-    updatedTiles = moveOrMerge(updatedTiles);
+    if (getRowFromPosition(tile.position) === 1) {
+      updatedTiles.push(tile);
+    } else {
+      updatedTiles = moveOrMerge({ updatedTiles, tile, direction: "up" });
+    }
   });
-  return sortedTiles;
+
+  return updatedTiles;
 };
 
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
