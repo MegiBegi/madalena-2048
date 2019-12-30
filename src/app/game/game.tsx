@@ -24,7 +24,7 @@ import {
   Grid,
   Cell
 } from "../styles";
-import { updateGrid, getTileColor, exemplaryGrid } from "../utils";
+import { updateGrid, getTileColor } from "../utils";
 interface GameStateProps {
   numbers: TileInfo[];
 }
@@ -41,7 +41,7 @@ const Game: FC<GameProps> = ({
   moveRight,
   newRound
 }): ReactElement => {
-  const updatedGrid: TileInfo[] = updateGrid(exemplaryGrid);
+  const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
       <Cell key={tile.position} tileColor={getTileColor(tile)}>
@@ -80,10 +80,6 @@ const Game: FC<GameProps> = ({
     document.removeEventListener("keydown", handleKeyPress);
   };
 
-  const handleOnClick = (): void => {
-    newGame();
-  };
-
   useEffect(() => {
     componentDidMount();
     return componentWillUnmount;
@@ -99,7 +95,7 @@ const Game: FC<GameProps> = ({
           <Grid>{gridItems}</Grid>
           <Buttons>
             <Button>UNDO </Button>
-            <Button onClick={handleOnClick}>NEW GAME</Button>
+            <Button onClick={() => newGame()}>NEW GAME</Button>
           </Buttons>
           <Description>
             <Paragraph>

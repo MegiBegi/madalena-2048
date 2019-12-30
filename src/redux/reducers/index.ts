@@ -50,7 +50,6 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       return { ...state, numbers: handleMoveRight(state.numbers) };
 
     case NEW_ROUND:
-      console.log("this is new round");
       return { ...state, numbers: getRandomNumber(state.numbers) };
     default:
       return state;
