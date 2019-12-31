@@ -92,13 +92,6 @@ const getColFromPosition = (newPosition: number): number => {
   return newPosition % COLS_NUMBER;
 };
 
-const sortList = (list: TileInfo[]): TileInfo[] => {
-  const sortedList: TileInfo[] = list.sort((a, b) =>
-    a.position > b.position ? 1 : -1
-  );
-  return sortedList;
-};
-
 const moveOrMerge = ({
   updatedTiles,
   tile,
