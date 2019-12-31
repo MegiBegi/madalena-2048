@@ -141,6 +141,55 @@ const moveOrMerge = ({
   return updatedTiles;
 };
 
+const moveOrMergeDown = ({
+  updatedTiles,
+  tile,
+  direction
+}: {
+  updatedTiles: TileInfo[];
+  direction: Direction;
+  tile: TileInfo;
+}): TileInfo[] => {
+  let takenPositions = updatedTiles.map(tile => tile.position);
+  const currentTilePosition = tile.position;
+  let position = tile.position;
+  const tileValue = tile.value;
+
+  while (
+    getRowFromPosition(position) < 4 &&
+    !takenPositions.includes(position + ROWS_NUMBER)
+  ) {
+    position += ROWS_NUMBER;
+  }
+
+  updatedTiles = updatedTiles.map(
+    (tile: TileInfo): TileInfo =>
+      tile.position === currentTilePosition ? { ...tile, position } : tile
+  );
+
+  if (takenPositions.includes(position + ROWS_NUMBER)) {
+    if (
+      updatedTiles.find(
+        (tile: TileInfo): boolean => tile.position === position + ROWS_NUMBER
+      )?.value === tileValue
+    ) {
+      updatedTiles.splice(
+        updatedTiles.indexOf({ position, value: tileValue }),
+        1
+      );
+      return updatedTiles.map(
+        (tile: TileInfo): TileInfo =>
+          tile.position === position + ROWS_NUMBER
+            ? { ...tile, value: tile.value * 2 }
+            : tile
+      );
+    }
+
+    return updatedTiles;
+  }
+  return updatedTiles;
+};
+
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
   const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
     a.position > b.position ? 1 : -1
@@ -165,9 +214,26 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
 };
 
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
-  const sortedTiles: TileInfo[] = takenTiles.sort();
+  const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  let updatedTiles: TileInfo[] = [];
 
-  return sortedTiles;
+  // first pushes all tiles into a new array so that last row is included unspoiled, other row are changed by moveOrMerge
+  sortedTiles.forEach((tile: TileInfo): void => {
+    updatedTiles.push(tile);
+  });
+  updatedTiles.forEach((tile: TileInfo): void => {
+    if (getRowFromPosition(tile.position) !== ROWS_NUMBER) {
+      updatedTiles = moveOrMergeDown({
+        updatedTiles,
+        tile,
+        direction: "down"
+      });
+    }
+  });
+
+  return updatedTiles;
 };
 export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
   const sortedTiles: TileInfo[] = takenTiles.sort();
