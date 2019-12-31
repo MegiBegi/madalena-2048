@@ -92,6 +92,13 @@ const getColFromPosition = (newPosition: number): number => {
   return newPosition % COLS_NUMBER;
 };
 
+const sortList = (list: TileInfo[]): TileInfo[] => {
+  const sortedList: TileInfo[] = list.sort((a, b) =>
+    a.position > b.position ? 1 : -1
+  );
+  return sortedList;
+};
+
 const moveOrMerge = ({
   updatedTiles,
   tile,
@@ -101,22 +108,36 @@ const moveOrMerge = ({
   direction: Direction;
   tile: TileInfo;
 }): TileInfo[] => {
+  console.log("move or merge");
   let takenPositions = updatedTiles.map(tile => tile.position);
   const currentTilePosition = tile.position;
   let position = tile.position;
   const tileValue = tile.value;
 
+  if (getRowFromPosition(position) === 1) {
+    updatedTiles.push(tile);
+  }
+
   if (takenPositions.includes(position - ROWS_NUMBER)) {
     if (
-      updatedTiles.find((tile: TileInfo): boolean => tile.position === position)
-        ?.value === tileValue
+      updatedTiles.find(
+        (tile: TileInfo): boolean => tile.position === position - ROWS_NUMBER
+      )?.value === tileValue
     ) {
-      updatedTiles.map(
+      console.log("value takie samo");
+      updatedTiles.splice(
+        updatedTiles.indexOf({ position, value: tileValue }),
+        1
+      );
+      return updatedTiles.map(
         (tile: TileInfo): TileInfo =>
-          tile.position === position ? { ...tile, value: tile.value * 2 } : tile
+          tile.position === position - ROWS_NUMBER
+            ? { ...tile, value: tile.value * 2 }
+            : tile
       );
     }
 
+    console.log("pierwszy warunek");
     return updatedTiles;
   }
 
@@ -128,15 +149,21 @@ const moveOrMerge = ({
   }
 
   if (takenPositions.includes(position)) {
-    if (
-      updatedTiles.find((tile: TileInfo): boolean => tile.position === position)
-        ?.value === tileValue
-    ) {
+    const targetedTile = updatedTiles.find(
+      (tile: TileInfo): boolean => tile.position === position
+    );
+    console.log({ targetedTile });
+
+    if (targetedTile?.value === tileValue) {
+      console.log("drugi warunek");
+
       return updatedTiles.map(
         (tile: TileInfo): TileInfo =>
           tile.position === position ? { ...tile, value: tile.value * 2 } : tile
       );
     }
+    console.log("trzeci warunek");
+
     return updatedTiles.map(
       (tile: TileInfo): TileInfo =>
         tile.position === currentTilePosition
@@ -144,6 +171,8 @@ const moveOrMerge = ({
           : tile
     );
   }
+  console.log("ostatni warunek", position);
+  console.log({ updatedTiles });
 
   return updatedTiles.map(
     (tile: TileInfo): TileInfo =>
@@ -152,21 +181,27 @@ const moveOrMerge = ({
 };
 
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
+  const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
+    a.position > b.position ? 1 : -1
+  );
   let updatedTiles: TileInfo[] = [];
-  const sortedTiles: TileInfo[] = takenTiles.sort();
 
+  // first pushes all tiles into a new array so that first row is included unspoiled, other row are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
+    updatedTiles.push(tile);
+  });
+  console.log({ sortedTiles });
+
+  updatedTiles.forEach((tile: TileInfo): void => {
     console.log(updatedTiles, "before");
-    if (getRowFromPosition(tile.position) === 1) {
-      updatedTiles.push(tile);
-    } else {
+    if (getRowFromPosition(tile.position) !== 1) {
       updatedTiles = moveOrMerge({
-        updatedTiles: sortedTiles,
+        updatedTiles,
         tile,
         direction: "up"
       });
+      console.log(updatedTiles, "after");
     }
-    console.log(updatedTiles, "after");
   });
 
   return updatedTiles;
