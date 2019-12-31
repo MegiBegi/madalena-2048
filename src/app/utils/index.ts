@@ -110,7 +110,7 @@ const moveOrMerge = ({
   if (getRowFromPosition(position) === 1) {
     updatedTiles.push(tile);
   }
-
+  console.log("johoo", position - ROWS_NUMBER);
   if (takenPositions.includes(position - ROWS_NUMBER)) {
     if (
       updatedTiles.find(
@@ -142,12 +142,10 @@ const moveOrMerge = ({
   }
 
   if (takenPositions.includes(position)) {
-    const targetedTile = updatedTiles.find(
-      (tile: TileInfo): boolean => tile.position === position
-    );
-    console.log({ targetedTile });
-
-    if (targetedTile?.value === tileValue) {
+    if (
+      updatedTiles.find((tile: TileInfo): boolean => tile.position === position)
+        ?.value === tileValue
+    ) {
       console.log("drugi warunek");
 
       return updatedTiles.map(
@@ -183,8 +181,6 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
   sortedTiles.forEach((tile: TileInfo): void => {
     updatedTiles.push(tile);
   });
-  console.log({ sortedTiles });
-
   updatedTiles.forEach((tile: TileInfo): void => {
     console.log(updatedTiles, "before");
     if (getRowFromPosition(tile.position) !== 1) {
