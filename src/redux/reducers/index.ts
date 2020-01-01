@@ -26,7 +26,7 @@ export interface RootState {
   numbers: TileInfo[];
 }
 
-const initialState: RootState = {
+export const initialState: RootState = {
   numbers: [],
   isPlaying: true
 };
