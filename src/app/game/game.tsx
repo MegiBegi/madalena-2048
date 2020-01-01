@@ -59,14 +59,17 @@ const Game: FC<GameProps> = ({
 
       case 38:
         moveUp();
+        newRound();
         break;
 
       case 39:
         moveRight();
+        newRound();
         break;
 
       case 40:
         moveDown();
+        newRound();
         break;
     }
   };
