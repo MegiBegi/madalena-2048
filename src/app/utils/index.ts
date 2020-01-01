@@ -1,6 +1,9 @@
 export const CELLS_NUMBER = 16;
 export const ROWS_NUMBER = 4;
 export const COLS_NUMBER = 4;
+const NEXT_POSITION = 1;
+const FIRST_COL_OR_ROW = 1;
+const LAST_COL_OR_ROW = 4;
 
 type Direction = "up" | "down" | "right" | "left";
 
@@ -111,7 +114,7 @@ const moveOrMerge = ({
   const tileValue = tile.value;
 
   while (
-    getRowFromPosition(position) > 1 &&
+    getRowFromPosition(position) > FIRST_COL_OR_ROW &&
     !takenPositions.includes(position - ROWS_NUMBER)
   ) {
     position -= ROWS_NUMBER;
@@ -160,7 +163,7 @@ const moveOrMergeDown = ({
   const tileValue = tile.value;
 
   while (
-    getRowFromPosition(position) < 4 &&
+    getRowFromPosition(position) < LAST_COL_OR_ROW &&
     !takenPositions.includes(position + ROWS_NUMBER)
   ) {
     position += ROWS_NUMBER;
@@ -207,13 +210,12 @@ const moveOrMergeRight = ({
   const currentTilePosition = tile.position;
   let position = tile.position;
   const tileValue = tile.value;
-  const oneTileAside = 1;
 
   while (
-    getColFromPosition(position) < 4 &&
-    !takenPositions.includes(position + 1)
+    getColFromPosition(position) < LAST_COL_OR_ROW &&
+    !takenPositions.includes(position + NEXT_POSITION)
   ) {
-    position += oneTileAside;
+    position += NEXT_POSITION;
   }
 
   updatedTiles = updatedTiles.map(
@@ -221,10 +223,10 @@ const moveOrMergeRight = ({
       tile.position === currentTilePosition ? { ...tile, position } : tile
   );
 
-  if (takenPositions.includes(position + 1)) {
+  if (takenPositions.includes(position + NEXT_POSITION)) {
     if (
       updatedTiles.find(
-        (tile: TileInfo): boolean => tile.position === position + 1
+        (tile: TileInfo): boolean => tile.position === position + NEXT_POSITION
       )?.value === tileValue
     ) {
       updatedTiles.splice(
@@ -233,7 +235,7 @@ const moveOrMergeRight = ({
       );
       return updatedTiles.map(
         (tile: TileInfo): TileInfo =>
-          tile.position === position + 1
+          tile.position === position + NEXT_POSITION
             ? { ...tile, value: tile.value * 2 }
             : tile
       );
@@ -259,10 +261,10 @@ const moveOrMergeLeft = ({
   const tileValue = tile.value;
 
   while (
-    getColFromPosition(position) > 1 &&
-    !takenPositions.includes(position - 1)
+    getColFromPosition(position) > FIRST_COL_OR_ROW &&
+    !takenPositions.includes(position - NEXT_POSITION)
   ) {
-    position -= 1;
+    position -= NEXT_POSITION;
   }
 
   updatedTiles = updatedTiles.map(
@@ -273,7 +275,7 @@ const moveOrMergeLeft = ({
   if (takenPositions.includes(position - 1)) {
     if (
       updatedTiles.find(
-        (tile: TileInfo): boolean => tile.position === position - 1
+        (tile: TileInfo): boolean => tile.position === position - NEXT_POSITION
       )?.value === tileValue
     ) {
       updatedTiles.splice(
@@ -282,7 +284,7 @@ const moveOrMergeLeft = ({
       );
       return updatedTiles.map(
         (tile: TileInfo): TileInfo =>
-          tile.position === position - 1
+          tile.position === position - NEXT_POSITION
             ? { ...tile, value: tile.value * 2 }
             : tile
       );
@@ -304,7 +306,7 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
     updatedTiles.push(tile);
   });
   updatedTiles.forEach((tile: TileInfo): void => {
-    if (getRowFromPosition(tile.position) !== 1) {
+    if (getRowFromPosition(tile.position) !== FIRST_COL_OR_ROW) {
       updatedTiles = moveOrMerge({
         updatedTiles,
         tile,
@@ -347,11 +349,8 @@ export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
   sortedTiles.forEach((tile: TileInfo): void => {
     updatedTiles.push(tile);
   });
-  console.log({ sortedTiles });
   updatedTiles.forEach((tile: TileInfo): void => {
-    console.log(getColFromPosition(tile.position), "to jest col");
-
-    if (getColFromPosition(tile.position) !== 1) {
+    if (getColFromPosition(tile.position) !== FIRST_COL_OR_ROW) {
       updatedTiles = moveOrMergeLeft({
         updatedTiles,
         tile,
@@ -372,9 +371,7 @@ export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
     updatedTiles.push(tile);
   });
   updatedTiles.forEach((tile: TileInfo): void => {
-    console.log(getColFromPosition(tile.position), "to jest col");
-
-    if (getColFromPosition(tile.position) !== 4) {
+    if (getColFromPosition(tile.position) !== LAST_COL_OR_ROW) {
       updatedTiles = moveOrMergeRight({
         updatedTiles,
         tile,
