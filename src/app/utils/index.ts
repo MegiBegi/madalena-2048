@@ -8,6 +8,12 @@ const LAST_COL_OR_ROW = 4;
 
 type Direction = "up" | "down" | "right" | "left";
 
+interface Condition {
+  whileCondition: boolean;
+  moveCondition: number;
+  changeCondition: number;
+}
+
 const getAllPositions = () => {
   let positions: number[] = [];
 
@@ -149,72 +155,66 @@ const moveOrMerge = ({
   const initialTilePosition = tile.position;
   let position = tile.position;
   const tileValue = tile.value;
-  const whileCondition = (direction: string, pos: number): boolean => {
+  const setCondition = (direction: string, pos: number): Condition | null => {
     switch (direction) {
       case "up":
-        return getRowFromPosition(pos) > FIRST_COL_OR_ROW;
+        return {
+          whileCondition: getRowFromPosition(pos) > FIRST_COL_OR_ROW,
+          moveCondition: pos - ROWS_NUMBER,
+          changeCondition: ROWS_NUMBER
+        };
       case "down":
-        return getRowFromPosition(pos) < LAST_COL_OR_ROW;
+        return {
+          whileCondition: getRowFromPosition(pos) < LAST_COL_OR_ROW,
+          moveCondition: pos + ROWS_NUMBER,
+          changeCondition: -ROWS_NUMBER
+        };
       case "left":
-        return getColFromPosition(pos) > FIRST_COL_OR_ROW;
-      case "right":
-        return getColFromPosition(pos) < LAST_COL_OR_ROW;
-      default:
-        return false;
-    }
-  };
+        return {
+          whileCondition: getColFromPosition(pos) > FIRST_COL_OR_ROW,
+          moveCondition: pos - NEXT_POSITION,
+          changeCondition: NEXT_POSITION
+        };
 
-  const moveCondition = (direction: string, pos: number): number => {
-    switch (direction) {
-      case "up":
-        return pos - ROWS_NUMBER;
-      case "down":
-        return pos + ROWS_NUMBER;
-      case "left":
-        return position - NEXT_POSITION;
       case "right":
-        return pos + NEXT_POSITION;
+        return {
+          whileCondition: getColFromPosition(pos) < LAST_COL_OR_ROW,
+          moveCondition: pos + NEXT_POSITION,
+          changeCondition: -NEXT_POSITION
+        };
       default:
-        return pos;
-    }
-  };
-
-  const changePosition = (direction: string): number => {
-    switch (direction) {
-      case "up":
-        return ROWS_NUMBER;
-      case "down":
-        return -ROWS_NUMBER;
-      case "left":
-        return NEXT_POSITION;
-      case "right":
-        return -NEXT_POSITION;
-      default:
-        return 0;
+        return null;
     }
   };
 
   while (
-    whileCondition(direction, position) &&
-    !takenPositions.includes(moveCondition(direction, position))
+    setCondition(direction, position)?.whileCondition &&
+    !takenPositions.includes(
+      Number(setCondition(direction, position)?.moveCondition)
+    )
   ) {
-    console.log({ whileCondition });
-    position -= changePosition(direction);
+    position -= Number(setCondition(direction, position)?.changeCondition);
   }
 
   let reUpdatedTiles: TileInfo[] = updatedTiles.map(
     (tile: TileInfo): TileInfo =>
       tile.position === initialTilePosition ? { ...tile, position } : tile
   );
-  if (takenPositions.includes(moveCondition(direction, position))) {
+  if (
+    takenPositions.includes(
+      Number(setCondition(direction, position)?.moveCondition)
+    )
+  ) {
     if (
       reUpdatedTiles.find(
         (tile: TileInfo): boolean =>
-          tile.position === moveCondition(direction, position)
+          tile.position ===
+          Number(setCondition(direction, position)?.moveCondition)
       )?.value === tileValue &&
       !reUpdatedTiles.find(
         (tile: TileInfo): boolean =>
-          tile.position === moveCondition(direction, position)
+          tile.position ===
+          Number(setCondition(direction, position)?.moveCondition)
       )?.merged
     ) {
       let reducedTiles: TileInfo[] = [];
@@ -225,7 +225,8 @@ const moveOrMerge = ({
       });
       return reducedTiles.map(
         (tile: TileInfo): TileInfo =>
-          tile.position === moveCondition(direction, position)
+          tile.position ===
+          Number(setCondition(direction, position)?.moveCondition)
             ? { ...tile, value: tile.value * 2, merged: true }
             : tile
       );
