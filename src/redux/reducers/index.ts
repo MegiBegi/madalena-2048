@@ -19,6 +19,7 @@ declare global {
   interface TileInfo {
     position: number;
     value: number;
+    merged?: boolean;
   }
 }
 export interface RootState {

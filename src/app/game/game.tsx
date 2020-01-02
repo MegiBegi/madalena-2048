@@ -1,13 +1,6 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  newGame,
-  moveUp,
-  moveDown,
-  moveLeft,
-  moveRight,
-  newRound
-} from "../../redux/actions";
+import * as actions from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
 import {
   MainContainer,
@@ -25,6 +18,9 @@ import {
   Cell
 } from "../styles";
 import { updateGrid, getTileColor } from "../utils";
+
+type Noop = () => void;
+
 interface GameStateProps {
   numbers: TileInfo[];
 }
@@ -127,21 +123,21 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
 });
 
 interface DispatchProps {
-  newGame: () => void;
-  moveUp: () => void;
-  moveDown: () => void;
-  moveLeft: () => void;
-  moveRight: () => void;
-  newRound: () => void;
+  newGame: Noop;
+  moveUp: Noop;
+  moveDown: Noop;
+  moveLeft: Noop;
+  moveRight: Noop;
+  newRound: Noop;
 }
 
 const mapDispatchToProps: DispatchProps = {
-  moveUp: moveUp,
-  newGame: newGame,
-  moveDown: moveDown,
-  moveLeft: moveLeft,
-  moveRight: moveRight,
-  newRound: newRound
+  moveUp: actions.moveUp,
+  newGame: actions.newGame,
+  moveDown: actions.moveDown,
+  moveLeft: actions.moveLeft,
+  moveRight: actions.moveRight,
+  newRound: actions.newRound
 };
 
 export default connect<GameStateProps, any, any, any>(

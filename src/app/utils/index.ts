@@ -1,3 +1,4 @@
+import { equals } from "ramda";
 export const CELLS_NUMBER = 16;
 export const ROWS_NUMBER = 4;
 export const COLS_NUMBER = 4;
@@ -109,7 +110,7 @@ const moveOrMerge = ({
   tile: TileInfo;
 }): TileInfo[] => {
   let takenPositions = updatedTiles.map(tile => tile.position);
-  const currentTilePosition = tile.position;
+  const initialTilePosition = tile.position;
   let position = tile.position;
   const tileValue = tile.value;
 
@@ -120,32 +121,37 @@ const moveOrMerge = ({
     position -= ROWS_NUMBER;
   }
 
-  updatedTiles = updatedTiles.map(
+  let reUpdatedTiles = updatedTiles.map(
     (tile: TileInfo): TileInfo =>
-      tile.position === currentTilePosition ? { ...tile, position } : tile
+      tile.position === initialTilePosition ? { ...tile, position } : tile
   );
-
   if (takenPositions.includes(position - ROWS_NUMBER)) {
     if (
-      updatedTiles.find(
+      reUpdatedTiles.find(
         (tile: TileInfo): boolean => tile.position === position - ROWS_NUMBER
-      )?.value === tileValue
+      )?.value === tileValue &&
+      !reUpdatedTiles.find(
+        (tile: TileInfo): boolean => tile.position === position - ROWS_NUMBER
+      )?.merged
     ) {
-      updatedTiles.splice(
-        updatedTiles.indexOf({ position, value: tileValue }),
-        1
-      );
-      return updatedTiles.map(
+      const reducedTiles: TileInfo[] = [];
+      reUpdatedTiles.forEach((tile: TileInfo): void => {
+        if (!equals({ position, value: tileValue }, tile)) {
+          reducedTiles.push(tile);
+        }
+      });
+      return reducedTiles.map(
         (tile: TileInfo): TileInfo =>
           tile.position === position - ROWS_NUMBER
-            ? { ...tile, value: tile.value * 2 }
+            ? { ...tile, value: tile.value * 2, merged: true }
             : tile
       );
     }
 
-    return updatedTiles;
+    return reUpdatedTiles;
   }
-  return updatedTiles;
+
+  return reUpdatedTiles;
 };
 
 const moveOrMergeDown = ({
@@ -178,16 +184,15 @@ const moveOrMergeDown = ({
     if (
       updatedTiles.find(
         (tile: TileInfo): boolean => tile.position === position + ROWS_NUMBER
-      )?.value === tileValue
+      )?.value === tileValue &&
+      !tile?.merged
     ) {
-      updatedTiles.splice(
-        updatedTiles.indexOf({ position, value: tileValue }),
-        1
-      );
+      updatedTiles.splice(updatedTiles.indexOf(tile), 1);
+      console.log({ tile });
       return updatedTiles.map(
         (tile: TileInfo): TileInfo =>
           tile.position === position + ROWS_NUMBER
-            ? { ...tile, value: tile.value * 2 }
+            ? { ...tile, value: tile.value * 2, merged: true }
             : tile
       );
     }
@@ -313,9 +318,15 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
         direction: "up"
       });
     }
+    console.log({ updatedTiles });
   });
 
-  return updatedTiles;
+  return updatedTiles.map(
+    ({ value, position }): TileInfo => ({
+      value,
+      position
+    })
+  );
 };
 
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
@@ -337,8 +348,14 @@ export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
       });
     }
   });
+  console.log({ updatedTiles });
 
-  return updatedTiles;
+  return updatedTiles.map(
+    ({ value, position }): TileInfo => ({
+      value,
+      position
+    })
+  );
 };
 export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
   const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
