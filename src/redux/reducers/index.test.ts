@@ -20,7 +20,7 @@ describe("mainReducer", (): void => {
     expect(reducer(state, actionNoop)).toEqual(state);
   });
 
-  it("handles move up wth 3 digits, 2 last to be merged", (): void => {
+  it("handles move up wth 3 digits, last 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -44,7 +44,7 @@ describe("mainReducer", (): void => {
     });
   });
 
-  it("handles move up wth 3 digits, 2 first to be merged", (): void => {
+  it("handles move up wth 3 digits, first 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -95,7 +95,7 @@ describe("mainReducer", (): void => {
     });
   });
 
-  it("handles move up with 4 digits, 2 first to be merged", (): void => {
+  it("handles move up with 4 digits, first 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -147,7 +147,7 @@ describe("mainReducer", (): void => {
     });
   });
 
-  it("handles move up with 4 digits, 2 last to be merged", (): void => {
+  it("handles move up with 4 digits, last 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -197,8 +197,8 @@ describe("mainReducer", (): void => {
       ]
     });
   });
-  /*
-  it("handles move down wth 3 digits, 2 last to be merged", (): void => {
+
+  it("handles move down with 3 digits, last 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -216,13 +216,13 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 10, value: 4 },
-        { position: 14, value: 2 }
+        { position: 14, value: 2 },
+        { position: 10, value: 8 }
       ]
     });
   });
 
-  it("handles move down wth 3 digits, 2 first to be merged", (): void => {
+  it("handles move down with 3 digits, first 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -240,8 +240,8 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 10, value: 2 },
-        { position: 14, value: 32 }
+        { position: 14, value: 32 },
+        { position: 10, value: 2 }
       ]
     });
   });
@@ -273,7 +273,7 @@ describe("mainReducer", (): void => {
     });
   });
 
-  it("handles move down with 4 digits, 2 last to be merged", (): void => {
+  it("handles move down with 4 digits, last 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -292,9 +292,9 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 6, value: 4 },
+        { position: 14, value: 8 },
         { position: 10, value: 4 },
-        { position: 14, value: 8 }
+        { position: 6, value: 4 }
       ]
     });
   });
@@ -318,14 +318,14 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 6, value: 4 },
+        { position: 14, value: 8 },
         { position: 10, value: 4 },
-        { position: 14, value: 8 }
+        { position: 6, value: 4 }
       ]
     });
   });
 
-  it("handles move down with 4 digits, 2 first to be merged", (): void => {
+  it("handles move down with 4 digits, first 2 to be merged", (): void => {
     expect(
       reducer(
         {
@@ -344,9 +344,9 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 6, value: 4 },
+        { position: 14, value: 4 },
         { position: 10, value: 8 },
-        { position: 14, value: 4 }
+        { position: 6, value: 4 }
       ]
     });
   });
@@ -370,9 +370,366 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 10, value: 8 },
-        { position: 14, value: 16 }
+        { position: 14, value: 16 },
+        { position: 10, value: 8 }
       ]
     });
-  });*/
+  });
+
+  it("handles move right with 3 digits, first 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 4 },
+            { position: 2, value: 2 },
+            { position: 3, value: 2 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 4 },
+        { position: 3, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move right wth 3 digits, last 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 2 },
+            { position: 2, value: 16 },
+            { position: 3, value: 16 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 32 },
+        { position: 3, value: 2 }
+      ]
+    });
+  });
+
+  it("handles move right with 4 digits, all to remain untouched", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 4 },
+            { position: 2, value: 8 },
+            { position: 3, value: 2 },
+            { position: 4, value: 4 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 4 },
+        { position: 3, value: 2 },
+        { position: 2, value: 8 },
+        { position: 1, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move right with 4 digits, last 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 2 },
+            { position: 2, value: 2 },
+            { position: 3, value: 4 },
+            { position: 4, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 8 },
+        { position: 3, value: 4 },
+        { position: 2, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move right with 4 digits, 2 in the middle to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 4 },
+            { position: 2, value: 2 },
+            { position: 3, value: 2 },
+            { position: 4, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 8 },
+
+        { position: 3, value: 4 },
+        { position: 2, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move right with 4 digits, first 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 4 },
+            { position: 2, value: 8 },
+            { position: 3, value: 2 },
+            { position: 4, value: 2 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 4 },
+        { position: 3, value: 8 },
+        { position: 2, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move right with 4 digits, 2 pairs to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 4 },
+            { position: 2, value: 4 },
+            { position: 3, value: 8 },
+            { position: 4, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_RIGHT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 4, value: 16 },
+        { position: 3, value: 8 }
+      ]
+    });
+  });
+
+  it("handles move left with 3 digits, last 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 6, value: 4 },
+            { position: 7, value: 2 },
+            { position: 8, value: 2 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move left wth 3 digits, last 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 6, value: 2 },
+            { position: 7, value: 16 },
+            { position: 8, value: 16 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 2 },
+        { position: 6, value: 32 }
+      ]
+    });
+  });
+
+  it("handles move left with 4 digits, all to remain untouched", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 4 },
+            { position: 6, value: 8 },
+            { position: 7, value: 2 },
+            { position: 8, value: 4 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 4 },
+        { position: 6, value: 8 },
+        { position: 7, value: 2 },
+        { position: 8, value: 4 }
+      ]
+    });
+  });
+
+  it("handles move left with 4 digits, first 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 2 },
+            { position: 6, value: 2 },
+            { position: 7, value: 4 },
+            { position: 8, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 }
+      ]
+    });
+  });
+
+  it("handles move left with 4 digits, 2 in the middle to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 4 },
+            { position: 6, value: 2 },
+            { position: 7, value: 2 },
+            { position: 8, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 }
+      ]
+    });
+  });
+
+  it("handles move left with 4 digits, first 2 to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 4 },
+            { position: 6, value: 4 },
+            { position: 7, value: 8 },
+            { position: 8, value: 2 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 8 },
+        { position: 6, value: 8 },
+        { position: 7, value: 2 }
+      ]
+    });
+  });
+
+  it("handles move left with 4 digits, 2 pairs to be merged", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 4 },
+            { position: 6, value: 4 },
+            { position: 7, value: 8 },
+            { position: 8, value: 8 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 8 },
+        { position: 6, value: 16 }
+      ]
+    });
+  });
 });
