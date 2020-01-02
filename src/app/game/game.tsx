@@ -17,7 +17,7 @@ import {
   Grid,
   Cell
 } from "../styles";
-import { updateGrid, getTileColor } from "../utils";
+import { updateGrid, getTileColor, getTileFontSize } from "../utils";
 
 type Noop = () => void;
 
@@ -40,7 +40,11 @@ const Game: FC<GameProps> = ({
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
-      <Cell key={tile.position} tileColor={getTileColor(tile)}>
+      <Cell
+        key={tile.position}
+        tileColor={getTileColor(tile)}
+        fontSize={getTileFontSize(tile)}
+      >
         {tile.value !== 0 && tile.value}
       </Cell>
     )

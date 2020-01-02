@@ -69,8 +69,44 @@ export const getTileColor = (tile: TileInfo): string => {
       return "#17e3c8";
     case 16:
       return "#70537a";
+    case 32:
+      return "#70437a";
+    case 64:
+      return "#09537a";
+    case 128:
+      return "#20887f";
+    case 256:
+      return "#33437a";
+    case 512:
+      return "#11598a";
+    case 1024:
+      return "#56951c";
+    case 2048:
+      return "#00533a";
+    case 4096:
+      return "#00531a";
+    case 8196:
+      return "#44597a";
+    case 16396:
+      return "#074a2e";
     default:
-      return "#8b9ab3";
+      return "#074e4e";
+  }
+};
+
+export const getTileFontSize = (tile: TileInfo): string => {
+  const { value } = tile;
+  switch (true) {
+    case value < 128:
+      return "100%";
+    case value >= 128 && value < 1024:
+      return "75%";
+    case value >= 1024 && value < 16396:
+      return "55%";
+    case value >= 16396:
+      return "40%";
+    default:
+      return "100%";
   }
 };
 
