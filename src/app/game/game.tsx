@@ -23,6 +23,8 @@ type Noop = () => void;
 
 interface GameStateProps {
   numbers: TileInfo[];
+  undoCount: number;
+  lastAction: string;
 }
 
 interface GameProps extends GameStateProps {}
@@ -36,7 +38,9 @@ const Game: FC<GameProps> = ({
   moveLeft,
   moveRight,
   newRound,
-  undo
+  undo,
+  undoCount,
+  lastAction
 }): ReactElement => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
@@ -51,7 +55,8 @@ const Game: FC<GameProps> = ({
     )
   );
 
-  const handleKeyPress = (e: any): void => {
+  const handleKeyPress = (e: KeyboardEvent): void => {
+    e.preventDefault();
     switch (e.keyCode) {
       case 37:
         moveLeft();
@@ -98,7 +103,16 @@ const Game: FC<GameProps> = ({
         <Main>
           <Grid>{gridItems}</Grid>
           <Buttons>
-            <Button onClick={() => undo()}>UNDO</Button>
+            <Button
+              onClick={() =>
+                undoCount < 3 &&
+                lastAction !== "UNDO" &&
+                lastAction !== "NEW GAME" &&
+                undo()
+              }
+            >
+              UNDO
+            </Button>
             <Button onClick={() => newGame()}>NEW GAME</Button>
           </Buttons>
           <Description>
@@ -124,7 +138,9 @@ const Game: FC<GameProps> = ({
 };
 
 const mapStateToProps = (state: RootState): GameStateProps => ({
-  numbers: state.numbers
+  numbers: state.numbers,
+  undoCount: state.undoCount,
+  lastAction: state.lastAction
 });
 
 interface DispatchProps {

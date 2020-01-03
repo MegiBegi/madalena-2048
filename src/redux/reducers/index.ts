@@ -27,46 +27,60 @@ export interface RootState {
   isPlaying: boolean;
   numbers: TileInfo[];
   prevState: TileInfo[];
+  undoCount: number;
+  lastAction: string;
 }
 
 export const initialState: RootState = {
   numbers: [],
   isPlaying: true,
-  prevState: []
+  prevState: [],
+  undoCount: 0,
+  lastAction: ""
 };
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
     case NEW_GAME:
       const tilesWithFirstNumber = getRandomNumber([]);
-      return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) };
+      return {
+        ...state,
+        numbers: getRandomNumber(tilesWithFirstNumber),
+        undoCount: 0,
+        lastAction: "NEW GAME",
+        prevState: []
+      };
 
     case MOVE_UP:
       return {
         ...state,
         numbers: handleMoveUp(state.numbers),
-        prevState: state.numbers
+        prevState: state.numbers,
+        lastAction: "MOVE UP"
       };
 
     case MOVE_DOWN:
       return {
         ...state,
         numbers: handleMoveDown(state.numbers),
-        prevState: state.numbers
+        prevState: state.numbers,
+        lastAction: "MOVE DOWN"
       };
 
     case MOVE_LEFT:
       return {
         ...state,
         numbers: handleMoveLeft(state.numbers),
-        prevState: state.numbers
+        prevState: state.numbers,
+        lastAction: "MOVE LEFT"
       };
 
     case MOVE_RIGHT:
       return {
         ...state,
         numbers: handleMoveRight(state.numbers),
-        prevState: state.numbers
+        prevState: state.numbers,
+        lastAction: "MOVE RIGHT"
       };
 
     case NEW_ROUND:
@@ -75,7 +89,13 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: getRandomNumber(state.numbers)
       };
     case UNDO:
-      return { ...state, numbers: state.prevState };
+      const newState: RootState = {
+        ...state,
+        numbers: state.prevState,
+        undoCount: state.undoCount <= 3 ? state.undoCount + 1 : state.undoCount,
+        lastAction: "UNDO"
+      };
+      return newState;
     default:
       return state;
   }
