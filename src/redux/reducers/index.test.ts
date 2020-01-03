@@ -1,5 +1,6 @@
 import reducer, { initialState, RootState } from "./index";
 import * as actions from "../actions";
+import { last } from "ramda";
 
 describe("mainReducer", (): void => {
   let state: RootState = initialState;
@@ -40,7 +41,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 1, value: 4 },
         { position: 5, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 9, value: 2 },
+        { position: 13, value: 2 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -64,7 +71,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 1, value: 4 },
         { position: 5, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 2 },
+        { position: 9, value: 2 },
+        { position: 13, value: 4 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -91,7 +104,14 @@ describe("mainReducer", (): void => {
         { position: 5, value: 8 },
         { position: 9, value: 2 },
         { position: 13, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 1, value: 4 },
+        { position: 5, value: 8 },
+        { position: 9, value: 2 },
+        { position: 13, value: 4 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -117,7 +137,14 @@ describe("mainReducer", (): void => {
         { position: 1, value: 4 },
         { position: 5, value: 4 },
         { position: 9, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 1, value: 2 },
+        { position: 5, value: 2 },
+        { position: 9, value: 4 },
+        { position: 13, value: 8 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -143,7 +170,14 @@ describe("mainReducer", (): void => {
         { position: 1, value: 4 },
         { position: 5, value: 4 },
         { position: 9, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 1, value: 4 },
+        { position: 5, value: 2 },
+        { position: 9, value: 2 },
+        { position: 13, value: 8 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -169,7 +203,14 @@ describe("mainReducer", (): void => {
         { position: 1, value: 4 },
         { position: 5, value: 8 },
         { position: 9, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 1, value: 4 },
+        { position: 5, value: 8 },
+        { position: 9, value: 2 },
+        { position: 13, value: 2 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -194,7 +235,14 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 1, value: 8 },
         { position: 5, value: 16 }
-      ]
+      ],
+      prevState: [
+        { position: 1, value: 4 },
+        { position: 5, value: 4 },
+        { position: 9, value: 8 },
+        { position: 13, value: 8 }
+      ],
+      lastAction: "MOVE UP"
     });
   });
 
@@ -218,7 +266,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 14, value: 2 },
         { position: 10, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 10, value: 2 },
+        { position: 6, value: 4 },
+        { position: 2, value: 4 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -242,7 +296,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 14, value: 32 },
         { position: 10, value: 2 }
-      ]
+      ],
+      prevState: [
+        { position: 10, value: 16 },
+        { position: 6, value: 16 },
+        { position: 2, value: 2 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -259,17 +319,24 @@ describe("mainReducer", (): void => {
           ]
         },
         {
-          type: actions.MOVE_UP
+          type: actions.MOVE_DOWN
         }
       )
     ).toEqual({
       ...state,
       numbers: [
-        { position: 1, value: 4 },
-        { position: 5, value: 8 },
+        { position: 13, value: 4 },
         { position: 9, value: 2 },
-        { position: 13, value: 4 }
-      ]
+        { position: 5, value: 8 },
+        { position: 1, value: 4 }
+      ],
+      prevState: [
+        { position: 13, value: 4 },
+        { position: 9, value: 2 },
+        { position: 5, value: 8 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -295,7 +362,14 @@ describe("mainReducer", (): void => {
         { position: 14, value: 8 },
         { position: 10, value: 4 },
         { position: 6, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 14, value: 8 },
+        { position: 10, value: 4 },
+        { position: 6, value: 2 },
+        { position: 2, value: 2 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -321,7 +395,14 @@ describe("mainReducer", (): void => {
         { position: 14, value: 8 },
         { position: 10, value: 4 },
         { position: 6, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 14, value: 8 },
+        { position: 10, value: 2 },
+        { position: 6, value: 2 },
+        { position: 2, value: 4 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -347,7 +428,14 @@ describe("mainReducer", (): void => {
         { position: 14, value: 4 },
         { position: 10, value: 8 },
         { position: 6, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 14, value: 2 },
+        { position: 10, value: 2 },
+        { position: 6, value: 8 },
+        { position: 2, value: 4 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -372,7 +460,14 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 14, value: 16 },
         { position: 10, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 14, value: 8 },
+        { position: 10, value: 8 },
+        { position: 6, value: 4 },
+        { position: 2, value: 4 }
+      ],
+      lastAction: "MOVE DOWN"
     });
   });
 
@@ -396,7 +491,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 4, value: 4 },
         { position: 3, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 3, value: 2 },
+        { position: 2, value: 2 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -420,7 +521,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 4, value: 32 },
         { position: 3, value: 2 }
-      ]
+      ],
+      prevState: [
+        { position: 3, value: 16 },
+        { position: 2, value: 16 },
+        { position: 1, value: 2 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -447,7 +554,14 @@ describe("mainReducer", (): void => {
         { position: 3, value: 2 },
         { position: 2, value: 8 },
         { position: 1, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 4, value: 4 },
+        { position: 3, value: 2 },
+        { position: 2, value: 8 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -473,7 +587,14 @@ describe("mainReducer", (): void => {
         { position: 4, value: 8 },
         { position: 3, value: 4 },
         { position: 2, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 4, value: 8 },
+        { position: 3, value: 4 },
+        { position: 2, value: 2 },
+        { position: 1, value: 2 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -497,10 +618,16 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 4, value: 8 },
-
         { position: 3, value: 4 },
         { position: 2, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 4, value: 8 },
+        { position: 3, value: 2 },
+        { position: 2, value: 2 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -526,7 +653,14 @@ describe("mainReducer", (): void => {
         { position: 4, value: 4 },
         { position: 3, value: 8 },
         { position: 2, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 4, value: 2 },
+        { position: 3, value: 2 },
+        { position: 2, value: 8 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -551,7 +685,14 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 4, value: 16 },
         { position: 3, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 4, value: 8 },
+        { position: 3, value: 8 },
+        { position: 2, value: 4 },
+        { position: 1, value: 4 }
+      ],
+      lastAction: "MOVE RIGHT"
     });
   });
 
@@ -575,7 +716,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 5, value: 4 },
         { position: 6, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 6, value: 4 },
+        { position: 7, value: 2 },
+        { position: 8, value: 2 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -599,7 +746,13 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 5, value: 2 },
         { position: 6, value: 32 }
-      ]
+      ],
+      prevState: [
+        { position: 6, value: 2 },
+        { position: 7, value: 16 },
+        { position: 8, value: 16 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -626,7 +779,14 @@ describe("mainReducer", (): void => {
         { position: 6, value: 8 },
         { position: 7, value: 2 },
         { position: 8, value: 4 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 6, value: 8 },
+        { position: 7, value: 2 },
+        { position: 8, value: 4 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -652,7 +812,14 @@ describe("mainReducer", (): void => {
         { position: 5, value: 4 },
         { position: 6, value: 4 },
         { position: 7, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 2 },
+        { position: 6, value: 2 },
+        { position: 7, value: 4 },
+        { position: 8, value: 8 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -678,7 +845,14 @@ describe("mainReducer", (): void => {
         { position: 5, value: 4 },
         { position: 6, value: 4 },
         { position: 7, value: 8 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 6, value: 2 },
+        { position: 7, value: 2 },
+        { position: 8, value: 8 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -704,7 +878,14 @@ describe("mainReducer", (): void => {
         { position: 5, value: 8 },
         { position: 6, value: 8 },
         { position: 7, value: 2 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 },
+        { position: 8, value: 2 }
+      ],
+      lastAction: "MOVE LEFT"
     });
   });
 
@@ -729,7 +910,55 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 5, value: 8 },
         { position: 6, value: 16 }
-      ]
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 },
+        { position: 8, value: 8 }
+      ],
+      lastAction: "MOVE LEFT"
+    });
+  });
+
+  it("handles undo at the first trial", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 5, value: 8 },
+            { position: 6, value: 16 }
+          ],
+          prevState: [
+            { position: 5, value: 4 },
+            { position: 6, value: 4 },
+            { position: 7, value: 8 },
+            { position: 8, value: 8 }
+          ],
+          undoCount: 0,
+          lastAction: "MOVE LEFT"
+        },
+        {
+          type: actions.UNDO
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 },
+        { position: 8, value: 8 }
+      ],
+      prevState: [
+        { position: 5, value: 4 },
+        { position: 6, value: 4 },
+        { position: 7, value: 8 },
+        { position: 8, value: 8 }
+      ],
+      lastAction: "UNDO",
+      undoCount: 1
     });
   });
 });
