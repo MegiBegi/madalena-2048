@@ -35,7 +35,8 @@ const Game: FC<GameProps> = ({
   moveDown,
   moveLeft,
   moveRight,
-  newRound
+  newRound,
+  undo
 }): ReactElement => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
@@ -97,7 +98,7 @@ const Game: FC<GameProps> = ({
         <Main>
           <Grid>{gridItems}</Grid>
           <Buttons>
-            <Button>UNDO </Button>
+            <Button onClick={() => undo()}>UNDO</Button>
             <Button onClick={() => newGame()}>NEW GAME</Button>
           </Buttons>
           <Description>
@@ -133,6 +134,7 @@ interface DispatchProps {
   moveLeft: Noop;
   moveRight: Noop;
   newRound: Noop;
+  undo: Noop;
 }
 
 const mapDispatchToProps: DispatchProps = {
@@ -141,7 +143,8 @@ const mapDispatchToProps: DispatchProps = {
   moveDown: actions.moveDown,
   moveLeft: actions.moveLeft,
   moveRight: actions.moveRight,
-  newRound: actions.newRound
+  newRound: actions.newRound,
+  undo: actions.undo
 };
 
 export default connect<GameStateProps, any, any, any>(

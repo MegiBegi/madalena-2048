@@ -5,7 +5,8 @@ import {
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
-  NEW_ROUND
+  NEW_ROUND,
+  UNDO
 } from "../actions";
 import {
   getRandomNumber,
@@ -25,11 +26,13 @@ declare global {
 export interface RootState {
   isPlaying: boolean;
   numbers: TileInfo[];
+  prevState: TileInfo[];
 }
 
 export const initialState: RootState = {
   numbers: [],
-  isPlaying: true
+  isPlaying: true,
+  prevState: []
 };
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
@@ -39,19 +42,40 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       return { ...state, numbers: getRandomNumber(tilesWithFirstNumber) };
 
     case MOVE_UP:
-      return { ...state, numbers: handleMoveUp(state.numbers) };
+      return {
+        ...state,
+        numbers: handleMoveUp(state.numbers),
+        prevState: state.numbers
+      };
 
     case MOVE_DOWN:
-      return { ...state, numbers: handleMoveDown(state.numbers) };
+      return {
+        ...state,
+        numbers: handleMoveDown(state.numbers),
+        prevState: state.numbers
+      };
 
     case MOVE_LEFT:
-      return { ...state, numbers: handleMoveLeft(state.numbers) };
+      return {
+        ...state,
+        numbers: handleMoveLeft(state.numbers),
+        prevState: state.numbers
+      };
 
     case MOVE_RIGHT:
-      return { ...state, numbers: handleMoveRight(state.numbers) };
+      return {
+        ...state,
+        numbers: handleMoveRight(state.numbers),
+        prevState: state.numbers
+      };
 
     case NEW_ROUND:
-      return { ...state, numbers: getRandomNumber(state.numbers) };
+      return {
+        ...state,
+        numbers: getRandomNumber(state.numbers)
+      };
+    case UNDO:
+      return { ...state, numbers: state.prevState };
     default:
       return state;
   }
