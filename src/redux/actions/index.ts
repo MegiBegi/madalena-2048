@@ -6,6 +6,7 @@ export const MOVE_LEFT = "MOVE LEFT";
 export const MOVE_RIGHT = "MOVE RIGHT";
 export const NEW_ROUND = "NEW ROUND";
 export const UNDO = "UNDO";
+export const GET_SCORE = "GET SCORE";
 
 interface UpdateScore {
   type: "UPDATE SCORE";
@@ -38,6 +39,10 @@ interface Undo {
   type: "UNDO";
 }
 
+interface GetScore {
+  type: "GET SCORE";
+}
+
 export type Actions =
   | UpdateScore
   | NewGame
@@ -46,7 +51,8 @@ export type Actions =
   | MoveLeft
   | MoveRight
   | NewRound
-  | Undo;
+  | Undo
+  | GetScore;
 
 export const updateScore = (): UpdateScore => ({
   type: UPDATE_SCORE
@@ -78,4 +84,8 @@ export const newRound = (): NewRound => ({
 
 export const undo = (): Undo => ({
   type: UNDO
+});
+
+export const getScore = (): GetScore => ({
+  type: GET_SCORE
 });

@@ -347,3 +347,10 @@ export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
     })
   );
 };
+
+export const bestMerge = (takenTiles: TileInfo[]): number => {
+  const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
+    b.value > a.value ? 1 : -1
+  );
+  return sortedTiles[0].value;
+};

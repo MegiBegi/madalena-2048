@@ -25,6 +25,7 @@ interface GameStateProps {
   numbers: TileInfo[];
   undoCount: number;
   lastAction: string;
+  bestMerge: number;
 }
 
 interface GameProps extends GameStateProps {}
@@ -40,7 +41,9 @@ const Game: FC<GameProps> = ({
   newRound,
   undo,
   undoCount,
-  lastAction
+  lastAction,
+  bestMerge,
+  getScore
 }): ReactElement => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
@@ -61,21 +64,25 @@ const Game: FC<GameProps> = ({
       case 37:
         moveLeft();
         newRound();
+        getScore();
         break;
 
       case 38:
         moveUp();
         newRound();
+        getScore();
         break;
 
       case 39:
         moveRight();
         newRound();
+        getScore();
         break;
 
       case 40:
         moveDown();
         newRound();
+        getScore();
         break;
     }
   };
@@ -83,6 +90,7 @@ const Game: FC<GameProps> = ({
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress);
     newGame();
+    getScore();
   };
 
   const componentWillUnmount = (): void => {
@@ -98,7 +106,7 @@ const Game: FC<GameProps> = ({
       <GameWrapper>
         <Header>
           <GameName>2048</GameName>
-          <Score>Best merge:</Score>
+          <Score>Best merge: {bestMerge}</Score>
         </Header>
         <Main>
           <Grid>{gridItems}</Grid>
@@ -113,7 +121,14 @@ const Game: FC<GameProps> = ({
             >
               UNDO
             </Button>
-            <Button onClick={() => newGame()}>NEW GAME</Button>
+            <Button
+              onClick={() => {
+                newGame();
+                getScore();
+              }}
+            >
+              NEW GAME
+            </Button>
           </Buttons>
           <Description>
             <Paragraph>
@@ -140,7 +155,8 @@ const Game: FC<GameProps> = ({
 const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers,
   undoCount: state.undoCount,
-  lastAction: state.lastAction
+  lastAction: state.lastAction,
+  bestMerge: state.bestMerge
 });
 
 interface DispatchProps {
@@ -151,6 +167,7 @@ interface DispatchProps {
   moveRight: Noop;
   newRound: Noop;
   undo: Noop;
+  getScore: Noop;
 }
 
 const mapDispatchToProps: DispatchProps = {
@@ -160,7 +177,8 @@ const mapDispatchToProps: DispatchProps = {
   moveLeft: actions.moveLeft,
   moveRight: actions.moveRight,
   newRound: actions.newRound,
-  undo: actions.undo
+  undo: actions.undo,
+  getScore: actions.getScore
 };
 
 export default connect<GameStateProps, any, any, any>(

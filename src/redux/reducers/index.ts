@@ -6,14 +6,16 @@ import {
   MOVE_LEFT,
   MOVE_RIGHT,
   NEW_ROUND,
-  UNDO
+  UNDO,
+  GET_SCORE
 } from "../actions";
 import {
   getRandomNumber,
   handleMoveUp,
   handleMoveDown,
   handleMoveLeft,
-  handleMoveRight
+  handleMoveRight,
+  bestMerge
 } from "../../app/utils";
 
 declare global {
@@ -29,6 +31,7 @@ export interface RootState {
   prevState: TileInfo[];
   undoCount: number;
   lastAction: string;
+  bestMerge: number;
 }
 
 export const initialState: RootState = {
@@ -36,7 +39,8 @@ export const initialState: RootState = {
   isPlaying: true,
   prevState: [],
   undoCount: 0,
-  lastAction: ""
+  lastAction: "",
+  bestMerge: 0
 };
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
@@ -96,6 +100,8 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         lastAction: "UNDO"
       };
       return newState;
+    case GET_SCORE:
+      return { ...state, bestMerge: bestMerge(state.numbers) };
     default:
       return state;
   }
