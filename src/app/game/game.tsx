@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useLayoutEffect } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
@@ -17,12 +17,7 @@ import {
   Grid,
   Cell
 } from "../styles";
-import {
-  updateGrid,
-  getTileColor,
-  getTileFontSize,
-  isGameOver
-} from "../utils";
+import { updateGrid, getTileColor, getTileFontSize } from "../utils";
 
 type Noop = () => void;
 
@@ -101,14 +96,11 @@ const Game: FC<GameProps> = ({
   };
 
   const componentDidMount = (): void => {
-    document.addEventListener("keydown", handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
   };
 
   const componentWillUnmount = (): void => {
-    document.removeEventListener("keydown", handleKeyPress);
-    document.addEventListener("keydown", (e: KeyboardEvent): void => {
-      e.preventDefault();
-    });
+    window.removeEventListener("keydown", handleKeyPress);
   };
 
   useEffect(() => {
