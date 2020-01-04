@@ -3,6 +3,7 @@ import styled, { keyframes, createGlobalStyle } from "styled-components";
 interface CellProps {
   tileColor: string;
   fontSize: string;
+  gameOver: string;
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -128,4 +129,5 @@ export const Cell = styled.div<CellProps>`
   font-size: ${({ fontSize }) => fontSize};
   text-align: center;
   line-height: 110px;
+  opacity: ${({ gameOver }) => gameOver};
 `;

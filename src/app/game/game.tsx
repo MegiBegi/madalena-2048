@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { FC, ReactElement, useEffect, useLayoutEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
@@ -60,12 +60,13 @@ const Game: FC<GameProps> = ({
         key={tile.position}
         tileColor={getTileColor(tile)}
         fontSize={getTileFontSize(tile)}
+        gameOver={gameIsOver ? "50%" : "100%"}
       >
         {tile.value !== 0 && tile.value}
       </Cell>
     )
   );
-  isGameOver(numbers);
+
   const handleKeyPress = (e: KeyboardEvent): void => {
     const LEFT = 37;
     const UP = 38;
@@ -76,6 +77,7 @@ const Game: FC<GameProps> = ({
     if (!moves.includes(e.keyCode)) return;
     e.preventDefault();
 
+    if (gameIsOver) return;
     switch (e.keyCode) {
       case LEFT:
         moveLeft();
@@ -104,6 +106,9 @@ const Game: FC<GameProps> = ({
 
   const componentWillUnmount = (): void => {
     document.removeEventListener("keydown", handleKeyPress);
+    document.addEventListener("keydown", (e: KeyboardEvent): void => {
+      e.preventDefault();
+    });
   };
 
   useEffect(() => {
