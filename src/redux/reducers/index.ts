@@ -38,9 +38,10 @@ export interface RootState {
   bestMerge: number;
   gameIsOver: boolean;
 }
+const tilesWithFirstNumber = getRandomNumber([]);
 
 export const initialState: RootState = {
-  numbers: [],
+  numbers: getRandomNumber(tilesWithFirstNumber),
   isPlaying: true,
   prevState: [],
   undoCount: 0,
