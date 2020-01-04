@@ -42,7 +42,7 @@ const tilesWithFirstNumber = getRandomNumber([]);
 export const initialState: RootState = {
   numbers: getRandomNumber(tilesWithFirstNumber),
   prevState: [],
-  undoCount: 0,
+  undoCount: 3,
   lastAction: "",
   bestMerge: 0,
   gameIsOver: false
@@ -55,7 +55,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       return {
         ...state,
         numbers: getRandomNumber(tilesWithFirstNumber),
-        undoCount: 0,
+        undoCount: 3,
         lastAction: "NEW GAME",
         prevState: [],
         gameIsOver: false
@@ -105,7 +105,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       const newState: RootState = {
         ...state,
         numbers: state.prevState,
-        undoCount: state.undoCount <= 3 ? state.undoCount + 1 : state.undoCount,
+        undoCount: state.undoCount > 0 ? state.undoCount - 1 : state.undoCount,
         lastAction: "UNDO"
       };
       return newState;

@@ -123,14 +123,14 @@ const Game: FC<GameProps> = ({
           <Buttons>
             <Button
               onClick={(): void => {
-                undoCount < 3 &&
+                undoCount > 0 &&
                   lastAction !== "UNDO" &&
                   lastAction !== "NEW GAME" &&
                   !gameIsOver &&
                   undo();
               }}
             >
-              UNDO
+              UNDO: {undoCount}
             </Button>
             <Button
               onClick={(): void => {
