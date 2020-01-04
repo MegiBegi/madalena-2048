@@ -7,7 +7,8 @@ import {
   MOVE_RIGHT,
   NEW_ROUND,
   UNDO,
-  GET_SCORE
+  GET_SCORE,
+  GAME_OVER
 } from "../actions";
 import {
   getRandomNumber,
@@ -15,8 +16,11 @@ import {
   handleMoveDown,
   handleMoveLeft,
   handleMoveRight,
-  bestMerge
+  bestMerge,
+  ROWS_NUMBER,
+  COLS_NUMBER
 } from "../../app/utils";
+import { equals } from "ramda";
 
 declare global {
   interface TileInfo {
@@ -32,6 +36,7 @@ export interface RootState {
   undoCount: number;
   lastAction: string;
   bestMerge: number;
+  gameIsOver: boolean;
 }
 
 export const initialState: RootState = {
@@ -40,7 +45,8 @@ export const initialState: RootState = {
   prevState: [],
   undoCount: 0,
   lastAction: "",
-  bestMerge: 0
+  bestMerge: 0,
+  gameIsOver: false
 };
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
@@ -52,7 +58,8 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: getRandomNumber(tilesWithFirstNumber),
         undoCount: 0,
         lastAction: "NEW GAME",
-        prevState: []
+        prevState: [],
+        gameIsOver: false
       };
 
     case MOVE_UP:
@@ -88,10 +95,13 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       };
 
     case NEW_ROUND:
-      return {
-        ...state,
-        numbers: getRandomNumber(state.numbers)
-      };
+      return state.numbers.length < 16
+        ? {
+            ...state,
+            numbers: getRandomNumber(state.numbers)
+          }
+        : state;
+
     case UNDO:
       const newState: RootState = {
         ...state,
@@ -100,8 +110,17 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         lastAction: "UNDO"
       };
       return newState;
+
     case GET_SCORE:
       return { ...state, bestMerge: bestMerge(state.numbers) };
+
+    case GAME_OVER:
+      const gameOver: RootState = { ...state, gameIsOver: true };
+      return state.numbers.length === ROWS_NUMBER * COLS_NUMBER &&
+        equals(state.numbers, state.prevState)
+        ? gameOver
+        : state;
+
     default:
       return state;
   }

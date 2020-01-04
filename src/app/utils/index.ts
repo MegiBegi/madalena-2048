@@ -196,7 +196,7 @@ const moveOrMerge = ({
     position -= Number(setCondition(direction, position)?.changeCondition);
   }
 
-  let reUpdatedTiles: TileInfo[] = updatedTiles.map(
+  const reUpdatedTiles: TileInfo[] = updatedTiles.map(
     (tile: TileInfo): TileInfo =>
       tile.position === initialTilePosition ? { ...tile, position } : tile
   );
@@ -217,7 +217,7 @@ const moveOrMerge = ({
           Number(setCondition(direction, position)?.moveCondition)
       )?.merged
     ) {
-      let reducedTiles: TileInfo[] = [];
+      const reducedTiles: TileInfo[] = [];
       reUpdatedTiles.forEach((tile: TileInfo): void => {
         if (!equals({ position, value: tileValue }, tile)) {
           reducedTiles.push(tile);
@@ -285,7 +285,6 @@ export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
       });
     }
   });
-  console.log({ updatedTiles });
 
   return updatedTiles.map(
     ({ value, position }): TileInfo => ({

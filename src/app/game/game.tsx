@@ -17,7 +17,13 @@ import {
   Grid,
   Cell
 } from "../styles";
-import { updateGrid, getTileColor, getTileFontSize } from "../utils";
+import {
+  updateGrid,
+  getTileColor,
+  getTileFontSize,
+  ROWS_NUMBER,
+  COLS_NUMBER
+} from "../utils";
 
 type Noop = () => void;
 
@@ -26,13 +32,13 @@ interface GameStateProps {
   undoCount: number;
   lastAction: string;
   bestMerge: number;
+  gameIsOver: boolean;
 }
 
 interface GameProps extends GameStateProps {}
 interface GameProps extends DispatchProps {}
 
 const Game: FC<GameProps> = ({
-  numbers,
   newGame,
   moveUp,
   moveDown,
@@ -40,10 +46,13 @@ const Game: FC<GameProps> = ({
   moveRight,
   newRound,
   undo,
+  gameOver,
+  getScore,
+  numbers,
   undoCount,
   lastAction,
   bestMerge,
-  getScore
+  gameIsOver
 }): ReactElement => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
@@ -59,38 +68,42 @@ const Game: FC<GameProps> = ({
   );
 
   const handleKeyPress = (e: KeyboardEvent): void => {
+    const LEFT = 37;
+    const UP = 38;
+    const RIGHT = 39;
+    const DOWN = 40;
+    const moves = [LEFT, UP, RIGHT, DOWN];
+    console.log({ numbers });
+
+    if (!moves.includes(e.keyCode)) return;
+
     e.preventDefault();
+    if (gameIsOver) return;
+
     switch (e.keyCode) {
-      case 37:
+      case LEFT:
         moveLeft();
-        newRound();
-        getScore();
         break;
 
-      case 38:
+      case UP:
         moveUp();
-        newRound();
-        getScore();
         break;
 
-      case 39:
+      case RIGHT:
         moveRight();
-        newRound();
-        getScore();
         break;
 
-      case 40:
+      case DOWN:
         moveDown();
-        newRound();
-        getScore();
         break;
     }
+    gameOver();
+    newRound();
+    getScore();
   };
 
   const componentDidMount = (): void => {
     document.addEventListener("keydown", handleKeyPress);
-    newGame();
-    getScore();
   };
 
   const componentWillUnmount = (): void => {
@@ -101,6 +114,7 @@ const Game: FC<GameProps> = ({
     componentDidMount();
     return componentWillUnmount;
   }, []);
+
   return (
     <MainContainer>
       <GameWrapper>
@@ -112,17 +126,18 @@ const Game: FC<GameProps> = ({
           <Grid>{gridItems}</Grid>
           <Buttons>
             <Button
-              onClick={() =>
+              onClick={(): void => {
                 undoCount < 3 &&
-                lastAction !== "UNDO" &&
-                lastAction !== "NEW GAME" &&
-                undo()
-              }
+                  lastAction !== "UNDO" &&
+                  lastAction !== "NEW GAME" &&
+                  !gameIsOver &&
+                  undo();
+              }}
             >
               UNDO
             </Button>
             <Button
-              onClick={() => {
+              onClick={(): void => {
                 newGame();
                 getScore();
               }}
@@ -156,7 +171,8 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers,
   undoCount: state.undoCount,
   lastAction: state.lastAction,
-  bestMerge: state.bestMerge
+  bestMerge: state.bestMerge,
+  gameIsOver: state.gameIsOver
 });
 
 interface DispatchProps {
@@ -168,6 +184,7 @@ interface DispatchProps {
   newRound: Noop;
   undo: Noop;
   getScore: Noop;
+  gameOver: Noop;
 }
 
 const mapDispatchToProps: DispatchProps = {
@@ -178,7 +195,8 @@ const mapDispatchToProps: DispatchProps = {
   moveRight: actions.moveRight,
   newRound: actions.newRound,
   undo: actions.undo,
-  getScore: actions.getScore
+  getScore: actions.getScore,
+  gameOver: actions.gameOver
 };
 
 export default connect<GameStateProps, any, any, any>(
