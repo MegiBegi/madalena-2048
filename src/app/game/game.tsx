@@ -21,8 +21,7 @@ import {
   updateGrid,
   getTileColor,
   getTileFontSize,
-  ROWS_NUMBER,
-  COLS_NUMBER
+  isGameOver
 } from "../utils";
 
 type Noop = () => void;
@@ -66,19 +65,16 @@ const Game: FC<GameProps> = ({
       </Cell>
     )
   );
-
+  isGameOver(numbers);
   const handleKeyPress = (e: KeyboardEvent): void => {
     const LEFT = 37;
     const UP = 38;
     const RIGHT = 39;
     const DOWN = 40;
     const moves = [LEFT, UP, RIGHT, DOWN];
-    console.log({ numbers });
 
     if (!moves.includes(e.keyCode)) return;
-
     e.preventDefault();
-    if (gameIsOver) return;
 
     switch (e.keyCode) {
       case LEFT:

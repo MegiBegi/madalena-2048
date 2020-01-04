@@ -1,4 +1,5 @@
 import { equals } from "ramda";
+import { gameOver } from "../../redux/actions";
 export const CELLS_NUMBER = 16;
 export const ROWS_NUMBER = 4;
 export const COLS_NUMBER = 4;
@@ -319,6 +320,7 @@ export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
     })
   );
 };
+
 export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
   const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
     b.position > a.position ? 1 : -1
@@ -352,4 +354,28 @@ export const bestMerge = (takenTiles: TileInfo[]): number => {
     b.value > a.value ? 1 : -1
   );
   return sortedTiles[0].value;
+};
+
+export const isGameOver = (takenTiles: TileInfo[]): boolean => {
+  const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  const afterUp: TileInfo[] = handleMoveUp(takenTiles).sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  const afterDown: TileInfo[] = handleMoveDown(takenTiles).sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  const afterLeft: TileInfo[] = handleMoveLeft(takenTiles).sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  const afterRight: TileInfo[] = handleMoveRight(takenTiles).sort((a, b) =>
+    b.position > a.position ? 1 : -1
+  );
+  const upAndDown = equals(afterUp, afterDown);
+  const leftAndRight = equals(afterRight, afterLeft);
+  const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false;
+  const gameIsOver = moves && equals(afterUp, sortedTiles) ? true : false;
+
+  return gameIsOver;
 };
