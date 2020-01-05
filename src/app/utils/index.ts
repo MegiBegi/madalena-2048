@@ -160,7 +160,10 @@ const moveOrMerge = ({
     switch (direction) {
       case "up":
         return {
-          whileCondition: getRowFromPosition(pos) > FIRST_COL_OR_ROW,
+          whileCondition:
+            getRowFromPosition(pos) > FIRST_COL_OR_ROW &&
+            getColFromPosition(pos - ROWS_NUMBER) ===
+              getColFromPosition(initialTilePosition),
           moveCondition:
             getColFromPosition(pos - ROWS_NUMBER) ===
             getColFromPosition(initialTilePosition)
@@ -170,7 +173,10 @@ const moveOrMerge = ({
         };
       case "down":
         return {
-          whileCondition: getRowFromPosition(pos) < LAST_COL_OR_ROW,
+          whileCondition:
+            getRowFromPosition(pos) < LAST_COL_OR_ROW &&
+            getColFromPosition(pos + ROWS_NUMBER) ===
+              getColFromPosition(initialTilePosition),
           moveCondition:
             getColFromPosition(pos + ROWS_NUMBER) ===
             getColFromPosition(initialTilePosition)
@@ -181,7 +187,10 @@ const moveOrMerge = ({
         };
       case "left":
         return {
-          whileCondition: getColFromPosition(pos) > FIRST_COL_OR_ROW,
+          whileCondition:
+            getColFromPosition(pos) > FIRST_COL_OR_ROW &&
+            getRowFromPosition(pos - NEXT_POSITION) ===
+              getRowFromPosition(initialTilePosition),
           moveCondition:
             getRowFromPosition(pos - NEXT_POSITION) ===
             getRowFromPosition(initialTilePosition)
@@ -192,7 +201,10 @@ const moveOrMerge = ({
 
       case "right":
         return {
-          whileCondition: getColFromPosition(pos) < LAST_COL_OR_ROW,
+          whileCondition:
+            getColFromPosition(pos) < LAST_COL_OR_ROW &&
+            getRowFromPosition(pos + NEXT_POSITION) ===
+              getRowFromPosition(initialTilePosition),
           moveCondition:
             getRowFromPosition(pos + NEXT_POSITION) ===
             getRowFromPosition(initialTilePosition)
