@@ -161,26 +161,43 @@ const moveOrMerge = ({
       case "up":
         return {
           whileCondition: getRowFromPosition(pos) > FIRST_COL_OR_ROW,
-          moveCondition: pos - ROWS_NUMBER,
+          moveCondition:
+            getColFromPosition(pos - ROWS_NUMBER) ===
+            getColFromPosition(initialTilePosition)
+              ? pos - ROWS_NUMBER
+              : 0,
           changeCondition: ROWS_NUMBER
         };
       case "down":
         return {
           whileCondition: getRowFromPosition(pos) < LAST_COL_OR_ROW,
-          moveCondition: pos + ROWS_NUMBER,
+          moveCondition:
+            getColFromPosition(pos + ROWS_NUMBER) ===
+            getColFromPosition(initialTilePosition)
+              ? pos + ROWS_NUMBER
+              : 0,
+
           changeCondition: -ROWS_NUMBER
         };
       case "left":
         return {
           whileCondition: getColFromPosition(pos) > FIRST_COL_OR_ROW,
-          moveCondition: pos - NEXT_POSITION,
+          moveCondition:
+            getRowFromPosition(pos - NEXT_POSITION) ===
+            getRowFromPosition(initialTilePosition)
+              ? pos - NEXT_POSITION
+              : 0,
           changeCondition: NEXT_POSITION
         };
 
       case "right":
         return {
           whileCondition: getColFromPosition(pos) < LAST_COL_OR_ROW,
-          moveCondition: pos + NEXT_POSITION,
+          moveCondition:
+            getRowFromPosition(pos + NEXT_POSITION) ===
+            getRowFromPosition(initialTilePosition)
+              ? pos + NEXT_POSITION
+              : 0,
           changeCondition: -NEXT_POSITION
         };
       default:

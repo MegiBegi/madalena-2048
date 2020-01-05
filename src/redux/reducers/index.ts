@@ -93,7 +93,6 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       };
 
     case NEW_ROUND:
-      console.log(state.numbers);
       const sortedNumbers: TileInfo[] = state.numbers.sort((a, b) =>
         a.position > b.position ? 1 : -1
       );

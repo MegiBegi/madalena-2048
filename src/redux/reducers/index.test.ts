@@ -920,6 +920,46 @@ describe("mainReducer", (): void => {
     });
   });
 
+  it("handles move left at a possible change of rows", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 8 },
+            { position: 2, value: 4 },
+            { position: 3, value: 2 },
+            { position: 4, value: 4 },
+            { position: 6, value: 4 },
+            { position: 9, value: 4 }
+          ]
+        },
+        {
+          type: actions.MOVE_LEFT
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 1, value: 8 },
+        { position: 2, value: 4 },
+        { position: 3, value: 2 },
+        { position: 4, value: 4 },
+        { position: 5, value: 4 },
+        { position: 9, value: 4 }
+      ],
+      prevState: [
+        { position: 1, value: 8 },
+        { position: 2, value: 4 },
+        { position: 3, value: 2 },
+        { position: 4, value: 4 },
+        { position: 6, value: 4 },
+        { position: 9, value: 4 }
+      ],
+      lastAction: "MOVE LEFT"
+    });
+  });
+
   it("handles undo at the first trial", (): void => {
     expect(
       reducer(

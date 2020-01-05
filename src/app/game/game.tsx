@@ -75,8 +75,6 @@ const Game: FC<GameProps> = ({
       if (e.repeat) return;
       if (gameIsOver) return;
 
-      console.log(numbers, "w handle key press");
-
       switch (e.keyCode) {
         case LEFT:
           moveLeft();
