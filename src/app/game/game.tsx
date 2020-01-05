@@ -47,7 +47,7 @@ const Game: FC<GameProps> = ({
   lastAction,
   bestMerge,
   gameIsOver
-}): ReactElement => {
+}) => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
@@ -62,51 +62,59 @@ const Game: FC<GameProps> = ({
     )
   );
 
-  const handleKeyPress = (e: KeyboardEvent): void => {
-    const LEFT = 37;
-    const UP = 38;
-    const RIGHT = 39;
-    const DOWN = 40;
-    const moves = [LEFT, UP, RIGHT, DOWN];
+  useEffect((): Noop => {
+    const handleKeyPress = (e: KeyboardEvent): void => {
+      const LEFT = 37;
+      const UP = 38;
+      const RIGHT = 39;
+      const DOWN = 40;
+      const moves = [LEFT, UP, RIGHT, DOWN];
+      if (!moves.includes(e.keyCode)) return;
+      e.preventDefault();
 
-    if (!moves.includes(e.keyCode)) return;
-    e.preventDefault();
+      if (e.repeat) return;
+      if (gameIsOver) return;
 
-    if (gameIsOver) return;
-    switch (e.keyCode) {
-      case LEFT:
-        moveLeft();
-        break;
+      console.log(numbers, "w handle key press");
 
-      case UP:
-        moveUp();
-        break;
+      switch (e.keyCode) {
+        case LEFT:
+          moveLeft();
+          break;
 
-      case RIGHT:
-        moveRight();
-        break;
+        case UP:
+          moveUp();
+          break;
 
-      case DOWN:
-        moveDown();
-        break;
-    }
-    gameOver();
-    newRound();
-    getScore();
-  };
+        case RIGHT:
+          moveRight();
+          break;
 
-  const componentDidMount = (): void => {
+        case DOWN:
+          moveDown();
+          break;
+      }
+      gameOver();
+      newRound();
+      getScore();
+    };
+
     window.addEventListener("keydown", handleKeyPress);
-  };
 
-  const componentWillUnmount = (): void => {
-    window.removeEventListener("keydown", handleKeyPress);
-  };
-
-  useEffect(() => {
-    componentDidMount();
-    return componentWillUnmount;
-  }, []);
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [
+    gameIsOver,
+    gameOver,
+    getScore,
+    moveDown,
+    moveLeft,
+    moveRight,
+    moveUp,
+    newRound,
+    numbers
+  ]);
 
   return (
     <MainContainer>

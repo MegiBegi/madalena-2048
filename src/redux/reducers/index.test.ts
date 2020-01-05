@@ -1,6 +1,5 @@
 import reducer, { initialState, RootState } from "./index";
 import * as actions from "../actions";
-import { last } from "ramda";
 
 describe("mainReducer", (): void => {
   let state: RootState = initialState;
@@ -936,7 +935,7 @@ describe("mainReducer", (): void => {
             { position: 7, value: 8 },
             { position: 8, value: 8 }
           ],
-          undoCount: 0,
+          undoCount: 3,
           lastAction: "MOVE LEFT"
         },
         {
@@ -958,7 +957,7 @@ describe("mainReducer", (): void => {
         { position: 8, value: 8 }
       ],
       lastAction: "UNDO",
-      undoCount: 1
+      undoCount: 2
     });
   });
 });

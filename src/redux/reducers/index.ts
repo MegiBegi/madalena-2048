@@ -17,10 +17,9 @@ import {
   handleMoveLeft,
   handleMoveRight,
   bestMerge,
-  ROWS_NUMBER,
-  COLS_NUMBER,
   isGameOver
 } from "../../app/utils";
+import { equals } from "ramda";
 
 declare global {
   interface TileInfo {
@@ -94,7 +93,15 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       };
 
     case NEW_ROUND:
-      return state.numbers.length < 16
+      console.log(state.numbers);
+      const sortedNumbers: TileInfo[] = state.numbers.sort((a, b) =>
+        a.position > b.position ? 1 : -1
+      );
+      const sortedPrevState: TileInfo[] = state.prevState.sort((a, b) =>
+        a.position > b.position ? 1 : -1
+      );
+      return state.numbers.length < 16 &&
+        !equals(sortedNumbers, sortedPrevState)
         ? {
             ...state,
             numbers: getRandomNumber(state.numbers)
