@@ -59,7 +59,7 @@ const Game: FC<GameProps> = ({
         tileColor={getTileColor(tile)}
         fontSize={getTileFontSize(tile)}
         gameOver={gameIsOver ? "50%" : "100%"}
-        newTile={equals(newNum[0], tile) ? "red" : "blue"}
+        newTile={equals(newNum[0], tile) ? "create" : ""}
       >
         {tile.value !== 0 && tile.value}
       </Cell>

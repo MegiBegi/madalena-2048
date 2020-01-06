@@ -68,7 +68,7 @@ export const getTileColor = (tile: TileInfo): string => {
     case 0:
       return "#303949";
     case 2:
-      return "#404447";
+      return "#004a31";
     case 4:
       return "#aab510";
     case 8:
