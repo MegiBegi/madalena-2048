@@ -147,6 +147,6 @@ export const Cell = styled.div<CellProps>`
   text-align: center;
   line-height: 110px;
   opacity: ${({ gameOver }) => gameOver};
-  color: ${({ newTile }) => newTile};
-  background-color: ${({ mergedTile }) => mergedTile};
+  ${({ newTile }) => newTile};
+  ${({ mergedTile }) => mergedTile};
 `;
