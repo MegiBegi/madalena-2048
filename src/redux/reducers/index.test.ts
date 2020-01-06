@@ -39,7 +39,7 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 1, value: 4 },
-        { position: 5, value: 4 }
+        { position: 5, value: 4, merged: true }
       ],
       prevState: [
         { position: 5, value: 4 },
@@ -68,7 +68,7 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 1, value: 4 },
+        { position: 1, value: 4, merged: true },
         { position: 5, value: 4 }
       ],
       prevState: [
@@ -133,7 +133,7 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 1, value: 4 },
+        { position: 1, value: 4, merged: true },
         { position: 5, value: 4 },
         { position: 9, value: 8 }
       ],
@@ -167,7 +167,7 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 1, value: 4 },
-        { position: 5, value: 4 },
+        { position: 5, value: 4, merged: true },
         { position: 9, value: 8 }
       ],
       prevState: [
@@ -201,7 +201,7 @@ describe("mainReducer", (): void => {
       numbers: [
         { position: 1, value: 4 },
         { position: 5, value: 8 },
-        { position: 9, value: 4 }
+        { position: 9, value: 4, merged: true }
       ],
       prevState: [
         { position: 1, value: 4 },
@@ -232,8 +232,8 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 1, value: 8 },
-        { position: 5, value: 16 }
+        { position: 1, value: 8, merged: true },
+        { position: 5, value: 16, merged: true }
       ],
       prevState: [
         { position: 1, value: 4 },
@@ -263,13 +263,13 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 2 },
-        { position: 10, value: 8 }
+        { position: 10, value: 8, merged: true },
+        { position: 14, value: 2 }
       ],
       prevState: [
-        { position: 10, value: 2 },
+        { position: 2, value: 4 },
         { position: 6, value: 4 },
-        { position: 2, value: 4 }
+        { position: 10, value: 2 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -293,13 +293,13 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 32 },
-        { position: 10, value: 2 }
+        { position: 10, value: 2 },
+        { position: 14, value: 32, merged: true }
       ],
       prevState: [
-        { position: 10, value: 16 },
+        { position: 2, value: 2 },
         { position: 6, value: 16 },
-        { position: 2, value: 2 }
+        { position: 10, value: 16 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -324,16 +324,16 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 13, value: 4 },
-        { position: 9, value: 2 },
+        { position: 1, value: 4 },
         { position: 5, value: 8 },
-        { position: 1, value: 4 }
+        { position: 9, value: 2 },
+        { position: 13, value: 4 }
       ],
       prevState: [
-        { position: 13, value: 4 },
-        { position: 9, value: 2 },
+        { position: 1, value: 4 },
         { position: 5, value: 8 },
-        { position: 1, value: 4 }
+        { position: 9, value: 2 },
+        { position: 13, value: 4 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -358,15 +358,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 8 },
+        { position: 6, value: 4, merged: true },
         { position: 10, value: 4 },
-        { position: 6, value: 4 }
+        { position: 14, value: 8 }
       ],
       prevState: [
-        { position: 14, value: 8 },
-        { position: 10, value: 4 },
+        { position: 2, value: 2 },
         { position: 6, value: 2 },
-        { position: 2, value: 2 }
+        { position: 10, value: 4 },
+        { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -391,15 +391,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 8 },
-        { position: 10, value: 4 },
-        { position: 6, value: 4 }
+        { position: 6, value: 4 },
+        { position: 10, value: 4, merged: true },
+        { position: 14, value: 8 }
       ],
       prevState: [
-        { position: 14, value: 8 },
-        { position: 10, value: 2 },
+        { position: 2, value: 4 },
         { position: 6, value: 2 },
-        { position: 2, value: 4 }
+        { position: 10, value: 2 },
+        { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -424,15 +424,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 4 },
+        { position: 6, value: 4 },
         { position: 10, value: 8 },
-        { position: 6, value: 4 }
+        { position: 14, value: 4, merged: true }
       ],
       prevState: [
-        { position: 14, value: 2 },
-        { position: 10, value: 2 },
+        { position: 2, value: 4 },
         { position: 6, value: 8 },
-        { position: 2, value: 4 }
+        { position: 10, value: 2 },
+        { position: 14, value: 2 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -457,14 +457,14 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 14, value: 16 },
-        { position: 10, value: 8 }
+        { position: 10, value: 8, merged: true },
+        { position: 14, value: 16, merged: true }
       ],
       prevState: [
-        { position: 14, value: 8 },
-        { position: 10, value: 8 },
+        { position: 2, value: 4 },
         { position: 6, value: 4 },
-        { position: 2, value: 4 }
+        { position: 10, value: 8 },
+        { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
     });
@@ -488,13 +488,13 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 4 },
-        { position: 3, value: 4 }
+        { position: 3, value: 4 },
+        { position: 4, value: 4, merged: true }
       ],
       prevState: [
-        { position: 3, value: 2 },
+        { position: 1, value: 4 },
         { position: 2, value: 2 },
-        { position: 1, value: 4 }
+        { position: 3, value: 2 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -518,13 +518,13 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 32 },
-        { position: 3, value: 2 }
+        { position: 3, value: 2 },
+        { position: 4, value: 32, merged: true }
       ],
       prevState: [
-        { position: 3, value: 16 },
+        { position: 1, value: 2 },
         { position: 2, value: 16 },
-        { position: 1, value: 2 }
+        { position: 3, value: 16 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -549,16 +549,16 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 4 },
-        { position: 3, value: 2 },
+        { position: 1, value: 4 },
         { position: 2, value: 8 },
-        { position: 1, value: 4 }
+        { position: 3, value: 2 },
+        { position: 4, value: 4 }
       ],
       prevState: [
-        { position: 4, value: 4 },
-        { position: 3, value: 2 },
+        { position: 1, value: 4 },
         { position: 2, value: 8 },
-        { position: 1, value: 4 }
+        { position: 3, value: 2 },
+        { position: 4, value: 4 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -583,15 +583,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 8 },
+        { position: 2, value: 4, merged: true },
         { position: 3, value: 4 },
-        { position: 2, value: 4 }
+        { position: 4, value: 8 }
       ],
       prevState: [
-        { position: 4, value: 8 },
-        { position: 3, value: 4 },
+        { position: 1, value: 2 },
         { position: 2, value: 2 },
-        { position: 1, value: 2 }
+        { position: 3, value: 4 },
+        { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -616,15 +616,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 8 },
-        { position: 3, value: 4 },
-        { position: 2, value: 4 }
+        { position: 2, value: 4 },
+        { position: 3, value: 4, merged: true },
+        { position: 4, value: 8 }
       ],
       prevState: [
-        { position: 4, value: 8 },
-        { position: 3, value: 2 },
+        { position: 1, value: 4 },
         { position: 2, value: 2 },
-        { position: 1, value: 4 }
+        { position: 3, value: 2 },
+        { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -649,15 +649,15 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 4 },
+        { position: 2, value: 4 },
         { position: 3, value: 8 },
-        { position: 2, value: 4 }
+        { position: 4, value: 4, merged: true }
       ],
       prevState: [
-        { position: 4, value: 2 },
-        { position: 3, value: 2 },
+        { position: 1, value: 4 },
         { position: 2, value: 8 },
-        { position: 1, value: 4 }
+        { position: 3, value: 2 },
+        { position: 4, value: 2 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -682,14 +682,14 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 4, value: 16 },
-        { position: 3, value: 8 }
+        { position: 3, value: 8, merged: true },
+        { position: 4, value: 16, merged: true }
       ],
       prevState: [
-        { position: 4, value: 8 },
-        { position: 3, value: 8 },
+        { position: 1, value: 4 },
         { position: 2, value: 4 },
-        { position: 1, value: 4 }
+        { position: 3, value: 8 },
+        { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
     });
@@ -714,7 +714,7 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 5, value: 4 },
-        { position: 6, value: 4 }
+        { position: 6, value: 4, merged: true }
       ],
       prevState: [
         { position: 6, value: 4 },
@@ -744,7 +744,7 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 5, value: 2 },
-        { position: 6, value: 32 }
+        { position: 6, value: 32, merged: true }
       ],
       prevState: [
         { position: 6, value: 2 },
@@ -808,7 +808,7 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 5, value: 4 },
+        { position: 5, value: 4, merged: true },
         { position: 6, value: 4 },
         { position: 7, value: 8 }
       ],
@@ -842,7 +842,7 @@ describe("mainReducer", (): void => {
       ...state,
       numbers: [
         { position: 5, value: 4 },
-        { position: 6, value: 4 },
+        { position: 6, value: 4, merged: true },
         { position: 7, value: 8 }
       ],
       prevState: [
@@ -874,7 +874,7 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 5, value: 8 },
+        { position: 5, value: 8, merged: true },
         { position: 6, value: 8 },
         { position: 7, value: 2 }
       ],
@@ -907,8 +907,8 @@ describe("mainReducer", (): void => {
     ).toEqual({
       ...state,
       numbers: [
-        { position: 5, value: 8 },
-        { position: 6, value: 16 }
+        { position: 5, value: 8, merged: true },
+        { position: 6, value: 16, merged: true }
       ],
       prevState: [
         { position: 5, value: 4 },
