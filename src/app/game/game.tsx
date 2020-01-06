@@ -63,6 +63,7 @@ const Game: FC<GameProps> = ({
   );
 
   useEffect((): Noop => {
+    getScore();
     const handleKeyPress = (e: KeyboardEvent): void => {
       const LEFT = 37;
       const UP = 38;
