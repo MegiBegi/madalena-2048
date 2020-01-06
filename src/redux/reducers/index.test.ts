@@ -966,8 +966,8 @@ describe("mainReducer", (): void => {
         {
           ...state,
           numbers: [
-            { position: 5, value: 8 },
-            { position: 6, value: 16 }
+            { position: 5, value: 8, merged: true },
+            { position: 6, value: 16, merged: true }
           ],
           prevState: [
             { position: 5, value: 4 },
@@ -998,6 +998,60 @@ describe("mainReducer", (): void => {
       ],
       lastAction: "UNDO",
       undoCount: 2
+    });
+  });
+
+  it("handles gameOver when game is over", (): void => {
+    expect(
+      reducer(
+        {
+          ...state,
+          numbers: [
+            { position: 1, value: 2 },
+            { position: 2, value: 4 },
+            { position: 3, value: 16 },
+            { position: 4, value: 2 },
+            { position: 5, value: 8 },
+            { position: 6, value: 64 },
+            { position: 7, value: 8 },
+            { position: 8, value: 32 },
+            { position: 9, value: 2 },
+            { position: 10, value: 16 },
+            { position: 11, value: 2 },
+            { position: 12, value: 16 },
+            { position: 13, value: 4 },
+            { position: 14, value: 8 },
+            { position: 15, value: 4 },
+            { position: 16, value: 2 }
+          ],
+          lastAction: "MOVE DOWN"
+        },
+        {
+          type: actions.GAME_OVER
+        }
+      )
+    ).toEqual({
+      ...state,
+      numbers: [
+        { position: 1, value: 2 },
+        { position: 2, value: 4 },
+        { position: 3, value: 16 },
+        { position: 4, value: 2 },
+        { position: 5, value: 8 },
+        { position: 6, value: 64 },
+        { position: 7, value: 8 },
+        { position: 8, value: 32 },
+        { position: 9, value: 2 },
+        { position: 10, value: 16 },
+        { position: 11, value: 2 },
+        { position: 12, value: 16 },
+        { position: 13, value: 4 },
+        { position: 14, value: 8 },
+        { position: 15, value: 4 },
+        { position: 16, value: 2 }
+      ],
+      gameIsOver: true,
+      lastAction: "MOVE DOWN"
     });
   });
 });
