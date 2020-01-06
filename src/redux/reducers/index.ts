@@ -94,15 +94,27 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       };
 
     case NEW_ROUND:
-      const sortedNumbers: TileInfo[] = state.numbers.sort((a, b) =>
-        a.position > b.position ? 1 : -1
-      );
-      const sortedPrevState: TileInfo[] = state.prevState.sort((a, b) =>
-        a.position > b.position ? 1 : -1
-      );
+      const basicTiles: TileInfo[] = state.numbers
+        .map(
+          ({ value, position }): TileInfo => ({
+            value,
+            position
+          })
+        )
+        .sort((a, b) => (a.position > b.position ? 1 : -1));
+      const basicPrevTiles: TileInfo[] = state.prevState
+        .map(
+          ({ value, position }): TileInfo => ({
+            value,
+            position
+          })
+        )
+        .sort((a, b) => (a.position > b.position ? 1 : -1));
+      console.log({ basicTiles });
+      console.log({ basicPrevTiles });
+
       const newGrid: TileInfo[] = getRandomNumber(state.numbers);
-      return state.numbers.length < 16 &&
-        !equals(sortedNumbers, sortedPrevState)
+      return state.numbers.length < 16 && !equals(basicTiles, basicPrevTiles)
         ? {
             ...state,
             numbers: newGrid,
