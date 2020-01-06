@@ -378,7 +378,7 @@ export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
   );
 };
 
-export const bestMerge = (takenTiles: TileInfo[]): number => {
+export const bestScore = (takenTiles: TileInfo[]): number => {
   const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
     b.value > a.value ? 1 : -1
   );
@@ -386,21 +386,16 @@ export const bestMerge = (takenTiles: TileInfo[]): number => {
 };
 
 export const isGameOver = (takenTiles: TileInfo[]): boolean => {
-  const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
-    b.position > a.position ? 1 : -1
-  );
-  const afterUp: TileInfo[] = handleMoveUp(takenTiles).sort((a, b) =>
-    b.position > a.position ? 1 : -1
-  );
-  const afterDown: TileInfo[] = handleMoveDown(takenTiles).sort((a, b) =>
-    b.position > a.position ? 1 : -1
-  );
-  const afterLeft: TileInfo[] = handleMoveLeft(takenTiles).sort((a, b) =>
-    b.position > a.position ? 1 : -1
-  );
-  const afterRight: TileInfo[] = handleMoveRight(takenTiles).sort((a, b) =>
-    b.position > a.position ? 1 : -1
-  );
+  const sortByPosition = (array: TileInfo[]): TileInfo[] => {
+    return array.sort((a, b) => (b.position > a.position ? 1 : -1));
+  };
+
+  const sortedTiles: TileInfo[] = sortByPosition(takenTiles);
+  const afterUp: TileInfo[] = sortByPosition(handleMoveUp(takenTiles));
+  const afterDown: TileInfo[] = sortByPosition(handleMoveDown(takenTiles));
+  const afterLeft: TileInfo[] = sortByPosition(handleMoveLeft(takenTiles));
+  const afterRight: TileInfo[] = sortByPosition(handleMoveRight(takenTiles));
+
   const upAndDown = equals(afterUp, afterDown);
   const leftAndRight = equals(afterRight, afterLeft);
   const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false;

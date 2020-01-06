@@ -25,7 +25,7 @@ interface GameStateProps {
   numbers: TileInfo[];
   undoCount: number;
   lastAction: string;
-  bestMerge: number;
+  bestScore: number;
   gameIsOver: boolean;
 }
 
@@ -45,7 +45,7 @@ const Game: FC<GameProps> = ({
   numbers,
   undoCount,
   lastAction,
-  bestMerge,
+  bestScore,
   gameIsOver
 }) => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
@@ -119,7 +119,7 @@ const Game: FC<GameProps> = ({
       <GameWrapper>
         <Header>
           <GameName>2048</GameName>
-          <Score>Best merge: {bestMerge}</Score>
+          <Score>Best score: {bestScore}</Score>
         </Header>
         <Main>
           <Grid>{gridItems}</Grid>
@@ -170,7 +170,7 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
   numbers: state.numbers,
   undoCount: state.undoCount,
   lastAction: state.lastAction,
-  bestMerge: state.bestMerge,
+  bestScore: state.bestScore,
   gameIsOver: state.gameIsOver
 });
 

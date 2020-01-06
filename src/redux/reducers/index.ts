@@ -16,7 +16,7 @@ import {
   handleMoveDown,
   handleMoveLeft,
   handleMoveRight,
-  bestMerge,
+  bestScore,
   isGameOver
 } from "../../app/utils";
 import { equals } from "ramda";
@@ -33,7 +33,7 @@ export interface RootState {
   prevState: TileInfo[];
   undoCount: number;
   lastAction: string;
-  bestMerge: number;
+  bestScore: number;
   gameIsOver: boolean;
 }
 const tilesWithFirstNumber = getRandomNumber([]);
@@ -43,7 +43,7 @@ export const initialState: RootState = {
   prevState: [],
   undoCount: 3,
   lastAction: "",
-  bestMerge: 0,
+  bestScore: 0,
   gameIsOver: false
 };
 
@@ -117,7 +117,13 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       return newState;
 
     case GET_SCORE:
-      return { ...state, bestMerge: bestMerge(state.numbers) };
+      return {
+        ...state,
+        bestScore:
+          state.bestScore > bestScore(state.numbers)
+            ? state.bestScore
+            : bestScore(state.numbers)
+      };
 
     case GAME_OVER:
       const gameOver: RootState = { ...state, gameIsOver: true };
