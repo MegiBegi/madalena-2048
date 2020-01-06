@@ -143,6 +143,18 @@ const getColFromPosition = (newPosition: number): number => {
   return newPosition % COLS_NUMBER;
 };
 
+export const getBasicTiles = (takenTiles: TileInfo[]): TileInfo[] => {
+  const basicTiles: TileInfo[] = takenTiles
+    .map(
+      ({ value, position }): TileInfo => ({
+        value,
+        position
+      })
+    )
+    .sort((a, b) => (a.position > b.position ? 1 : -1));
+  return basicTiles;
+};
+
 const moveOrMerge = ({
   updatedTiles,
   tile,
@@ -269,15 +281,7 @@ const moveOrMerge = ({
 };
 
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = takenTiles.map(
-    ({ value, position }): TileInfo => ({
-      value,
-      position
-    })
-  );
-  const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
-    a.position > b.position ? 1 : -1
-  );
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
   let updatedTiles: TileInfo[] = [];
 
   // first pushes all tiles into a new array so that first row is included unspoiled, other row are changed by moveOrMerge
@@ -298,12 +302,7 @@ export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
 };
 
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = takenTiles.map(
-    ({ value, position }): TileInfo => ({
-      value,
-      position
-    })
-  );
+  const basicTiles: TileInfo[] = getBasicTiles(takenTiles);
   const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
     b.position > a.position ? 1 : -1
   );
@@ -326,15 +325,8 @@ export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
   return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1));
 };
 export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = takenTiles.map(
-    ({ value, position }): TileInfo => ({
-      value,
-      position
-    })
-  );
-  const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
-    a.position > b.position ? 1 : -1
-  );
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
+
   let updatedTiles: TileInfo[] = [];
   // first pushes all tiles into a new array so that last row is included unspoiled, other row are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
@@ -354,12 +346,7 @@ export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
 };
 
 export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = takenTiles.map(
-    ({ value, position }): TileInfo => ({
-      value,
-      position
-    })
-  );
+  const basicTiles: TileInfo[] = getBasicTiles(takenTiles);
   const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
     b.position > a.position ? 1 : -1
   );
@@ -390,21 +377,11 @@ export const bestScore = (takenTiles: TileInfo[]): number => {
 };
 
 export const isGameOver = (takenTiles: TileInfo[]): boolean => {
-  const basicTiles: TileInfo[] = takenTiles.map(
-    ({ value, position }): TileInfo => ({
-      value,
-      position
-    })
-  );
-  const sortByPosition = (array: TileInfo[]): TileInfo[] => {
-    return array.sort((a, b) => (b.position > a.position ? 1 : -1));
-  };
-
-  const sortedTiles: TileInfo[] = sortByPosition(basicTiles);
-  const afterUp: TileInfo[] = sortByPosition(handleMoveUp(basicTiles));
-  const afterDown: TileInfo[] = sortByPosition(handleMoveDown(basicTiles));
-  const afterLeft: TileInfo[] = sortByPosition(handleMoveLeft(basicTiles));
-  const afterRight: TileInfo[] = sortByPosition(handleMoveRight(basicTiles));
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
+  const afterUp: TileInfo[] = getBasicTiles(handleMoveUp(takenTiles));
+  const afterDown: TileInfo[] = getBasicTiles(handleMoveDown(takenTiles));
+  const afterLeft: TileInfo[] = getBasicTiles(handleMoveLeft(takenTiles));
+  const afterRight: TileInfo[] = getBasicTiles(handleMoveRight(takenTiles));
 
   const upAndDown = equals(afterUp, afterDown);
   const leftAndRight = equals(afterRight, afterLeft);

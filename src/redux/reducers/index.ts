@@ -17,7 +17,8 @@ import {
   handleMoveLeft,
   handleMoveRight,
   bestScore,
-  isGameOver
+  isGameOver,
+  getBasicTiles
 } from "../../app/utils";
 import { equals } from "ramda";
 
@@ -94,27 +95,9 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
       };
 
     case NEW_ROUND:
-      const basicTiles: TileInfo[] = state.numbers
-        .map(
-          ({ value, position }): TileInfo => ({
-            value,
-            position
-          })
-        )
-        .sort((a, b) => (a.position > b.position ? 1 : -1));
-      const basicPrevTiles: TileInfo[] = state.prevState
-        .map(
-          ({ value, position }): TileInfo => ({
-            value,
-            position
-          })
-        )
-        .sort((a, b) => (a.position > b.position ? 1 : -1));
-      console.log({ basicTiles });
-      console.log({ basicPrevTiles });
-
       const newGrid: TileInfo[] = getRandomNumber(state.numbers);
-      return state.numbers.length < 16 && !equals(basicTiles, basicPrevTiles)
+      return state.numbers.length < 16 &&
+        !equals(getBasicTiles(state.numbers), getBasicTiles(state.prevState))
         ? {
             ...state,
             numbers: newGrid,
