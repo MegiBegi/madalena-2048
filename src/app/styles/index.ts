@@ -10,8 +10,8 @@ export const GlobalStyle = createGlobalStyle`
 html {
   padding: 0;
   margin: 0;
-  background-color: #8b9ab3;
-  color: #fff;
+  background-color: #181a1b;
+  color: #e8e6e3;
   }
 body {
   padding: 0;
@@ -52,15 +52,15 @@ export const GameName = styled.h1`
   font-size: 5rem;
   background: linear-gradient(
     124deg,
-    #ff2400,
-    #e81d1d,
-    #e8b71d,
-    #e3e81d,
-    #1de840,
-    #1ddde8,
-    #2b1de8,
-    #dd00f3,
-    #dd00f3
+    #cc1d00,
+    #a91111,
+    #a98511,
+    #a6a911,
+    #11a92b,
+    #11a1a9,
+    #1c11a9,
+    #ba00cc,
+    #ba00cc
   );
   background-size: 1600% 1600%;
   animation: ${rainbow} 18s ease infinite;
@@ -68,17 +68,18 @@ export const GameName = styled.h1`
   padding: 7px;
 `;
 export const Score = styled.button`
-  background-color: #fff;
-  color: #8b9ab3;
+  background-color: #181a1b;
+  color: #b5b0a5;
   font-size: 2.1rem;
   border-radius: 5%;
+  border-color: #404447;
 `;
 export const Main = styled.main`
   font-size: 1rem;
   width: 100%;
 `;
 export const Grid = styled.div`
-  background-color: #fff;
+  background-color: #181a1b;
   font-size: 5rem;
   width: 500px;
   height: 500px;
@@ -100,10 +101,11 @@ export const Buttons = styled.div`
   margin-bottom: 30px;
 `;
 export const Button = styled.button`
-  background-color: #fff;
-  color: #8b9ab3;
+  background-color: #181a1b;
+  color: #b5b0a5;
   font-size: 2.1rem;
   border-radius: 5%;
+  border-color: #404447;
 `;
 export const Description = styled.div`
   font-size: 1rem;
@@ -114,7 +116,7 @@ export const Description = styled.div`
 export const Paragraph = styled.p`
   margin-top: 15px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #404447;
 `;
 export const Footer = styled.footer`
   font-size: 1rem;

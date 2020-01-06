@@ -1,5 +1,4 @@
 import { equals } from "ramda";
-import { gameOver } from "../../redux/actions";
 export const CELLS_NUMBER = 16;
 export const ROWS_NUMBER = 4;
 export const COLS_NUMBER = 4;
@@ -67,11 +66,11 @@ export const createEmptyTilesGrid = () => {
 export const getTileColor = (tile: TileInfo): string => {
   switch (tile.value) {
     case 0:
-      return "#8b9ab3";
+      return "#303949";
     case 2:
-      return "#6b7585";
+      return "#404447";
     case 4:
-      return "#d5e317";
+      return "#aab510";
     case 8:
       return "#17e3c8";
     case 16:
