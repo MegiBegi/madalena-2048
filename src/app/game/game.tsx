@@ -1,6 +1,5 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { connect } from "react-redux";
-import { equals } from "ramda";
 import * as actions from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
 import {
@@ -28,7 +27,6 @@ interface GameStateProps {
   lastAction: string;
   bestScore: number;
   gameIsOver: boolean;
-  newNum: TileInfo[];
 }
 
 interface GameProps extends GameStateProps {}
@@ -48,8 +46,7 @@ const Game: FC<GameProps> = ({
   undoCount,
   lastAction,
   bestScore,
-  gameIsOver,
-  newNum
+  gameIsOver
 }) => {
   const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
@@ -59,7 +56,8 @@ const Game: FC<GameProps> = ({
         tileColor={getTileColor(tile)}
         fontSize={getTileFontSize(tile)}
         gameOver={gameIsOver ? "50%" : "100%"}
-        newTile={equals(newNum[0], tile) ? "create" : ""}
+        newTile={tile.newNum ? "red" : ""}
+        mergedTile={tile.merged ? "white" : ""}
       >
         {tile.value !== 0 && tile.value}
       </Cell>
@@ -176,8 +174,7 @@ const mapStateToProps = (state: RootState): GameStateProps => ({
   undoCount: state.undoCount,
   lastAction: state.lastAction,
   bestScore: state.bestScore,
-  gameIsOver: state.gameIsOver,
-  newNum: state.newNum
+  gameIsOver: state.gameIsOver
 });
 
 interface DispatchProps {

@@ -17,8 +17,7 @@ import {
   handleMoveLeft,
   handleMoveRight,
   bestScore,
-  isGameOver,
-  detectNewNumber
+  isGameOver
 } from "../../app/utils";
 import { equals } from "ramda";
 
@@ -27,6 +26,7 @@ declare global {
     position: number;
     value: number;
     merged?: boolean;
+    newNum?: boolean;
   }
 }
 export interface RootState {
@@ -36,7 +36,6 @@ export interface RootState {
   lastAction: string;
   bestScore: number;
   gameIsOver: boolean;
-  newNum: TileInfo[];
 }
 const tilesWithFirstNumber = getRandomNumber([]);
 
@@ -46,8 +45,7 @@ export const initialState: RootState = {
   undoCount: 3,
   lastAction: "",
   bestScore: 0,
-  gameIsOver: false,
-  newNum: []
+  gameIsOver: false
 };
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
@@ -108,8 +106,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         ? {
             ...state,
             numbers: newGrid,
-            lastAction: "NEW ROUND",
-            newNum: detectNewNumber(sortedNumbers, newGrid)
+            lastAction: "NEW ROUND"
           }
         : state;
 

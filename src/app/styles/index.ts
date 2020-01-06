@@ -5,6 +5,7 @@ interface CellProps {
   fontSize: string;
   gameOver: string;
   newTile: string;
+  mergedTile: string;
 }
 export const create = keyframes`
   0% {
@@ -146,5 +147,6 @@ export const Cell = styled.div<CellProps>`
   text-align: center;
   line-height: 110px;
   opacity: ${({ gameOver }) => gameOver};
-  animation: ${({ newTile }) => newTile} 3s;
+  color: ${({ newTile }) => newTile};
+  background-color: ${({ mergedTile }) => mergedTile};
 `;
