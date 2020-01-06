@@ -402,3 +402,23 @@ export const isGameOver = (takenTiles: TileInfo[]): boolean => {
 
   return gameIsOver;
 };
+
+export const detectNewNumber = (
+  takenTiles: TileInfo[],
+  updatedTakenTiles: TileInfo[]
+): TileInfo[] => {
+  const sortByPosition = (array: TileInfo[]): TileInfo[] => {
+    return array.sort((a, b) => (b.position > a.position ? 1 : -1));
+  };
+
+  const sortedTiles: TileInfo[] = sortByPosition(takenTiles);
+  const updatedTiles: TileInfo[] = sortByPosition(updatedTakenTiles);
+  const difference: TileInfo[] = [];
+
+  updatedTiles.forEach((update: TileInfo) => {
+    !sortedTiles.find((tile: TileInfo) => equals(update, tile)) &&
+      difference.push(update);
+  });
+
+  return difference;
+};

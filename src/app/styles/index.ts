@@ -4,7 +4,22 @@ interface CellProps {
   tileColor: string;
   fontSize: string;
   gameOver: string;
+  newTile: string;
 }
+
+export const create = keyframes`
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+  }
+
+  100% {
+    width: 110px;
+    height: 110px;
+    opacity: 1;
+  }
+`;
 
 export const GlobalStyle = createGlobalStyle`
 html {
@@ -132,4 +147,9 @@ export const Cell = styled.div<CellProps>`
   text-align: center;
   line-height: 110px;
   opacity: ${({ gameOver }) => gameOver};
+  animation-delay: 2s;
+  color: ${({ newTile }) => newTile};
+  transition: width 10ms ease-in, height 10ms ease-in;
+  animation-duration: 2s;
+  animation-timing-function: ease;
 `;
