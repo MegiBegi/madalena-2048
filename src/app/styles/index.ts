@@ -15,30 +15,19 @@ interface CellProps {
 
 export const create = keyframes`
   0% {
-    width: 0px;
-    height: 0px;
-    opacity: 0;
+    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
   }
-
-  1% {
-    width: 100%;
-    height: 100%;
-    opacity: 1;
+  50% {
+    transform: scale(0.4) rotate3d(-1, 1, 0, -90deg);
+  }
+  100% {
+    transform: scale(1) rotate3d(-1, 1, 0, -180deg);
   }
 `;
 
 export const merge = keyframes`
- 0% {
-    height: 1%;
-  }
-
-  50% {
-    height: 15%;
-  }
-
-  100% {
-    height: 0%;
-  }
+  0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
+  50% {transform: translateY(-10px);}
 `;
 
 export const GlobalStyle = createGlobalStyle`
@@ -191,6 +180,6 @@ export const Cell = styled.div<CellProps>`
         if (newTile) return create;
         if (mergedTile) return merge;
       }}
-      5s;
+      0.2s;
   `}
 `;
