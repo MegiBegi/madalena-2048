@@ -56,8 +56,8 @@ const Game: FC<GameProps> = ({
         tileColor={getTileColor(tile)}
         fontSize={getTileFontSize(tile)}
         gameOver={gameIsOver ? "50%" : "100%"}
-        newTile={tile.newNum ? "transition: 1s 0.5s" : ""}
-        mergedTile={tile.merged ? "transition: 3s 0.5s" : ""}
+        newTile={tile.newNum ? true : false}
+        mergedTile={tile.merged ? true : false}
       >
         {tile.value !== 0 && tile.value}
       </Cell>
