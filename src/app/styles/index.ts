@@ -4,6 +4,14 @@ import styled, {
   createGlobalStyle,
   css
 } from "styled-components";
+import { generateMedia } from "styled-media-query";
+
+const media = generateMedia({
+  small: "555px",
+  xSmall: "360px"
+});
+
+// https://github.com/morajabi/styled-media-query
 
 interface CellProps {
   tileColor: string;
@@ -12,23 +20,6 @@ interface CellProps {
   newTile: boolean;
   mergedTile: boolean;
 }
-
-export const create = keyframes`
-  0% {
-    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
-  }
-  50% {
-    transform: scale(0.4) rotate3d(-1, 1, 0, -90deg);
-  }
-  100% {
-    transform: scale(1) rotate3d(-1, 1, 0, -180deg);
-  }
-`;
-
-export const merge = keyframes`
-  0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
-  50% {transform: translateY(-10px);}
-`;
 
 export const GlobalStyle = createGlobalStyle`
 html {
@@ -41,6 +32,23 @@ body {
   padding: 0;
   margin: 0;
 }
+`;
+
+export const create = keyframes`
+  0% {
+    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
+  }
+  50% {
+    transform: scale(0.2) rotate3d(-1, 1, 0, -30deg);
+  }
+  100% {
+    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
+  }
+`;
+
+export const merge = keyframes`
+  0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
+  50% {transform: translateY(-30px);}
 `;
 
 const rainbow = keyframes`
@@ -59,7 +67,6 @@ export const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   font-size: 10rem;
-  background-color: 6d7d99;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,6 +79,15 @@ export const GameWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+
+  ${media.lessThan("xSmall")`
+    margin-top: 15px;
+  `}
+
+  ${media.between("xSmall", "small")`
+     margin-top: 20px;
+     width: 375px;
+  `}
 `;
 
 export const Header = styled.header`
@@ -79,6 +95,19 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  ${media.lessThan("xSmall")`
+    width: 75%;
+    flex-direction: column;
+    margin-bottom: 15px;
+  `}
+
+  ${media.between("xSmall", "small")`
+  width: 90%;
+  flex-direction: column;
+  flex-direction: column;
+  margin-bottom: 40px;
+  `}
 `;
 
 export const GameName = styled.h1`
@@ -100,6 +129,16 @@ export const GameName = styled.h1`
   animation: ${rainbow} 18s ease infinite;
   border-radius: 5%;
   padding: 7px;
+
+  ${media.lessThan("xSmall")`
+    font-size: 2rem;
+    padding: 1px 10px;
+  `}
+
+  ${media.between("xSmall", "small")`
+  font-size: 3rem;
+  padding: 2px 20px;
+  `}
 `;
 
 export const Score = styled.button`
@@ -108,11 +147,27 @@ export const Score = styled.button`
   font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
+
+  ${media.lessThan("xSmall")`
+    font-size: 1.3rem;
+  `}
+
+  ${media.between("xSmall", "small")`
+  font-size: 1.7rem;
+  `}
 `;
 
 export const Main = styled.main`
   font-size: 1rem;
   width: 100%;
+
+  ${media.lessThan("xSmall")`
+    width: 320px;
+  `}
+
+  ${media.between("xSmall", "small")`
+    width: 400px;
+  `}
 `;
 
 export const Grid = styled.div`
@@ -127,6 +182,21 @@ export const Grid = styled.div`
   align-items: center;
   border-radius: 2%;
   padding: 5px;
+
+  ${media.lessThan("xSmall")`
+    font-size: 50%;
+    width: 280px;
+    height: 280px;
+    margin: auto;
+  `}
+
+  ${media.between("xSmall", "small")`
+    font-size: 50%
+    width: 280px;
+    height: 280px;
+    margin: auto;
+
+  `}
 `;
 
 export const Buttons = styled.div`
@@ -137,13 +207,32 @@ export const Buttons = styled.div`
   flex-wrap: wrap;
   margin-top: 30px;
   margin-bottom: 30px;
+
+  ${media.lessThan("xSmall")`
+  justify-content: center;
+  width: 100%;
+  `}
+
+  ${media.between("xSmall", "small")`
+  justify-content: center;
+  `}
 `;
+
 export const Button = styled.button`
   background-color: #181a1b;
   color: #b5b0a5;
   font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
+  ${media.lessThan("xSmall")`
+    font-size: 1.7rem;
+    margin-left: 2px;
+  `}
+
+  ${media.between("xSmall", "small")`
+  font-size: 1.7rem;
+  margin-right: 10px;
+  `}
 `;
 
 export const Description = styled.div`
@@ -151,6 +240,24 @@ export const Description = styled.div`
   width: 100%;
   font-weight: bold;
   text-align: justify;
+
+  ${media.lessThan("xSmall")`
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  `}
+
+  ${media.between("xSmall", "small")`
+  width: 75% 
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+  `}
 `;
 
 export const Paragraph = styled.p`
@@ -163,6 +270,15 @@ export const Footer = styled.footer`
   font-size: 1rem;
   width: 100%;
   padding-bottom: 30px;
+  text-align: center;
+
+  ${media.lessThan("xSmall")`
+  width: 75%;
+  `}
+
+  ${media.between("xSmall", "small")`
+  width: 90%; 
+  `}
 `;
 
 export const Cell = styled.div<CellProps>`
@@ -181,5 +297,18 @@ export const Cell = styled.div<CellProps>`
         if (mergedTile) return merge;
       }}
       0.2s;
+    ${media.lessThan("xSmall")`
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+  `}
+
+    ${media.between("xSmall", "small")`
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;  
+    line-height: 60px;
+  `}
   `}
 `;
