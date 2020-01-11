@@ -1,13 +1,7 @@
-import React, { FC, ReactElement, useEffect } from "react"
-import { connect } from "react-redux"
-import {
-  newGame,
-  moveUp,
-  moveDown,
-  moveLeft,
-  moveRight
-} from "../../redux/actions"
-import { RootState } from "../../redux/reducers"
+import React, { FC, ReactElement, useEffect } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../redux/actions";
+import { RootState } from "../../redux/reducers";
 import {
   MainContainer,
   GameWrapper,
@@ -22,81 +16,136 @@ import {
   Paragraph,
   Grid,
   Cell
-} from "../styles"
-import { updateGrid, getTileColor } from "../utils"
+} from "../styles";
+import { updateGrid, getTileColor, getTileFontSize } from "../utils";
+
+type Noop = () => void;
+
 interface GameStateProps {
-  numbers: TileInfo[]
+  numbers: TileInfo[];
+  undoCount: number;
+  lastAction: string;
+  bestScore: number;
+  gameIsOver: boolean;
 }
 
 interface GameProps extends GameStateProps {}
 interface GameProps extends DispatchProps {}
 
 const Game: FC<GameProps> = ({
-  numbers,
   newGame,
   moveUp,
   moveDown,
   moveLeft,
-  moveRight
-}): ReactElement => {
-  const updatedGrid: TileInfo[] = updateGrid(numbers)
-  console.log(numbers, "numbers")
+  moveRight,
+  newRound,
+  undo,
+  gameOver,
+  getScore,
+  numbers,
+  undoCount,
+  lastAction,
+  bestScore,
+  gameIsOver
+}) => {
+  const updatedGrid: TileInfo[] = updateGrid(numbers);
   const gridItems: ReactElement[] = updatedGrid.map(
     (tile: TileInfo): ReactElement => (
-      <Cell key={`${tile.row} + ${tile.col}`} tileColor={getTileColor(tile)}>
+      <Cell
+        key={tile.position}
+        tileColor={getTileColor(tile)}
+        fontSize={getTileFontSize(tile)}
+        gameOver={gameIsOver ? "50%" : "100%"}
+        newTile={tile.newNum ? true : false}
+        mergedTile={tile.merged ? true : false}
+      >
         {tile.value !== 0 && tile.value}
       </Cell>
     )
-  )
-  const handleKeyPress = (e: any): void => {
-    switch (e.keyCode) {
-      case 37:
-        moveLeft()
-        break
+  );
 
-      case 38:
-        moveUp()
-        break
+  useEffect((): Noop => {
+    getScore();
+    const handleKeyPress = (e: KeyboardEvent): void => {
+      const LEFT = 37;
+      const UP = 38;
+      const RIGHT = 39;
+      const DOWN = 40;
+      const moves = [LEFT, UP, RIGHT, DOWN];
+      if (!moves.includes(e.keyCode)) return;
+      e.preventDefault();
 
-      case 39:
-        moveRight()
-        break
+      if (e.repeat) return;
+      if (gameIsOver) return;
 
-      case 40:
-        moveDown()
-        break
-    }
-  }
+      switch (e.keyCode) {
+        case LEFT:
+          moveLeft();
+          break;
 
-  const componentDidMount = (): void => {
-    document.addEventListener("keydown", handleKeyPress)
-    newGame()
-  }
+        case UP:
+          moveUp();
+          break;
 
-  const componentWillUnmount = (): void => {
-    document.removeEventListener("keydown", handleKeyPress)
-  }
+        case RIGHT:
+          moveRight();
+          break;
 
-  const handleOnClick = (): void => {
-    newGame()
-  }
+        case DOWN:
+          moveDown();
+          break;
+      }
+      gameOver();
+      newRound();
+      getScore();
+    };
 
-  useEffect(() => {
-    componentDidMount()
-    return componentWillUnmount
-  }, [])
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [
+    gameIsOver,
+    gameOver,
+    getScore,
+    moveDown,
+    moveLeft,
+    moveRight,
+    moveUp,
+    newRound,
+    numbers
+  ]);
+
   return (
     <MainContainer>
       <GameWrapper>
         <Header>
           <GameName>2048</GameName>
-          <Score>Best merge:</Score>
+          <Score>Best score: {bestScore}</Score>
         </Header>
         <Main>
           <Grid>{gridItems}</Grid>
           <Buttons>
-            <Button>UNDO </Button>
-            <Button onClick={handleOnClick}>NEW GAME</Button>
+            <Button
+              onClick={(): void => {
+                undoCount > 0 &&
+                  lastAction !== "UNDO" &&
+                  lastAction !== "NEW GAME" &&
+                  !gameIsOver &&
+                  undo();
+              }}
+            >
+              UNDO: {undoCount}
+            </Button>
+            <Button
+              onClick={(): void => {
+                newGame();
+                getScore();
+              }}
+            >
+              NEW GAME
+            </Button>
           </Buttons>
           <Description>
             <Paragraph>
@@ -117,30 +166,42 @@ const Game: FC<GameProps> = ({
         <Footer>Visit my website</Footer>
       </GameWrapper>
     </MainContainer>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state: RootState): GameStateProps => ({
-  numbers: state.numbers
-})
+  numbers: state.numbers,
+  undoCount: state.undoCount,
+  lastAction: state.lastAction,
+  bestScore: state.bestScore,
+  gameIsOver: state.gameIsOver
+});
 
 interface DispatchProps {
-  newGame: () => void
-  moveUp: () => void
-  moveDown: () => void
-  moveLeft: () => void
-  moveRight: () => void
+  newGame: Noop;
+  moveUp: Noop;
+  moveDown: Noop;
+  moveLeft: Noop;
+  moveRight: Noop;
+  newRound: Noop;
+  undo: Noop;
+  getScore: Noop;
+  gameOver: Noop;
 }
 
 const mapDispatchToProps: DispatchProps = {
-  moveUp: moveUp,
-  newGame: newGame,
-  moveDown: moveDown,
-  moveLeft: moveLeft,
-  moveRight: moveRight
-}
+  moveUp: actions.moveUp,
+  newGame: actions.newGame,
+  moveDown: actions.moveDown,
+  moveLeft: actions.moveLeft,
+  moveRight: actions.moveRight,
+  newRound: actions.newRound,
+  undo: actions.undo,
+  getScore: actions.getScore,
+  gameOver: actions.gameOver
+};
 
 export default connect<GameStateProps, any, any, any>(
   mapStateToProps,
   mapDispatchToProps
-)(Game)
+)(Game);
