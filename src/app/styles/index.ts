@@ -3,22 +3,22 @@ import styled, {
   Keyframes,
   createGlobalStyle,
   css
-} from "styled-components";
-import { generateMedia } from "styled-media-query";
+} from "styled-components"
+import { generateMedia } from "styled-media-query"
 
 const media = generateMedia({
   small: "555px",
   xSmall: "360px"
-});
+})
 
 // https://github.com/morajabi/styled-media-query
 
 interface CellProps {
-  tileColor: string;
-  fontSize: string;
-  gameOver: string;
-  newTile: boolean;
-  mergedTile: boolean;
+  tileColor: string
+  fontSize: string
+  gameOver: string
+  newTile: boolean
+  mergedTile: boolean
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -32,7 +32,7 @@ body {
   padding: 0;
   margin: 0;
 }
-`;
+`
 
 export const create = keyframes`
   0% {
@@ -44,12 +44,12 @@ export const create = keyframes`
   100% {
     transform: scale(1) rotate3d(-1, 1, 0, 0deg);
   }
-`;
+`
 
 export const merge = keyframes`
   0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
   50% {transform: translateY(-30px);}
-`;
+`
 
 const rainbow = keyframes`
   0% {
@@ -61,7 +61,7 @@ const rainbow = keyframes`
   100% {
     background-position:0% 82%
   }
-`;
+`
 
 export const MainContainer = styled.div`
   width: 100vw;
@@ -70,7 +70,8 @@ export const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+  user-select: none;
+`
 
 export const GameWrapper = styled.div`
   width: 500px;
@@ -88,7 +89,7 @@ export const GameWrapper = styled.div`
      margin-top: 20px;
      width: 375px;
   `}
-`;
+`
 
 export const Header = styled.header`
   width: 100%;
@@ -108,7 +109,7 @@ export const Header = styled.header`
   flex-direction: column;
   margin-bottom: 40px;
   `}
-`;
+`
 
 export const GameName = styled.h1`
   font-weight: bold;
@@ -139,7 +140,7 @@ export const GameName = styled.h1`
   font-size: 3rem;
   padding: 2px 20px;
   `}
-`;
+`
 
 export const Score = styled.button`
   background-color: #181a1b;
@@ -155,7 +156,7 @@ export const Score = styled.button`
   ${media.between("xSmall", "small")`
   font-size: 1.7rem;
   `}
-`;
+`
 
 export const Main = styled.main`
   font-size: 1rem;
@@ -168,7 +169,7 @@ export const Main = styled.main`
   ${media.between("xSmall", "small")`
     width: 400px;
   `}
-`;
+`
 
 export const Grid = styled.div`
   background-color: #181a1b;
@@ -197,7 +198,7 @@ export const Grid = styled.div`
     margin: auto;
 
   `}
-`;
+`
 
 export const Buttons = styled.div`
   width: 100%;
@@ -216,7 +217,7 @@ export const Buttons = styled.div`
   ${media.between("xSmall", "small")`
   justify-content: center;
   `}
-`;
+`
 
 export const Button = styled.button`
   background-color: #181a1b;
@@ -233,7 +234,7 @@ export const Button = styled.button`
   font-size: 1.7rem;
   margin-right: 10px;
   `}
-`;
+`
 
 export const Description = styled.div`
   font-size: 1rem;
@@ -258,13 +259,13 @@ export const Description = styled.div`
   flex-wrap: wrap;
   margin: auto;
   `}
-`;
+`
 
 export const Paragraph = styled.p`
   margin-top: 15px;
   padding-bottom: 20px;
   border-bottom: 2px solid #404447;
-`;
+`
 
 export const Footer = styled.footer`
   font-size: 1rem;
@@ -279,7 +280,7 @@ export const Footer = styled.footer`
   ${media.between("xSmall", "small")`
   width: 90%; 
   `}
-`;
+`
 
 export const Cell = styled.div<CellProps>`
   width: 110px;
@@ -293,8 +294,8 @@ export const Cell = styled.div<CellProps>`
     font-size: ${fontSize};
     opacity: ${gameOver};
     animation: ${(): Keyframes | undefined => {
-        if (newTile) return create;
-        if (mergedTile) return merge;
+        if (newTile) return create
+        if (mergedTile) return merge
       }}
       0.2s;
     ${media.lessThan("xSmall")`
@@ -311,4 +312,4 @@ export const Cell = styled.div<CellProps>`
     line-height: 60px;
   `}
   `}
-`;
+`
