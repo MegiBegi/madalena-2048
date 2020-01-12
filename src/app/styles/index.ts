@@ -189,6 +189,7 @@ export const Grid = styled.div<ZoomedIn>`
   align-items: center;
   border-radius: 2%;
   padding: 5px;
+  position: relative;
 
   ${media.lessThan("xSmall")`
     font-size: 50%;
@@ -326,7 +327,7 @@ export const Zoom = styled.svg`
   fill: none;
   stroke: #e8e6e3;
   position: absolute;
-  top: 489px;
+  bottom: -40px;
   right: 14px;
   width: 25px;
   height: 55px;
