@@ -196,7 +196,6 @@ export const Grid = styled.div`
     width: 280px;
     height: 280px;
     margin: auto;
-
   `}
 `
 
@@ -312,4 +311,25 @@ export const Cell = styled.div<CellProps>`
     line-height: 60px;
   `}
   `}
+`
+
+export const Zoom = styled.svg`
+  fill: none;
+  stroke: #e8e6e3;
+  position: absolute;
+  top: 489px;
+  right: 14px;
+  width: 25px;
+  height: 55px;
+  fill: none;
+  cursor: pointer;
+  display: none;
+
+  ${media.lessThan("xSmall")`
+    display: none;
+  `};
+
+  ${media.between("xSmall", "small")`
+    display: block;
+  `};
 `
