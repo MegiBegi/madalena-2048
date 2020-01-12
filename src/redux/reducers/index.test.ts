@@ -1,24 +1,24 @@
-import reducer, { initialState, RootState } from "./index";
-import * as actions from "../actions";
+import reducer, { initialState, RootState } from "redux/reducers"
+import * as actions from "redux/actions"
 
 describe("mainReducer", (): void => {
-  let state: RootState = initialState;
+  let state: RootState = initialState
 
-  const actionNoop = { type: "NOOP" };
+  const actionNoop = { type: "NOOP" }
 
   beforeEach((): void => {
-    state = initialState;
-  });
+    state = initialState
+  })
 
   it("has a default state", () => {
     // @ts-ignore
-    expect(reducer(undefined, actionNoop)).toEqual(state);
-  });
+    expect(reducer(undefined, actionNoop)).toEqual(state)
+  })
 
   it("returns the initial state", () => {
     // @ts-ignore
-    expect(reducer(state, actionNoop)).toEqual(state);
-  });
+    expect(reducer(state, actionNoop)).toEqual(state)
+  })
 
   it("handles move up wth 3 digits, last 2 to be merged", (): void => {
     expect(
@@ -47,8 +47,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 2 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up wth 3 digits, first 2 to be merged", (): void => {
     expect(
@@ -77,8 +77,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 4 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up with 4 digits, all to remain untouched", (): void => {
     expect(
@@ -111,8 +111,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 4 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up with 4 digits, first 2 to be merged", (): void => {
     expect(
@@ -144,8 +144,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 8 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up with 4 digits, 2 in the middle to be merged", (): void => {
     expect(
@@ -177,8 +177,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 8 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up with 4 digits, last 2 to be merged", (): void => {
     expect(
@@ -210,8 +210,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 2 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move up with 4 digits, 2 pairs to be merged", (): void => {
     expect(
@@ -242,8 +242,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 8 }
       ],
       lastAction: "MOVE UP"
-    });
-  });
+    })
+  })
 
   it("handles move down with 3 digits, last 2 to be merged", (): void => {
     expect(
@@ -272,8 +272,8 @@ describe("mainReducer", (): void => {
         { position: 10, value: 2 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 3 digits, first 2 to be merged", (): void => {
     expect(
@@ -302,8 +302,8 @@ describe("mainReducer", (): void => {
         { position: 10, value: 16 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 4 digits, all to remain untouched", (): void => {
     expect(
@@ -336,8 +336,8 @@ describe("mainReducer", (): void => {
         { position: 13, value: 4 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 4 digits, last 2 to be merged", (): void => {
     expect(
@@ -369,8 +369,8 @@ describe("mainReducer", (): void => {
         { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 4 digits, 2 in the middle to be merged", (): void => {
     expect(
@@ -402,8 +402,8 @@ describe("mainReducer", (): void => {
         { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 4 digits, first 2 to be merged", (): void => {
     expect(
@@ -435,8 +435,8 @@ describe("mainReducer", (): void => {
         { position: 14, value: 2 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move down with 4 digits, 2 pairs to be merged", (): void => {
     expect(
@@ -467,8 +467,8 @@ describe("mainReducer", (): void => {
         { position: 14, value: 8 }
       ],
       lastAction: "MOVE DOWN"
-    });
-  });
+    })
+  })
 
   it("handles move right with 3 digits, first 2 to be merged", (): void => {
     expect(
@@ -497,8 +497,8 @@ describe("mainReducer", (): void => {
         { position: 3, value: 2 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right wth 3 digits, last 2 to be merged", (): void => {
     expect(
@@ -527,8 +527,8 @@ describe("mainReducer", (): void => {
         { position: 3, value: 16 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right with 4 digits, all to remain untouched", (): void => {
     expect(
@@ -561,8 +561,8 @@ describe("mainReducer", (): void => {
         { position: 4, value: 4 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right with 4 digits, last 2 to be merged", (): void => {
     expect(
@@ -594,8 +594,8 @@ describe("mainReducer", (): void => {
         { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right with 4 digits, 2 in the middle to be merged", (): void => {
     expect(
@@ -627,8 +627,8 @@ describe("mainReducer", (): void => {
         { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right with 4 digits, first 2 to be merged", (): void => {
     expect(
@@ -660,8 +660,8 @@ describe("mainReducer", (): void => {
         { position: 4, value: 2 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move right with 4 digits, 2 pairs to be merged", (): void => {
     expect(
@@ -692,8 +692,8 @@ describe("mainReducer", (): void => {
         { position: 4, value: 8 }
       ],
       lastAction: "MOVE RIGHT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 3 digits, last 2 to be merged", (): void => {
     expect(
@@ -722,8 +722,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 2 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left wth 3 digits, last 2 to be merged", (): void => {
     expect(
@@ -752,8 +752,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 16 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 4 digits, all to remain untouched", (): void => {
     expect(
@@ -786,8 +786,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 4 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 4 digits, first 2 to be merged", (): void => {
     expect(
@@ -819,8 +819,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 8 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 4 digits, 2 in the middle to be merged", (): void => {
     expect(
@@ -852,8 +852,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 8 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 4 digits, first 2 to be merged", (): void => {
     expect(
@@ -885,8 +885,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 2 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left with 4 digits, 2 pairs to be merged", (): void => {
     expect(
@@ -917,8 +917,8 @@ describe("mainReducer", (): void => {
         { position: 8, value: 8 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles move left at a possible change of rows", (): void => {
     expect(
@@ -957,8 +957,8 @@ describe("mainReducer", (): void => {
         { position: 9, value: 4 }
       ],
       lastAction: "MOVE LEFT"
-    });
-  });
+    })
+  })
 
   it("handles undo at the first trial", (): void => {
     expect(
@@ -998,8 +998,8 @@ describe("mainReducer", (): void => {
       ],
       lastAction: "UNDO",
       undoCount: 2
-    });
-  });
+    })
+  })
 
   it("handles gameOver when game is over", (): void => {
     expect(
@@ -1052,6 +1052,6 @@ describe("mainReducer", (): void => {
       ],
       gameIsOver: true,
       lastAction: "MOVE DOWN"
-    });
-  });
-});
+    })
+  })
+})

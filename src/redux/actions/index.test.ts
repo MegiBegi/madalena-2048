@@ -1,4 +1,4 @@
-import * as actions from "./index"
+import * as actions from "redux/actions"
 
 describe("actions", (): void => {
   it("should create an action to start a new game", (): void => {

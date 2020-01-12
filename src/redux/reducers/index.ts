@@ -9,7 +9,7 @@ import {
   UNDO,
   GET_SCORE,
   GAME_OVER
-} from "../actions";
+} from "redux/actions"
 import {
   getRandomNumber,
   handleMoveUp,
@@ -19,26 +19,26 @@ import {
   bestScore,
   isGameOver,
   getBasicTiles
-} from "../../app/utils";
-import { equals } from "ramda";
+} from "app/utils"
+import { equals } from "ramda"
 
 declare global {
   interface TileInfo {
-    position: number;
-    value: number;
-    merged?: boolean;
-    newNum?: boolean;
+    position: number
+    value: number
+    merged?: boolean
+    newNum?: boolean
   }
 }
 export interface RootState {
-  numbers: TileInfo[];
-  prevState: TileInfo[];
-  undoCount: number;
-  lastAction: string;
-  bestScore: number;
-  gameIsOver: boolean;
+  numbers: TileInfo[]
+  prevState: TileInfo[]
+  undoCount: number
+  lastAction: string
+  bestScore: number
+  gameIsOver: boolean
 }
-const tilesWithFirstNumber = getRandomNumber([]);
+const tilesWithFirstNumber = getRandomNumber([])
 
 export const initialState: RootState = {
   numbers: getRandomNumber(tilesWithFirstNumber),
@@ -47,12 +47,12 @@ export const initialState: RootState = {
   lastAction: "",
   bestScore: 0,
   gameIsOver: false
-};
+}
 
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
     case NEW_GAME:
-      const tilesWithFirstNumber = getRandomNumber([]);
+      const tilesWithFirstNumber = getRandomNumber([])
       return {
         ...state,
         numbers: getRandomNumber(tilesWithFirstNumber),
@@ -60,7 +60,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         lastAction: "NEW GAME",
         prevState: [],
         gameIsOver: false
-      };
+      }
 
     case MOVE_UP:
       return {
@@ -68,7 +68,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: handleMoveUp(state.numbers),
         prevState: state.numbers,
         lastAction: "MOVE UP"
-      };
+      }
 
     case MOVE_DOWN:
       return {
@@ -76,7 +76,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: handleMoveDown(state.numbers),
         prevState: state.numbers,
         lastAction: "MOVE DOWN"
-      };
+      }
 
     case MOVE_LEFT:
       return {
@@ -84,7 +84,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: handleMoveLeft(state.numbers),
         prevState: state.numbers,
         lastAction: "MOVE LEFT"
-      };
+      }
 
     case MOVE_RIGHT:
       return {
@@ -92,10 +92,10 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: handleMoveRight(state.numbers),
         prevState: state.numbers,
         lastAction: "MOVE RIGHT"
-      };
+      }
 
     case NEW_ROUND:
-      const newGrid: TileInfo[] = getRandomNumber(state.numbers);
+      const newGrid: TileInfo[] = getRandomNumber(state.numbers)
       return state.numbers.length < 16 &&
         !equals(getBasicTiles(state.numbers), getBasicTiles(state.prevState))
         ? {
@@ -103,7 +103,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
             numbers: newGrid,
             lastAction: "NEW ROUND"
           }
-        : state;
+        : state
 
     case UNDO:
       const newState: RootState = {
@@ -111,8 +111,8 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
         numbers: state.prevState,
         undoCount: state.undoCount > 0 ? state.undoCount - 1 : state.undoCount,
         lastAction: "UNDO"
-      };
-      return newState;
+      }
+      return newState
 
     case GET_SCORE:
       return {
@@ -121,15 +121,15 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
           state.bestScore > bestScore(state.numbers)
             ? state.bestScore
             : bestScore(state.numbers)
-      };
+      }
 
     case GAME_OVER:
-      const gameOver: RootState = { ...state, gameIsOver: true };
-      return isGameOver(state.numbers) ? gameOver : state;
+      const gameOver: RootState = { ...state, gameIsOver: true }
+      return isGameOver(state.numbers) ? gameOver : state
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default mainReducer;
+export default mainReducer

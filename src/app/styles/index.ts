@@ -5,7 +5,7 @@ import styled, {
   css
 } from "styled-components"
 import { generateMedia } from "styled-media-query"
-import { ZOOMED_GRID, ZOOMED_CELL } from "../utils"
+import { ZOOMED_GRID, ZOOMED_CELL } from "app/utils"
 
 const media = generateMedia({
   small: "555px",

@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
-import * as actions from "../../redux/actions"
-import { RootState } from "../../redux/reducers"
+import * as actions from "redux/actions"
+import { RootState } from "redux/reducers"
 import {
   MainContainer,
   GameWrapper,
@@ -19,7 +19,7 @@ import {
   Cell,
   Zoom
 } from "../styles"
-import { updateGrid, getTileColor, getTileFontSize } from "../utils"
+import { updateGrid, getTileColor, getTileFontSize } from "app/utils"
 
 type Noop = () => void
 

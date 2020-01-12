@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from "react"
-import Game from "./game/game"
-import { GlobalStyle } from "./styles"
+import Game from "app/game/game"
+import { GlobalStyle } from "app/styles"
 
 const App: FC = (): ReactElement => {
   return (
