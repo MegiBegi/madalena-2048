@@ -5,10 +5,11 @@ import styled, {
   css
 } from "styled-components"
 import { generateMedia } from "styled-media-query"
+import { ZOOMED_GRID, ZOOMED_CELL } from "../utils"
 
 const media = generateMedia({
   small: "555px",
-  xSmall: "360px"
+  xSmall: "370px"
 })
 
 // https://github.com/morajabi/styled-media-query
@@ -19,6 +20,11 @@ interface CellProps {
   gameOver: string
   newTile: boolean
   mergedTile: boolean
+  zoomIn: boolean
+}
+
+interface ZoomedIn {
+  zoomIn: boolean
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -171,7 +177,7 @@ export const Main = styled.main`
   `}
 `
 
-export const Grid = styled.div`
+export const Grid = styled.div<ZoomedIn>`
   background-color: #181a1b;
   font-size: 5rem;
   width: 500px;
@@ -191,11 +197,13 @@ export const Grid = styled.div`
     margin: auto;
   `}
 
-  ${media.between("xSmall", "small")`
+  ${({ zoomIn }) =>
+    media.between("xSmall", "small")`
     font-size: 50%
     width: 280px;
     height: 280px;
     margin: auto;
+    ${zoomIn && ZOOMED_GRID};
   `}
 `
 
@@ -288,7 +296,7 @@ export const Cell = styled.div<CellProps>`
   text-align: center;
   line-height: 110px;
 
-  ${({ tileColor, fontSize, gameOver, newTile, mergedTile }) => css`
+  ${({ tileColor, fontSize, gameOver, newTile, mergedTile, zoomIn }) => css`
     background-color: ${tileColor};
     font-size: ${fontSize};
     opacity: ${gameOver};
@@ -309,6 +317,7 @@ export const Cell = styled.div<CellProps>`
     width: 60px;
     height: 60px;  
     line-height: 60px;
+    ${zoomIn && ZOOMED_CELL}
   `}
   `}
 `
