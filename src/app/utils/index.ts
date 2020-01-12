@@ -1,147 +1,149 @@
-import { equals } from "ramda";
-export const CELLS_NUMBER = 16;
-export const ROWS_NUMBER = 4;
-export const COLS_NUMBER = 4;
-const NEXT_POSITION = 1;
-const FIRST_COL_OR_ROW = 1;
-const LAST_COL_OR_ROW = 4;
+import { equals } from "ramda"
+export const CELLS_NUMBER = 16
+export const ROWS_NUMBER = 4
+export const COLS_NUMBER = 4
+const NEXT_POSITION = 1
+const FIRST_COL_OR_ROW = 1
+const LAST_COL_OR_ROW = 4
+export const ZOOMED_GRID = "width: 370px;  height: 370px;"
+export const ZOOMED_CELL = "width: 78px;  height: 78px;"
 
-type Direction = "up" | "down" | "right" | "left";
+type Direction = "up" | "down" | "right" | "left"
 
 interface Condition {
-  whileCondition: boolean;
-  moveCondition: number;
-  changeCondition: number;
+  whileCondition: boolean
+  moveCondition: number
+  changeCondition: number
 }
 
 const getAllPositions = () => {
-  let positions: number[] = [];
+  let positions: number[] = []
 
   for (let i = 1; i <= CELLS_NUMBER; i++) {
-    positions.push(i);
+    positions.push(i)
   }
-  return positions;
-};
+  return positions
+}
 
 const getRandomValue = (): number => {
-  const possibleRandomValues = [2, 4];
-  const randomIndex = Math.floor(Math.random() * possibleRandomValues.length);
-  return possibleRandomValues[randomIndex];
-};
+  const possibleRandomValues = [2, 4]
+  const randomIndex = Math.floor(Math.random() * possibleRandomValues.length)
+  return possibleRandomValues[randomIndex]
+}
 
 export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] => {
-  let places: number[] = getAllPositions();
+  let places: number[] = getAllPositions()
   const takenPositions: number[] = takenTiles.map(
     (tile: TileInfo): number => tile.position
-  );
-  let takenPlaces: number[];
-  takenPlaces = takenTiles.length === 0 ? [] : takenPositions;
-  let emptyPlaces = [];
+  )
+  let takenPlaces: number[]
+  takenPlaces = takenTiles.length === 0 ? [] : takenPositions
+  let emptyPlaces = []
 
   for (let place of places) {
     if (!takenPlaces.includes(place)) {
-      emptyPlaces.push(place);
+      emptyPlaces.push(place)
     }
   }
 
   const newPosition: number =
-    emptyPlaces[Math.floor(Math.random() * emptyPlaces.length)];
+    emptyPlaces[Math.floor(Math.random() * emptyPlaces.length)]
 
-  const value = getRandomValue();
+  const value = getRandomValue()
   const newRandomNumber: TileInfo = {
     position: newPosition,
     value: value,
     newNum: true
-  };
-  return [...takenTiles, newRandomNumber];
-};
+  }
+  return [...takenTiles, newRandomNumber]
+}
 
 export const createEmptyTilesGrid = () => {
-  const allPos = getAllPositions();
+  const allPos = getAllPositions()
   const emptyTilesGrid = allPos.map(el => {
-    return { position: el, value: 0 };
-  });
-  return emptyTilesGrid;
-};
+    return { position: el, value: 0 }
+  })
+  return emptyTilesGrid
+}
 
 export const getTileColor = (tile: TileInfo): string => {
   switch (tile.value) {
     case 0:
-      return "#303949";
+      return "#303949"
     case 2:
-      return "#004a31";
+      return "#004a31"
     case 4:
-      return "#aab510";
+      return "#aab510"
     case 8:
-      return "#11ac98";
+      return "#11ac98"
     case 16:
-      return "#70537a";
+      return "#70537a"
     case 32:
-      return "#70037a";
+      return "#70037a"
     case 64:
-      return "#09537a";
+      return "#09537a"
     case 128:
-      return "#20887f";
+      return "#20887f"
     case 256:
-      return "#33437a";
+      return "#33437a"
     case 512:
-      return "#11598a";
+      return "#11598a"
     case 1024:
-      return "#56951c";
+      return "#56951c"
     case 2048:
-      return "#00533a";
+      return "#00533a"
     case 4096:
-      return "#00531a";
+      return "#00531a"
     case 8196:
-      return "#44597a";
+      return "#44597a"
     case 16396:
-      return "#074a2e";
+      return "#074a2e"
     default:
-      return "#074e4e";
+      return "#074e4e"
   }
-};
+}
 
 export const getTileFontSize = (tile: TileInfo): string => {
-  const { value } = tile;
+  const { value } = tile
   switch (true) {
     case value < 128:
-      return "100%";
+      return "100%"
     case value >= 128 && value < 1024:
-      return "75%";
+      return "75%"
     case value >= 1024 && value < 16396:
-      return "55%";
+      return "55%"
     case value >= 16396:
-      return "40%";
+      return "40%"
     default:
-      return "100%";
+      return "100%"
   }
-};
+}
 
 export const updateGrid = (updates: TileInfo[]): TileInfo[] => {
-  const emptyGrid = createEmptyTilesGrid();
-  const takenTiles = updates;
+  const emptyGrid = createEmptyTilesGrid()
+  const takenTiles = updates
   const updatedGrid = emptyGrid.map(
     (tile: TileInfo): TileInfo =>
       takenTiles.find(
         (takenTile: TileInfo): boolean => takenTile.position === tile.position
       ) || tile
-  );
+  )
 
-  return updatedGrid;
-};
+  return updatedGrid
+}
 
 const getRowFromPosition = (newPosition: number): number =>
-  newPosition <= 4 ? 1 : Math.ceil(newPosition / ROWS_NUMBER);
+  newPosition <= 4 ? 1 : Math.ceil(newPosition / ROWS_NUMBER)
 
 const getColFromPosition = (newPosition: number): number => {
   if (newPosition <= COLS_NUMBER) {
-    return newPosition;
+    return newPosition
   }
   if (newPosition % COLS_NUMBER === 0) {
-    return COLS_NUMBER;
+    return COLS_NUMBER
   }
-  return newPosition % COLS_NUMBER;
-};
+  return newPosition % COLS_NUMBER
+}
 
 export const getBasicTiles = (takenTiles: TileInfo[]): TileInfo[] => {
   const basicTiles: TileInfo[] = takenTiles
@@ -151,23 +153,23 @@ export const getBasicTiles = (takenTiles: TileInfo[]): TileInfo[] => {
         position
       })
     )
-    .sort((a, b) => (a.position > b.position ? 1 : -1));
-  return basicTiles;
-};
+    .sort((a, b) => (a.position > b.position ? 1 : -1))
+  return basicTiles
+}
 
 const moveOrMerge = ({
   updatedTiles,
   tile,
   direction
 }: {
-  updatedTiles: TileInfo[];
-  direction: Direction;
-  tile: TileInfo;
+  updatedTiles: TileInfo[]
+  direction: Direction
+  tile: TileInfo
 }): TileInfo[] => {
-  let takenPositions = updatedTiles.map(tile => tile.position);
-  const initialTilePosition = tile.position;
-  let position = tile.position;
-  const tileValue = tile.value;
+  let takenPositions = updatedTiles.map(tile => tile.position)
+  const initialTilePosition = tile.position
+  let position = tile.position
+  const tileValue = tile.value
   const setCondition = (direction: string, pos: number): Condition | null => {
     switch (direction) {
       case "up":
@@ -182,7 +184,7 @@ const moveOrMerge = ({
               ? pos - ROWS_NUMBER
               : 0,
           changeCondition: ROWS_NUMBER
-        };
+        }
       case "down":
         return {
           whileCondition:
@@ -196,7 +198,7 @@ const moveOrMerge = ({
               : 0,
 
           changeCondition: -ROWS_NUMBER
-        };
+        }
       case "left":
         return {
           whileCondition:
@@ -209,7 +211,7 @@ const moveOrMerge = ({
               ? pos - NEXT_POSITION
               : 0,
           changeCondition: NEXT_POSITION
-        };
+        }
 
       case "right":
         return {
@@ -223,11 +225,11 @@ const moveOrMerge = ({
               ? pos + NEXT_POSITION
               : 0,
           changeCondition: -NEXT_POSITION
-        };
+        }
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   while (
     setCondition(direction, position)?.whileCondition &&
@@ -235,13 +237,13 @@ const moveOrMerge = ({
       Number(setCondition(direction, position)?.moveCondition)
     )
   ) {
-    position -= Number(setCondition(direction, position)?.changeCondition);
+    position -= Number(setCondition(direction, position)?.changeCondition)
   }
 
   const reUpdatedTiles: TileInfo[] = updatedTiles.map(
     (tile: TileInfo): TileInfo =>
       tile.position === initialTilePosition ? { ...tile, position } : tile
-  );
+  )
   if (
     takenPositions.includes(
       Number(setCondition(direction, position)?.moveCondition)
@@ -259,134 +261,134 @@ const moveOrMerge = ({
           Number(setCondition(direction, position)?.moveCondition)
       )?.merged
     ) {
-      const reducedTiles: TileInfo[] = [];
+      const reducedTiles: TileInfo[] = []
       reUpdatedTiles.forEach((tile: TileInfo): void => {
         if (!equals({ position, value: tileValue }, tile)) {
-          reducedTiles.push(tile);
+          reducedTiles.push(tile)
         }
-      });
+      })
       return reducedTiles.map(
         (tile: TileInfo): TileInfo =>
           tile.position ===
           Number(setCondition(direction, position)?.moveCondition)
             ? { ...tile, value: tile.value * 2, merged: true }
             : tile
-      );
+      )
     }
 
-    return reUpdatedTiles;
+    return reUpdatedTiles
   }
 
-  return reUpdatedTiles;
-};
+  return reUpdatedTiles
+}
 
 export const handleMoveUp = (takenTiles: TileInfo[]): TileInfo[] => {
-  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
-  let updatedTiles: TileInfo[] = [];
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles)
+  let updatedTiles: TileInfo[] = []
 
   // first pushes all tiles into a new array so that first row is included unspoiled, other row are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
-    updatedTiles.push(tile);
-  });
+    updatedTiles.push(tile)
+  })
   updatedTiles.forEach((tile: TileInfo): void => {
     if (getRowFromPosition(tile.position) !== FIRST_COL_OR_ROW) {
       updatedTiles = moveOrMerge({
         updatedTiles,
         tile,
         direction: "up"
-      });
+      })
     }
-  });
+  })
 
-  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1));
-};
+  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1))
+}
 
 export const handleMoveDown = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = getBasicTiles(takenTiles);
+  const basicTiles: TileInfo[] = getBasicTiles(takenTiles)
   const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
     b.position > a.position ? 1 : -1
-  );
-  let updatedTiles: TileInfo[] = [];
+  )
+  let updatedTiles: TileInfo[] = []
 
   // first pushes all tiles into a new array so that last row is included unspoiled, other row are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
-    updatedTiles.push(tile);
-  });
+    updatedTiles.push(tile)
+  })
   updatedTiles.forEach((tile: TileInfo): void => {
     if (getRowFromPosition(tile.position) !== LAST_COL_OR_ROW) {
       updatedTiles = moveOrMerge({
         updatedTiles,
         tile,
         direction: "down"
-      });
+      })
     }
-  });
+  })
 
-  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1));
-};
+  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1))
+}
 export const handleMoveLeft = (takenTiles: TileInfo[]): TileInfo[] => {
-  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles)
 
-  let updatedTiles: TileInfo[] = [];
+  let updatedTiles: TileInfo[] = []
   // first pushes all tiles into a new array so that last row is included unspoiled, other row are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
-    updatedTiles.push(tile);
-  });
+    updatedTiles.push(tile)
+  })
   updatedTiles.forEach((tile: TileInfo): void => {
     if (getColFromPosition(tile.position) !== FIRST_COL_OR_ROW) {
       updatedTiles = moveOrMerge({
         updatedTiles,
         tile,
         direction: "left"
-      });
+      })
     }
-  });
+  })
 
-  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1));
-};
+  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1))
+}
 
 export const handleMoveRight = (takenTiles: TileInfo[]): TileInfo[] => {
-  const basicTiles: TileInfo[] = getBasicTiles(takenTiles);
+  const basicTiles: TileInfo[] = getBasicTiles(takenTiles)
   const sortedTiles: TileInfo[] = basicTiles.sort((a, b) =>
     b.position > a.position ? 1 : -1
-  );
-  let updatedTiles: TileInfo[] = [];
+  )
+  let updatedTiles: TileInfo[] = []
 
   // first pushes all tiles into a new array so that last row is included unspoiled, other rows are changed by moveOrMerge
   sortedTiles.forEach((tile: TileInfo): void => {
-    updatedTiles.push(tile);
-  });
+    updatedTiles.push(tile)
+  })
   updatedTiles.forEach((tile: TileInfo): void => {
     if (getColFromPosition(tile.position) !== LAST_COL_OR_ROW) {
       updatedTiles = moveOrMerge({
         updatedTiles,
         tile,
         direction: "right"
-      });
+      })
     }
-  });
+  })
 
-  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1));
-};
+  return updatedTiles.sort((a, b) => (a.position > b.position ? 1 : -1))
+}
 
 export const bestScore = (takenTiles: TileInfo[]): number => {
   const sortedTiles: TileInfo[] = takenTiles.sort((a, b) =>
     b.value > a.value ? 1 : -1
-  );
-  return sortedTiles[0].value;
-};
+  )
+  return sortedTiles[0].value
+}
 
 export const isGameOver = (takenTiles: TileInfo[]): boolean => {
-  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles);
-  const afterUp: TileInfo[] = getBasicTiles(handleMoveUp(takenTiles));
-  const afterDown: TileInfo[] = getBasicTiles(handleMoveDown(takenTiles));
-  const afterLeft: TileInfo[] = getBasicTiles(handleMoveLeft(takenTiles));
-  const afterRight: TileInfo[] = getBasicTiles(handleMoveRight(takenTiles));
+  const sortedTiles: TileInfo[] = getBasicTiles(takenTiles)
+  const afterUp: TileInfo[] = getBasicTiles(handleMoveUp(takenTiles))
+  const afterDown: TileInfo[] = getBasicTiles(handleMoveDown(takenTiles))
+  const afterLeft: TileInfo[] = getBasicTiles(handleMoveLeft(takenTiles))
+  const afterRight: TileInfo[] = getBasicTiles(handleMoveRight(takenTiles))
 
-  const upAndDown = equals(afterUp, afterDown);
-  const leftAndRight = equals(afterRight, afterLeft);
-  const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false;
-  const gameIsOver = moves && equals(afterUp, sortedTiles) ? true : false;
+  const upAndDown = equals(afterUp, afterDown)
+  const leftAndRight = equals(afterRight, afterLeft)
+  const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false
+  const gameIsOver = moves && equals(afterUp, sortedTiles) ? true : false
 
-  return gameIsOver;
-};
+  return gameIsOver
+}
