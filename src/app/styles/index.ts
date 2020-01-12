@@ -27,6 +27,10 @@ interface ZoomedIn {
   zoomIn: boolean
 }
 
+interface ButtonProps {
+  active?: boolean
+}
+
 export const GlobalStyle = createGlobalStyle`
 html {
   padding: 0;
@@ -227,21 +231,23 @@ export const Buttons = styled.div`
   `}
 `
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
   background-color: #181a1b;
   color: #b5b0a5;
   font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
+  ${({ active }) => (!active ? "opacity: 0.5;" : "")}
+
   ${media.lessThan("xSmall")`
     font-size: 1.7rem;
     margin-left: 2px;
-  `}
+  `};
 
   ${media.between("xSmall", "small")`
   font-size: 1.7rem;
   margin-right: 10px;
-  `}
+  `};
 `
 
 export const Description = styled.div`

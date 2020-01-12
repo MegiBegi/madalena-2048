@@ -161,6 +161,12 @@ const Game: FC<GameProps> = ({
             </Grid>
             <Buttons>
               <Button
+                active={
+                  undoCount > 0 &&
+                  lastAction !== "UNDO" &&
+                  lastAction !== "NEW GAME" &&
+                  !gameIsOver
+                }
                 onClick={(): void => {
                   undoCount > 0 &&
                     lastAction !== "UNDO" &&
@@ -172,6 +178,7 @@ const Game: FC<GameProps> = ({
                 UNDO: {undoCount}
               </Button>
               <Button
+                active={true}
                 onClick={(): void => {
                   newGame()
                   getScore()
