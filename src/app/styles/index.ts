@@ -136,6 +136,7 @@ export const GameName = styled.h1`
     #ba00cc,
     #ba00cc
   );
+  //downloaded from https://codepen.io/nohoid/embed/kIfto/?height=265&theme-id=0&default-tab=css,result&embed-version=2
   background-size: 1600% 1600%;
   animation: ${rainbow} 18s ease infinite;
   border-radius: 5%;
