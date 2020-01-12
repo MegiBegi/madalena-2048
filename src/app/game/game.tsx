@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
-import * as actions from "../../redux/actions"
-import { RootState } from "../../redux/reducers"
+import * as actions from "redux/actions"
+import { RootState } from "redux/reducers"
 import {
   MainContainer,
   GameWrapper,
@@ -19,7 +19,7 @@ import {
   Cell,
   Zoom
 } from "../styles"
-import { updateGrid, getTileColor, getTileFontSize } from "../utils"
+import { updateGrid, getTileColor, getTileFontSize } from "app/utils"
 
 type Noop = () => void
 
@@ -149,7 +149,7 @@ const Game: FC<GameProps> = ({
         <GameWrapper>
           <Header>
             <GameName>2048</GameName>
-            <Score>Best score: {bestScore}</Score>
+            <Score disabled>Best score: {bestScore}</Score>
           </Header>
           <Main>
             <Grid zoomIn={zoom}>
@@ -161,24 +161,19 @@ const Game: FC<GameProps> = ({
             </Grid>
             <Buttons>
               <Button
-                active={
-                  undoCount > 0 &&
-                  lastAction !== "UNDO" &&
-                  lastAction !== "NEW GAME" &&
-                  !gameIsOver
+                disabled={
+                  undoCount <= 0 ||
+                  lastAction === "UNDO" ||
+                  lastAction === "NEW GAME" ||
+                  gameIsOver
                 }
                 onClick={(): void => {
-                  undoCount > 0 &&
-                    lastAction !== "UNDO" &&
-                    lastAction !== "NEW GAME" &&
-                    !gameIsOver &&
-                    undo()
+                  undo()
                 }}
               >
                 UNDO: {undoCount}
               </Button>
               <Button
-                active={true}
                 onClick={(): void => {
                   newGame()
                   getScore()

@@ -5,7 +5,7 @@ import styled, {
   css
 } from "styled-components"
 import { generateMedia } from "styled-media-query"
-import { ZOOMED_GRID, ZOOMED_CELL } from "../utils"
+import { ZOOMED_GRID, ZOOMED_CELL } from "app/utils"
 
 const media = generateMedia({
   small: "555px",
@@ -238,7 +238,8 @@ export const Button = styled.button<ButtonProps>`
   font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
-  ${({ active }) => (!active ? "opacity: 0.5;" : "")}
+  ${({ disabled }) => (disabled ? "opacity: 0.5;" : "")}
+  outline: none;
 
   ${media.lessThan("xSmall")`
     font-size: 1.7rem;
