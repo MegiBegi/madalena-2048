@@ -44,19 +44,26 @@ body {
 
 export const create = keyframes`
   0% {
-    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
+    transform: scale(1);
   }
   50% {
-    transform: scale(0.2) rotate3d(-1, 1, 0, -30deg);
+    transform: scale(0.7); 
   }
   100% {
-    transform: scale(1) rotate3d(-1, 1, 0, 0deg);
+    transform: scale(1);
   }
 `
 
 export const merge = keyframes`
-  0%, 20%, 40%, 60%, 80%, 100% { transform: translateY(0); }
-  50% {transform: translateY(-30px);}
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2); 
+  }
+  100% {
+    transform: scale(1);
+  }
 `
 
 const rainbow = keyframes`
