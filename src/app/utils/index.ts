@@ -89,10 +89,10 @@ export const getTileColor = (tile: TileInfo): string => {
     "#074e4e"
   ]
 
-  let counter = 1
+  let counter = 0
   let value = tile.value
 
-  while (value > 2) {
+  while (value > 1) {
     counter++
     value -= 0.5 * value
   }

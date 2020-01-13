@@ -43,9 +43,7 @@ interface DispatchProps {
   gameOver: Noop
 }
 
-interface OwnProps extends GameStateProps, DispatchProps {}
-
-const Game: FC<OwnProps> = ({
+const Game: FC<GameStateProps & DispatchProps> = ({
   newGame,
   moveUp,
   moveDown,
@@ -239,7 +237,7 @@ const mapDispatchToProps: DispatchProps = {
   gameOver: actions.gameOver
 }
 
-export default connect<GameStateProps, DispatchProps, OwnProps, RootState>(
+export default connect<GameStateProps, DispatchProps, {}, RootState>(
   mapStateToProps,
   mapDispatchToProps
 )(Game)
