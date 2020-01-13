@@ -18,7 +18,8 @@ import {
   handleMoveRight,
   bestScore,
   isGameOver,
-  getBasicTiles
+  getBasicTiles,
+  CELLS_NUMBER
 } from "app/utils"
 import { equals } from "ramda"
 
@@ -38,7 +39,7 @@ export interface RootState {
   bestScore: number
   gameIsOver: boolean
 }
-const tilesWithFirstNumber = getRandomNumber([])
+const tilesWithFirstNumber: TileInfo[] = getRandomNumber([])
 
 export const initialState: RootState = {
   numbers: getRandomNumber(tilesWithFirstNumber),
@@ -52,7 +53,7 @@ export const initialState: RootState = {
 const mainReducer = (state: RootState = initialState, action: Actions) => {
   switch (action.type) {
     case NEW_GAME:
-      const tilesWithFirstNumber = getRandomNumber([])
+      const tilesWithFirstNumber: TileInfo[] = getRandomNumber([])
       return {
         ...state,
         numbers: getRandomNumber(tilesWithFirstNumber),
@@ -96,7 +97,7 @@ const mainReducer = (state: RootState = initialState, action: Actions) => {
 
     case NEW_ROUND:
       const newGrid: TileInfo[] = getRandomNumber(state.numbers)
-      return state.numbers.length < 16 &&
+      return state.numbers.length < CELLS_NUMBER &&
         !equals(getBasicTiles(state.numbers), getBasicTiles(state.prevState))
         ? {
             ...state,

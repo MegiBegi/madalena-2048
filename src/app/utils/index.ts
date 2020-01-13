@@ -7,8 +7,11 @@ export const ZOOMED_GRID = "width: 370px;  height: 370px;"
 export const ZOOMED_CELL = "width: 78px;  height: 78px;"
 
 const NEXT_POSITION = 1
+const EMPTY_CELL_VALUE = 0
+const FIRST_POSITION = 1
 const FIRST_COL_OR_ROW = 1
 const LAST_COL_OR_ROW = 4
+const POSSIBLE_RANDOM_VALUES = [2, 4]
 
 type Direction = "up" | "down" | "right" | "left"
 
@@ -21,7 +24,7 @@ interface Condition {
 const getAllPositions = (): number[] => {
   let positions: number[] = []
 
-  for (let i = 1; i <= CELLS_NUMBER; i++) {
+  for (let i = FIRST_POSITION; i <= CELLS_NUMBER; i++) {
     positions.push(i)
   }
 
@@ -29,9 +32,10 @@ const getAllPositions = (): number[] => {
 }
 
 const getRandomValue = (): number => {
-  const possibleRandomValues = [2, 4]
-  const randomIndex = Math.floor(Math.random() * possibleRandomValues.length)
-  return possibleRandomValues[randomIndex]
+  const randomIndex: number = Math.floor(
+    Math.random() * POSSIBLE_RANDOM_VALUES.length
+  )
+  return POSSIBLE_RANDOM_VALUES[randomIndex]
 }
 
 export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] => {
@@ -64,7 +68,7 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] => {
 export const createEmptyTilesGrid = (): TileInfo[] => {
   const allPos = getAllPositions()
   const emptyTilesGrid = allPos.map(el => {
-    return { position: el, value: 0 }
+    return { position: el, value: EMPTY_CELL_VALUE }
   })
   return emptyTilesGrid
 }
@@ -89,7 +93,7 @@ export const getTileColor = (tile: TileInfo): string => {
     "#074e4e"
   ]
 
-  let counter: number = 0
+  let counter: number = EMPTY_CELL_VALUE
   let value: number = tile.value
 
   while (value > 1) {
