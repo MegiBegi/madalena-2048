@@ -5,7 +5,7 @@ import styled, {
   css
 } from "styled-components"
 import { generateMedia } from "styled-media-query"
-import { ZOOMED_GRID, ZOOMED_CELL } from "app/utils"
+import { ZOOMED_GRID, ZOOMED_CELL, ANIMATION_TIME } from "app/utils"
 
 const media = generateMedia({
   small: "555px",
@@ -342,8 +342,15 @@ export const Cell = styled.div<CellProps>`
       if (newTile === "create") return create
       if (mergedTile === "merge") return merge
       return "none"
-    }}
-      0.2s;
+    }}${ANIMATION_TIME}ms;
+      
+      ${(): string => {
+        if (mergedTile === "merge")
+          return `transition: all ${ANIMATION_TIME + 100}ms ease-in;`
+        return ""
+      }};
+  
+
     ${media.lessThan("xSmall")`
       font-size: ${Number(fontSize) * 5}%;
       width: 60px;

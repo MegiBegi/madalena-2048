@@ -20,7 +20,12 @@ import {
   Cell,
   Zoom
 } from "app/styles"
-import { updateGrid, getTileColor, getTileFontSize } from "app/utils"
+import {
+  updateGrid,
+  getTileColor,
+  getTileFontSize,
+  ANIMATION_TIME
+} from "app/utils"
 
 type Noop = () => void
 
@@ -88,7 +93,7 @@ const Game: FC<GameStateProps & DispatchProps> = ({
     setTimeout(() => {
       setCreate("none")
       setMerge("none")
-    }, 200)
+    }, ANIMATION_TIME)
   }
   useEffect(closeAnimation, [numbers])
 

@@ -5,6 +5,7 @@ export const ROWS_NUMBER = 4
 export const COLS_NUMBER = 4
 export const ZOOMED_GRID = "width: 370px;  height: 370px;"
 export const ZOOMED_CELL = "width: 78px;  height: 78px;"
+export const ANIMATION_TIME = 200
 
 const NEXT_POSITION = 1
 const EMPTY_CELL_VALUE = 0
