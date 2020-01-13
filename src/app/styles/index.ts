@@ -12,8 +12,6 @@ const media = generateMedia({
   xSmall: "370px"
 })
 
-// https://github.com/morajabi/styled-media-query
-
 interface CellProps {
   tileColor: string
   fontSize: string
@@ -84,8 +82,6 @@ export const MainContainer = styled.div`
 `
 
 export const GameWrapper = styled.div`
-  width: 500px;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,10 +95,14 @@ export const GameWrapper = styled.div`
     margin-top: 20px;
     width: 375px;
   `}
+
+  ${media.greaterThan("small")`
+    margin-top: 50px;
+    width: 500px;
+  `}
 `
 
 export const Header = styled.header`
-  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -119,11 +119,14 @@ export const Header = styled.header`
     flex-direction: column;
     margin-bottom: 40px;
   `}
+
+  ${media.greaterThan("small")`
+    width: 100%;
+  `}
 `
 
 export const GameName = styled.h1`
   font-weight: bold;
-  font-size: 5rem;
   background: linear-gradient(
     124deg,
     #cc1d00,
@@ -139,7 +142,6 @@ export const GameName = styled.h1`
   background-size: 1600% 1600%;
   animation: ${rainbow} 18s ease infinite;
   border-radius: 5%;
-  padding: 7px;
 
   ${media.lessThan("xSmall")`
     font-size: 2rem;
@@ -149,6 +151,11 @@ export const GameName = styled.h1`
   ${media.between("xSmall", "small")`
     font-size: 3rem;
     padding: 2px 20px;
+  `}
+
+  ${media.greaterThan("small")`
+    font-size: 5rem;
+    padding: 7px;
   `}
 `
 
@@ -173,7 +180,6 @@ export const Score = styled.button`
 
 export const Main = styled.main`
   font-size: 1rem;
-  width: 100%;
 
   ${media.lessThan("xSmall")`
     width: 320px;
@@ -182,13 +188,14 @@ export const Main = styled.main`
   ${media.between("xSmall", "small")`
     width: 400px;
   `}
+
+  ${media.greaterThan("small")`
+    width: 100%;
+  `}
 `
 
 export const Grid = styled.div<ZoomedIn>`
   background-color: #181a1b;
-  font-size: 5rem;
-  width: 500px;
-  height: 500px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -213,31 +220,38 @@ export const Grid = styled.div<ZoomedIn>`
     margin: auto;
     ${zoomIn && ZOOMED_GRID};
   `}
+
+  ${media.greaterThan("small")`
+    font-size: 5rem;
+    width: 500px;
+    height: 500px;
+  `}
 `
 
 export const Buttons = styled.div`
-  width: 100%;
   display: flex;
-  justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 30px;
   margin-bottom: 30px;
 
   ${media.lessThan("xSmall")`
-  justify-content: center;
-  width: 100%;
+    justify-content: center;
   `}
 
   ${media.between("xSmall", "small")`
-  justify-content: center;
+    justify-content: center;
+  `}
+
+  ${media.greaterThan("small")`
+    justify-content: space-around;
+    width: 100%;
   `}
 `
 
 export const Button = styled.button<ButtonProps>`
   background-color: #181a1b;
   color: #b5b0a5;
-  font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
   ${({ disabled }) => (disabled ? "opacity: 0.5;" : "")}
@@ -249,14 +263,17 @@ export const Button = styled.button<ButtonProps>`
   `};
 
   ${media.between("xSmall", "small")`
-  font-size: 1.7rem;
-  margin-right: 10px;
+    font-size: 1.7rem;
+    margin-right: 10px;
   `};
+
+  ${media.greaterThan("small")`
+    font-size: 2.1rem;
+  `}
 `
 
 export const Description = styled.div`
   font-size: 1rem;
-  width: 100%;
   font-weight: bold;
   text-align: justify;
 
@@ -277,6 +294,10 @@ export const Description = styled.div`
     flex-wrap: wrap;
     margin: auto;
   `}
+
+  ${media.greaterThan("small")`
+    width: 100%;
+  `}
 `
 
 export const Paragraph = styled.p`
@@ -287,50 +308,57 @@ export const Paragraph = styled.p`
 
 export const Footer = styled.footer`
   font-size: 1rem;
-  width: 100%;
   padding-bottom: 30px;
   text-align: center;
 
   ${media.lessThan("xSmall")`
-  width: 75%;
+    width: 75%;
   `}
 
   ${media.between("xSmall", "small")`
-  width: 90%; 
+    width: 90%; 
+  `}
+
+  ${media.greaterThan("small")`
+    width: 100%;
   `}
 `
 
 export const Cell = styled.div<CellProps>`
-  width: 110px;
-  height: 110px;
   border-radius: 5%;
   text-align: center;
-  line-height: 110px;
 
   ${({ tileColor, fontSize, gameOver, newTile, mergedTile, zoomIn }) => css`
     background-color: ${tileColor};
-    font-size: ${fontSize};
     opacity: ${gameOver};
     animation: ${(): Keyframes | string => {
-        if (newTile) return create
-        if (mergedTile) return merge
-        return "none"
-      }}
+      if (newTile) return create
+      if (mergedTile) return merge
+      return "none"
+    }}
       0.2s;
     ${media.lessThan("xSmall")`
-    font-size: 2rem;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
   `}
 
     ${media.between("xSmall", "small")`
-    font-size: 2rem;
-    width: 60px;
-    height: 60px;  
-    line-height: 60px;
-    ${zoomIn && ZOOMED_CELL}
+      font-size: 2rem;
+      width: 60px;
+      height: 60px;  
+      line-height: 60px;
+      ${zoomIn && ZOOMED_CELL}
   `}
+
+    ${media.greaterThan("small")`
+      width: 110px;
+      height: 110px;
+      font-size: ${fontSize};
+      line-height: 110px;
+    `}
+
   `}
 `
 
@@ -344,7 +372,6 @@ export const Zoom = styled.svg`
   height: 55px;
   fill: none;
   cursor: pointer;
-  display: none;
 
   ${media.lessThan("xSmall")`
     display: none;
@@ -353,4 +380,8 @@ export const Zoom = styled.svg`
   ${media.between("xSmall", "small")`
     display: block;
   `};
+
+  ${media.greaterThan("small")`
+    display: none;
+  `}
 `

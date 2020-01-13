@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, ReactElement, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
@@ -135,7 +136,8 @@ const Game: FC<GameStateProps & DispatchProps> = ({
     moveRight,
     moveUp,
     newRound,
-    numbers
+    numbers,
+    afterEachMove
   ])
 
   const slide = (move: Noop): void => {
