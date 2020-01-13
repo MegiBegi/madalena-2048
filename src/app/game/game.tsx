@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { FC, ReactElement, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
