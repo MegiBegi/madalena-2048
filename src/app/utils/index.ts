@@ -378,10 +378,11 @@ export const isGameOver = (takenTiles: TileInfo[]): boolean => {
   const afterLeft: TileInfo[] = getBasicTiles(handleMoveLeft(takenTiles))
   const afterRight: TileInfo[] = getBasicTiles(handleMoveRight(takenTiles))
 
-  const upAndDown = equals(afterUp, afterDown)
-  const leftAndRight = equals(afterRight, afterLeft)
-  const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false
-  const gameIsOver = moves && equals(afterUp, sortedTiles)
+  const upAndDown: boolean = equals(afterUp, afterDown)
+  const leftAndRight: boolean = equals(afterRight, afterLeft)
+  const moves: boolean =
+    upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false
+  const gameIsOver: boolean = moves && equals(afterUp, sortedTiles)
 
   return Boolean(gameIsOver)
 }
