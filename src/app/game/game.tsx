@@ -61,6 +61,8 @@ const Game: FC<GameStateProps & DispatchProps> = ({
   gameIsOver
 }) => {
   const [zoom, setZoom] = useState<boolean>(false)
+  const [create, setCreate] = useState<string>("create")
+  const [merge, setMerge] = useState<string>("merge")
 
   const updatedGrid: TileInfo[] = updateGrid(numbers)
 
@@ -71,14 +73,24 @@ const Game: FC<GameStateProps & DispatchProps> = ({
         tileColor={getTileColor(tile)}
         fontSize={getTileFontSize(tile)}
         gameOver={gameIsOver ? "50%" : "100%"}
-        newTile={tile.newNum ? true : false}
-        mergedTile={tile.merged ? true : false}
+        newTile={tile.newNum ? create : "none"}
+        mergedTile={tile.merged ? merge : "none"}
         zoomIn={zoom}
       >
         {tile.value !== 0 && tile.value}
       </Cell>
     )
   )
+
+  const closeAnimation = () => {
+    setCreate("create")
+    setMerge("merge")
+    setTimeout(() => {
+      setCreate("none")
+      setMerge("none")
+    }, 200)
+  }
+  useEffect(closeAnimation, [numbers])
 
   const afterEachMove = (): void => {
     gameOver()

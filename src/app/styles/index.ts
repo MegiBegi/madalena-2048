@@ -16,8 +16,8 @@ interface CellProps {
   tileColor: string
   fontSize: string
   gameOver: string
-  newTile: boolean
-  mergedTile: boolean
+  newTile: string
+  mergedTile: string
   zoomIn: boolean
 }
 
@@ -339,8 +339,8 @@ export const Cell = styled.div<CellProps>`
     background-color: ${tileColor};
     opacity: ${gameOver};
     animation: ${(): Keyframes | string => {
-      if (newTile) return create
-      if (mergedTile) return merge
+      if (newTile === "create") return create
+      if (mergedTile === "merge") return merge
       return "none"
     }}
       0.2s;
