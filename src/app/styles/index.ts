@@ -57,7 +57,7 @@ export const create = keyframes`
 `
 
 export const merge = keyframes`
-  0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
+  0%, 20%, 40%, 60%, 80%, 100% { transform: translateY(0); }
   50% {transform: translateY(-30px);}
 `
 
@@ -96,8 +96,8 @@ export const GameWrapper = styled.div`
   `}
 
   ${media.between("xSmall", "small")`
-     margin-top: 20px;
-     width: 375px;
+    margin-top: 20px;
+    width: 375px;
   `}
 `
 
@@ -114,10 +114,10 @@ export const Header = styled.header`
   `}
 
   ${media.between("xSmall", "small")`
-  width: 90%;
-  flex-direction: column;
-  flex-direction: column;
-  margin-bottom: 40px;
+    width: 90%;
+    flex-direction: column;
+    flex-direction: column;
+    margin-bottom: 40px;
   `}
 `
 
@@ -136,7 +136,6 @@ export const GameName = styled.h1`
     #ba00cc,
     #ba00cc
   );
-  //downloaded from https://codepen.io/nohoid/embed/kIfto/?height=265&theme-id=0&default-tab=css,result&embed-version=2
   background-size: 1600% 1600%;
   animation: ${rainbow} 18s ease infinite;
   border-radius: 5%;
@@ -148,15 +147,14 @@ export const GameName = styled.h1`
   `}
 
   ${media.between("xSmall", "small")`
-  font-size: 3rem;
-  padding: 2px 20px;
+    font-size: 3rem;
+    padding: 2px 20px;
   `}
 `
 
 export const Score = styled.button`
   background-color: #181a1b;
   color: #b5b0a5;
-  font-size: 2.1rem;
   border-radius: 5%;
   border-color: #404447;
 
@@ -165,7 +163,11 @@ export const Score = styled.button`
   `}
 
   ${media.between("xSmall", "small")`
-  font-size: 1.7rem;
+    font-size: 1.7rem;
+  `}
+
+  ${media.greaterThan("small")`
+    font-size: 2.1rem;
   `}
 `
 
@@ -259,21 +261,21 @@ export const Description = styled.div`
   text-align: justify;
 
   ${media.lessThan("xSmall")`
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: auto;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
   `}
 
   ${media.between("xSmall", "small")`
-  width: 75% 
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: auto;
+    width: 75% 
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
   `}
 `
 
@@ -309,9 +311,10 @@ export const Cell = styled.div<CellProps>`
     background-color: ${tileColor};
     font-size: ${fontSize};
     opacity: ${gameOver};
-    animation: ${(): Keyframes | undefined => {
+    animation: ${(): Keyframes | string => {
         if (newTile) return create
         if (mergedTile) return merge
+        return "none"
       }}
       0.2s;
     ${media.lessThan("xSmall")`

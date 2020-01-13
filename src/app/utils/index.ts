@@ -1,12 +1,14 @@
 import { equals } from "ramda"
+
 export const CELLS_NUMBER = 16
 export const ROWS_NUMBER = 4
 export const COLS_NUMBER = 4
+export const ZOOMED_GRID = "width: 370px;  height: 370px;"
+export const ZOOMED_CELL = "width: 78px;  height: 78px;"
+
 const NEXT_POSITION = 1
 const FIRST_COL_OR_ROW = 1
 const LAST_COL_OR_ROW = 4
-export const ZOOMED_GRID = "width: 370px;  height: 370px;"
-export const ZOOMED_CELL = "width: 78px;  height: 78px;"
 
 type Direction = "up" | "down" | "right" | "left"
 
@@ -22,6 +24,7 @@ const getAllPositions = () => {
   for (let i = 1; i <= CELLS_NUMBER; i++) {
     positions.push(i)
   }
+
   return positions
 }
 
@@ -67,44 +70,37 @@ export const createEmptyTilesGrid = () => {
 }
 
 export const getTileColor = (tile: TileInfo): string => {
-  switch (tile.value) {
-    case 0:
-      return "#303949"
-    case 2:
-      return "#004a31"
-    case 4:
-      return "#aab510"
-    case 8:
-      return "#11ac98"
-    case 16:
-      return "#70537a"
-    case 32:
-      return "#70037a"
-    case 64:
-      return "#09537a"
-    case 128:
-      return "#20887f"
-    case 256:
-      return "#33437a"
-    case 512:
-      return "#11598a"
-    case 1024:
-      return "#56951c"
-    case 2048:
-      return "#00533a"
-    case 4096:
-      return "#00531a"
-    case 8196:
-      return "#44597a"
-    case 16396:
-      return "#074a2e"
-    default:
-      return "#074e4e"
+  const colors = [
+    "#303949",
+    "#004a31",
+    "#aab510",
+    "#11ac98",
+    "#70537a",
+    "#70037a",
+    "#09537a",
+    "#20887f",
+    "#33437a",
+    "#11598a",
+    "#56951c",
+    "#00533a",
+    "#00531a",
+    "#44597a",
+    "#074a2e",
+    "#074e4e"
+  ]
+
+  let counter = 1
+  let value = tile.value
+
+  while (value > 2) {
+    counter++
+    value -= 0.5 * value
   }
+
+  return colors[counter]
 }
 
-export const getTileFontSize = (tile: TileInfo): string => {
-  const { value } = tile
+export const getTileFontSize = ({ value }: TileInfo): string => {
   switch (true) {
     case value < 128:
       return "100%"
@@ -136,12 +132,8 @@ const getRowFromPosition = (newPosition: number): number =>
   newPosition <= 4 ? 1 : Math.ceil(newPosition / ROWS_NUMBER)
 
 const getColFromPosition = (newPosition: number): number => {
-  if (newPosition <= COLS_NUMBER) {
-    return newPosition
-  }
-  if (newPosition % COLS_NUMBER === 0) {
-    return COLS_NUMBER
-  }
+  if (newPosition <= COLS_NUMBER) return newPosition
+  if (newPosition % COLS_NUMBER === 0) return COLS_NUMBER
   return newPosition % COLS_NUMBER
 }
 
@@ -170,6 +162,7 @@ const moveOrMerge = ({
   const initialTilePosition = tile.position
   let position = tile.position
   const tileValue = tile.value
+
   const setCondition = (direction: string, pos: number): Condition | null => {
     switch (direction) {
       case "up":
@@ -388,7 +381,7 @@ export const isGameOver = (takenTiles: TileInfo[]): boolean => {
   const upAndDown = equals(afterUp, afterDown)
   const leftAndRight = equals(afterRight, afterLeft)
   const moves = upAndDown && leftAndRight ? equals(afterUp, afterLeft) : false
-  const gameIsOver = moves && equals(afterUp, sortedTiles) ? true : false
+  const gameIsOver = moves && equals(afterUp, sortedTiles)
 
-  return gameIsOver
+  return Boolean(gameIsOver)
 }
