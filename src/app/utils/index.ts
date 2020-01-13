@@ -18,7 +18,7 @@ interface Condition {
   changeCondition: number
 }
 
-const getAllPositions = () => {
+const getAllPositions = (): number[] => {
   let positions: number[] = []
 
   for (let i = 1; i <= CELLS_NUMBER; i++) {
@@ -61,7 +61,7 @@ export const getRandomNumber = (takenTiles: TileInfo[]): TileInfo[] => {
   return [...takenTiles, newRandomNumber]
 }
 
-export const createEmptyTilesGrid = () => {
+export const createEmptyTilesGrid = (): TileInfo[] => {
   const allPos = getAllPositions()
   const emptyTilesGrid = allPos.map(el => {
     return { position: el, value: 0 }
@@ -89,8 +89,8 @@ export const getTileColor = (tile: TileInfo): string => {
     "#074e4e"
   ]
 
-  let counter = 0
-  let value = tile.value
+  let counter: number = 0
+  let value: number = tile.value
 
   while (value > 1) {
     counter++
@@ -158,10 +158,10 @@ const moveOrMerge = ({
   direction: Direction
   tile: TileInfo
 }): TileInfo[] => {
-  let takenPositions = updatedTiles.map(tile => tile.position)
-  const initialTilePosition = tile.position
-  let position = tile.position
-  const tileValue = tile.value
+  let takenPositions: number[] = updatedTiles.map(tile => tile.position)
+  const initialTilePosition: number = tile.position
+  let position: number = tile.position
+  const tileValue: number = tile.value
 
   const setCondition = (direction: string, pos: number): Condition | null => {
     switch (direction) {
