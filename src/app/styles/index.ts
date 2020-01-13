@@ -346,7 +346,7 @@ export const Cell = styled.div<CellProps>`
       
       ${(): string => {
         if (mergedTile === "merge")
-          return `transition: all ${ANIMATION_TIME + 100}ms ease-in;`
+          return `transition: all ${ANIMATION_TIME}ms ease-in;`
         return ""
       }};
   
