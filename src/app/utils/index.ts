@@ -103,15 +103,15 @@ export const getTileColor = (tile: TileInfo): string => {
 export const getTileFontSize = ({ value }: TileInfo): string => {
   switch (true) {
     case value < 128:
-      return "100%"
+      return "100"
     case value >= 128 && value < 1024:
-      return "75%"
+      return "75"
     case value >= 1024 && value < 16396:
-      return "55%"
+      return "55"
     case value >= 16396:
-      return "40%"
+      return "40"
     default:
-      return "100%"
+      return "100"
   }
 }
 

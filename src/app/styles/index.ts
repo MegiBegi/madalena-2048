@@ -338,14 +338,14 @@ export const Cell = styled.div<CellProps>`
     }}
       0.2s;
     ${media.lessThan("xSmall")`
-      font-size: 2rem;
+      font-size: ${Number(fontSize) * 5}%;
       width: 60px;
       height: 60px;
       line-height: 60px;
   `}
 
     ${media.between("xSmall", "small")`
-      font-size: 2rem;
+      font-size: ${Number(fontSize) * 5}%;
       width: 60px;
       height: 60px;  
       line-height: 60px;
@@ -355,7 +355,7 @@ export const Cell = styled.div<CellProps>`
     ${media.greaterThan("small")`
       width: 110px;
       height: 110px;
-      font-size: ${fontSize};
+      font-size: ${fontSize}%;
       line-height: 110px;
     `}
 
