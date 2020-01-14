@@ -342,7 +342,7 @@ export const Cell = styled.div<CellProps>`
       if (newTile === "create") return create
       if (mergedTile === "merge") return merge
       return "none"
-    }}${ANIMATION_TIME}ms;
+    }} ${ANIMATION_TIME}ms;
       
       ${(): string => {
         if (mergedTile === "merge")
