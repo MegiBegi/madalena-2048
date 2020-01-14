@@ -5,7 +5,7 @@
 ### Download
 
 ```
-git clone https://github.com/MegiBegi/madalena-2048
+git clone git@github.com:MegiBegi/madalena-2048.git
 ```
 
 ```
