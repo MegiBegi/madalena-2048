@@ -109,12 +109,12 @@ export const getTileFontSize = ({ value }: TileInfo): string => {
   switch (true) {
     case value < 128:
       return "100"
-    case value >= 128 && value < 1024:
+    case value >= 100 && value < 1000:
       return "75"
-    case value >= 1024 && value < 16396:
+    case value >= 1000 && value < 10000:
       return "55"
-    case value >= 16396:
-      return "40"
+    case value >= 10000:
+      return "50"
     default:
       return "100"
   }

@@ -19,6 +19,7 @@ interface CellProps {
   newTile: string
   mergedTile: string
   zoomIn: boolean
+  value: number
 }
 
 interface ZoomedIn {
@@ -78,6 +79,9 @@ const rainbow = keyframes`
   }
 `
 
+const animationColors =
+  "linear-gradient(124deg,#cc1d00,#a91111,#a98511,#a6a911,#11a92b,#11a1a9,#1c11a9,#ba00cc,#ba00cc)"
+
 export const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
@@ -134,18 +138,7 @@ export const Header = styled.header`
 
 export const GameName = styled.h1`
   font-weight: bold;
-  background: linear-gradient(
-    124deg,
-    #cc1d00,
-    #a91111,
-    #a98511,
-    #a6a911,
-    #11a92b,
-    #11a1a9,
-    #1c11a9,
-    #ba00cc,
-    #ba00cc
-  );
+  background: ${animationColors};
   background-size: 1600% 1600%;
   animation: ${rainbow} 18s ease infinite;
   border-radius: 5%;
@@ -335,7 +328,15 @@ export const Cell = styled.div<CellProps>`
   border-radius: 5%;
   text-align: center;
 
-  ${({ tileColor, fontSize, gameOver, newTile, mergedTile, zoomIn }) => css`
+  ${({
+    tileColor,
+    fontSize,
+    gameOver,
+    newTile,
+    mergedTile,
+    zoomIn,
+    value
+  }) => css`
     background-color: ${tileColor};
     opacity: ${gameOver};
     animation: ${(): Keyframes | string => {
@@ -344,12 +345,20 @@ export const Cell = styled.div<CellProps>`
       return "none"
     }} ${ANIMATION_TIME}ms;
       
-      ${(): string => {
-        if (mergedTile === "merge")
-          return `transition: all ${ANIMATION_TIME}ms ease-in;`
-        return ""
-      }};
-  
+    ${(): string => {
+      if (mergedTile === "merge")
+        return `transition: all ${ANIMATION_TIME}ms ease-in;`
+      return ""
+    }};
+   
+    ${() => {
+      if (value === 2048)
+        return css`
+          background: ${animationColors};
+          background-size: 1600% 1600%;
+          animation: ${rainbow} 4s ease infinite;
+        `
+    }}
 
     ${media.lessThan("xSmall")`
       font-size: ${Number(fontSize) * 5}%;

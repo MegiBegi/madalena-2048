@@ -80,6 +80,7 @@ const Game: FC<GameStateProps & DispatchProps> = ({
         newTile={tile.newNum ? create : "none"}
         mergedTile={tile.merged ? merge : "none"}
         zoomIn={zoom}
+        value={tile.value}
       >
         {tile.value !== 0 && tile.value}
       </Cell>

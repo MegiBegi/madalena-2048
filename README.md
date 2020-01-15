@@ -42,6 +42,7 @@ https://www.npmjs.com/package/react-swipeable
 
 ### Supported:
 
+- - max 5 digits in one Cell
 - Responsive on all devices
 - The newest versions of Chrome, Firefox, Opera, Safari
 - PWA unless you miss https
