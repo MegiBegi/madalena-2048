@@ -351,20 +351,14 @@ export const Cell = styled.div<CellProps>`
       return "none"
     }} ${ANIMATION_TIME}ms;
       
-    ${(): string => {
-      if (mergedTile === "merge")
-        return `transition: all ${ANIMATION_TIME}ms ease-in;`
-      return ""
-    }};
+    ${mergedTile === "merge" && `transition: all ${ANIMATION_TIME}ms ease-in;`};
    
-    ${() => {
-      if (value === 2048)
-        return css`
-          background: ${animationColors};
-          background-size: 1600% 1600%;
-          animation: ${rainbow} 4s ease infinite;
-        `
-    }}
+    ${value === 2048 &&
+      css`
+        background: ${animationColors};
+        background-size: 1600% 1600%;
+        animation: ${rainbow} 4s ease infinite;
+      `}}
 
     ${media.lessThan("xSmall")`
       font-size: ${Number(fontSize) * 5}%;
