@@ -324,6 +324,12 @@ export const Footer = styled.footer`
   `}
 `
 
+export const Visit = styled.a`
+  text-decoration: underline;
+  color: #e8e6e3;
+  cursor: pointer;
+`
+
 export const Cell = styled.div<CellProps>`
   border-radius: 5%;
   text-align: center;

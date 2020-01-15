@@ -17,7 +17,8 @@ import {
   Paragraph,
   Grid,
   Cell,
-  Zoom
+  Zoom,
+  Visit
 } from "app/styles"
 import {
   updateGrid,
@@ -222,7 +223,9 @@ const Game: FC<GameStateProps & DispatchProps> = ({
               GAME to start again! Good luck!
             </Paragraph>
             <Paragraph>
-              NOTE: The game on play2048.co is the original version of 2048.
+              NOTE: The game on{" "}
+              <Visit href="https://play2048.co/">play2048.co</Visit> is the
+              original version of 2048.
             </Paragraph>
             <Paragraph>
               GOAL: To get the 2048 tile. Then you can continue on merging tiles
@@ -230,7 +233,9 @@ const Game: FC<GameStateProps & DispatchProps> = ({
             </Paragraph>
           </Description>
         </Main>
-        <Footer>Visit my website</Footer>
+        <Footer>
+          <Visit href="https://github.com/MegiBegi">Visit my GitHub!</Visit>
+        </Footer>
       </GameWrapper>
     </MainContainer>
   )
