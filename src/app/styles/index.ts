@@ -372,7 +372,7 @@ export const Cell = styled.div<CellProps>`
       width: 60px;
       height: 60px;  
       line-height: 60px;
-      ${zoomIn && ZOOMED_CELL && `font-size: ${Number(fontSize) * 5}%;`}
+      ${zoomIn && ZOOMED_CELL};
   `}
 
     ${media.greaterThan("small")`
