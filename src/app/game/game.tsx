@@ -142,7 +142,7 @@ const Game: FC<GameStateProps & DispatchProps> = ({
     }
 
     window.addEventListener("keydown", handleKeyPress)
-    gridRef?.current?.addEventListener("touchmove", e => {
+    gridRef.current?.addEventListener("touchmove", e => {
       e.preventDefault()
     })
 
