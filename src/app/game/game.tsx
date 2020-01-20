@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
+import { isMobile } from "react-device-detect"
 import * as actions from "redux/actions"
 import { RootState } from "redux/reducers"
 import {
@@ -115,7 +116,7 @@ const Game: FC<GameStateProps & DispatchProps> = ({
 
       if (!moves.includes(e.keyCode)) return
 
-      e.preventDefault()
+      !isMobile && e.preventDefault()
 
       if (e.repeat) return
       if (gameIsOver) return
