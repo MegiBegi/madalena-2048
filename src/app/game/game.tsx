@@ -143,6 +143,10 @@ const Game: FC<GameStateProps & DispatchProps> = ({
 
     window.addEventListener("keydown", handleKeyPress)
 
+    gridRef.current?.addEventListener("touchmove", e => {
+      e.preventDefault()
+    })
+
     return (): void => {
       window.removeEventListener("keydown", handleKeyPress)
     }
@@ -159,14 +163,6 @@ const Game: FC<GameStateProps & DispatchProps> = ({
     afterEachMove
   ])
 
-  useEffect(
-    () =>
-      gridRef.current?.addEventListener("touchmove", e => {
-        e.preventDefault()
-      }),
-    []
-  )
-
   const slide = (move: Noop): void => {
     move()
     afterEachMove()
@@ -177,7 +173,8 @@ const Game: FC<GameStateProps & DispatchProps> = ({
     onSwipedDown: () => slide(moveDown),
     onSwipedLeft: () => slide(moveLeft),
     onSwipedRight: () => slide(moveRight),
-    trackMouse: true
+    trackMouse: true,
+    preventDefaultTouchmoveEvent: true
   })
 
   const zooming = (): void => {
