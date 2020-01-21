@@ -1,7 +1,6 @@
 import React, { FC, ReactElement, useEffect, useState, useRef } from "react"
 import { connect } from "react-redux"
 import { useSwipeable } from "react-swipeable"
-import { isMobile } from "react-device-detect"
 import * as actions from "redux/actions"
 import { RootState } from "redux/reducers"
 import {
@@ -191,7 +190,6 @@ const Game: FC<GameStateProps & DispatchProps> = ({
           <Score disabled>Best score: {bestScore}</Score>
         </Header>
         <Main>
-
           <Grid ref={gridRef} zoomIn={zoom} {...swipeProps}>
             {gridItems}
             <Zoom viewBox="0 0 20 20" onClick={(): void => zooming()}>
