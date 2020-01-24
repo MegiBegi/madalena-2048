@@ -350,6 +350,7 @@ export const Cell = styled.div<CellProps>`
     opacity: ${gameOver};
     -webkit-opacity: ${gameOver === "50%" && 0.5}; 
       /* WebKit browser for Safari and Chrome mobile were props was not being passed properly to the components*/
+
     animation: ${(): Keyframes | string => {
       if (newTile === "create") return create
       if (mergedTile === "merge") return merge
