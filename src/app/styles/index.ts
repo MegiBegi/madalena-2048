@@ -160,10 +160,12 @@ export const GameName = styled.h1`
 `
 
 export const Score = styled.button`
+  appearance: none !important;
   background-color: #181a1b;
   color: #b5b0a5;
   border-radius: 5%;
   border-color: #404447;
+  border-style: none;
 
   ${media.lessThan("xSmall")`
     font-size: 1.3rem;
@@ -256,6 +258,7 @@ export const Button = styled.button<ButtonProps>`
   border-color: #404447;
   ${({ disabled }) => (disabled ? "opacity: 0.5;" : "")}
   outline: none;
+  border-style: solid;
 
   ${media.lessThan("xSmall")`
     font-size: 1.7rem;
@@ -345,6 +348,8 @@ export const Cell = styled.div<CellProps>`
   }) => css`
     background-color: ${tileColor};
     opacity: ${gameOver};
+    -webkit-opacity: ${gameOver === "50%" && 0.5}; 
+      /* WebKit browser for Safari and Chrome mobile were props was not being passed properly to the components*/
     animation: ${(): Keyframes | string => {
       if (newTile === "create") return create
       if (mergedTile === "merge") return merge
