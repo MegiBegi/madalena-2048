@@ -345,6 +345,7 @@ export const Cell = styled.div<CellProps>`
   }) => css`
     background-color: ${tileColor};
     opacity: ${gameOver};
+    visibility: visible;
     animation: ${(): Keyframes | string => {
       if (newTile === "create") return create
       if (mergedTile === "merge") return merge
